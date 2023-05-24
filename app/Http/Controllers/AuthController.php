@@ -56,4 +56,12 @@ class AuthController extends Controller
         }
     }
 
+    public function logout(Request $request){
+        if($request->hasCookie('asscess-token')){
+            Cookie::forget('asscess-token');
+            return response()->json(['message' => 'Logout success'], 200);
+        }else{
+            return response()->json(['message' => 'Logout fail'], 400);
+        }
+    }
 }

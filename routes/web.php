@@ -65,4 +65,9 @@ Route::group(['middleware' =>['customAuTh']], function (){
         PermissionController::class,
         'delete'
     ]);
+
+    Route::delete('/logout',[
+        AuthController::class,
+        'delete'
+    ]);
 });
