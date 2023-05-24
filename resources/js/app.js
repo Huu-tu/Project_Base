@@ -9,7 +9,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.js'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.component('home-view', require('./components/Home.vue').default);
-Vue.component('show-view', require('./components/Show.vue').default);
 Vue.component('app', require('./components/App.vue').default);
 
 Vue.use(BootstrapVue);

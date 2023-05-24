@@ -3,16 +3,14 @@
      <div class="form">
           <img src="https://inkythuatso.com/uploads/images/2021/12/logo-fpt-polytechnic-inkythuatso-09-12-57-46.jpg"> 
           <div id="app" class="select-dropdown">
-             <select name="" id="" v-model="selected" >
+             <select name="" id="" v-model="selected" @change="onChange($event)" >
                 <option value="" disabled>Chọn cơ sở</option>
                 <option v-for="item in items" >{{ item.content }}</option>
              </select>
           </div>
-          <a href="http://127.0.0.1:8000/google/login">
-             <button type="button" class="login-with-google-btn" onclick="">
-                Sign in with Google
-             </button>
-          </a>
+          <button type="button" class="login-with-google-btn" @click="loginAuth()">
+            Sign in with Google
+          </button>
        </div>
     </div>
  </template>
@@ -25,8 +23,12 @@
    name:'login',
    data() {
       return { 
-         items: [],
-         selected: ''
+        items: [],
+        selected: '',
+        onChange(e) {
+              // console.log(e.target.value);
+              this.selected = e.target.value
+        }
       }
    },
    mounted() {
@@ -42,11 +44,10 @@
           console.log(error);
         });
     },
-    loginAuth(){
-      
+    loginAuth : function() {
+      window.location.href = 'http://127.0.0.1:8000/google/login?campus_id=' + this.selected;
     }
   },
-
  }
  </script>
   
