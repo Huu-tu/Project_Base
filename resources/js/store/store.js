@@ -23,7 +23,7 @@ export default new Vuex.Store({
         },
         getTime(state) {
             return state.time;
-        },
+        }, 
         getContent(state) {
             return state.content;
         }

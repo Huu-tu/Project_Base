@@ -36,7 +36,7 @@
                             <img
                                 :src="require('../assets/images/avatar.png')"
                             />
-                            <div class="account-name">Nguyễn Văn A</div>
+                            <div class="account-name">{{ userName }}</div>
                         </a>
                     </li>
                     <li>
@@ -54,6 +54,9 @@
 import "../assets/styles/global.css";
 export default {
     name: "Header",
+    props: {
+        userName: String,
+    }
 };
 </script>
 

@@ -83,7 +83,7 @@
                                         fill="#dc3545"
                                     />
                                 </svg>
-                                <div class="model-content">Đã từ chối!</div>
+                                <div class="model-content">Đã từ chối đơn thành công!</div>
                             </div>
                         </div>
                     </div>
@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import router from '../routes'
 export default {
     name: "Show",
     props: {

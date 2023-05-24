@@ -1,17 +1,4 @@
 <template>
-    <!-- <div class="login-page">
-     <div class="form">
-          <img src="https://inkythuatso.com/uploads/images/2021/12/logo-fpt-polytechnic-inkythuatso-09-12-57-46.jpg"> 
-          <div id="app" class="select-dropdown">
-             <select name="" id="" v-model="selected" @change="onChange($event)" >
-                <option value="" disabled>Chọn cơ sở</option>
-                <option v-for="item in items" >{{ item.content }}</option>
-             </select>
-          </div>
-          <button type="button" class="login-with-google-btn" @click="loginAuth()">
-            Sign in with Google
-          </button>
-       </div> -->
     <div class="login-wrap">
         <div class="login-container">
             <img :src="require('../assets/images/logo_default.png')" />
@@ -23,7 +10,7 @@
                     <option
                         v-for="(item, index) in items"
                         :key="index"
-                        :value="item"
+                        :value="item.content"
                     >
                         {{ item.content }}
                     </option>

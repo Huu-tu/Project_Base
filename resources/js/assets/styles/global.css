@@ -111,6 +111,44 @@ option {
     font-family: var(--font-style);
 }
 
+@media screen and (max-width: 768px) {
+    .login-container {
+        width: 336px;
+        height: 308px;
+    }
+    .login-container img {
+        width: 179px;
+        height: 70px;
+    }
+    .google-login,
+    .select-dropdown {
+        width: 240px;
+        height: 48px;
+        padding: 0 8px;
+    }
+    .form-select {
+        background-size: 20px !important;
+        font-size: 18px !important;
+    }
+    select {
+        height: 85%;
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+    option {
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+    .google-login img {
+        width: 22px;
+        height: 22px;
+    }
+    .login-text {
+        font-size: 18px;
+        line-height: 20px;
+    }
+}
+
 /*End Login*/
 
 /*Header*/
@@ -144,171 +182,261 @@ option {
 }
 
 .account-info {
-  display: flex !important;
-  padding: 20px !important;
+    display: flex !important;
+    padding: 20px !important;
 }
 
 .account-info:active {
-  background: #fff !important;
-  color: var(--font-color) !important;
+    background: #fff !important;
+    color: var(--font-color) !important;
 }
 
 .account-info:hover {
-  border-radius: 0.375rem;
+    border-radius: 0.375rem;
 }
 
 .account-name {
-  margin: 0 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  font-size: 20px !important;
-  font-weight: 400 !important;
-  line-height: 23px !important;
-  font-family: var(--font-style) !important;
+    margin: 0 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 23px !important;
+    font-family: var(--font-style) !important;
 }
 
 .dropdown-menu.dropdown-menu-end {
-  width: 360px;
-  padding: 0;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  margin-top: 30px !important;
+    width: 360px;
+    padding: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    margin-top: 30px !important;
 }
 
 .account-logout {
-  background: #394867 !important;
-  color: #fff !important;
-  padding: 10px 40px !important;
-  text-align: center !important;
-  font-size: 20px !important;
-  font-weight: 400 !important;
-  line-height: 23px !important;
-  font-family: var(--font-style) !important;
+    background: #394867 !important;
+    color: #fff !important;
+    padding: 10px 40px !important;
+    text-align: center !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 23px !important;
+    font-family: var(--font-style) !important;
 }
 
 .account-logout:hover {
-  background: #394867;
-  color: #fff;
+    background: #394867;
+    color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .header-container img {
+        width: 179px;
+        height: 70px;
+    }
+    .noti-container img {
+        width: 33px;
+        height: 33px;
+    }
+    .dropdown-menu.dropdown-menu-end {
+        width: 260px;
+        margin-top: 24px !important;
+    }
+    .account-info {
+        padding: 10px 16px !important;
+    }
+    .account-name {
+        margin: 0 16px !important;
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
+    .account-logout {
+        font-size: 18px !important;
+        line-height: 20px !important;
+    }
 }
 /*End Header*/
 
 /*Home*/
 .main-container {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .main-wrap {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.11);
-  box-shadow: inset 0px 10px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 50px 50px 0px 0px;
-  /* border-radius: 50px; */
-  width: 1000px;
-  /* height: max-content; */
-  height: 800px;
-  margin-top: 50px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    box-shadow: inset 0px 10px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px 50px 0px 0px;
+    /* border-radius: 50px; */
+    width: 1000px;
+    /* height: max-content; */
+    height: 800px;
+    margin-top: 50px;
 }
 
 .infomation-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
 }
 
 .infomation-container img {
-  width: 44px;
-  height: 44px;
-  margin-right: 10px;
+    width: 44px;
+    height: 44px;
+    margin-right: 16px;
 }
 
 .info-wrap {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .info-title {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 39px;
-  color: var(--font-color);
-  margin: 50px 30px 10px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: var(--font-color);
+    margin: 50px 30px 10px;
+}
+
+.info-name {
+    margin-right: 16px;
 }
 
 .info-name,
 .info-mail,
 .info-time {
-  margin-right: 20px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 39px;
-  color: var(--font-color);
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 39px;
+    color: var(--font-color);
 }
 
 .info-mail {
-  font-size: 16px;
-  font-weight: 400;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .info-time {
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 500;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .mail-wrap {
-  margin: 20px;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+    margin: 20px 30px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 .nav-wrap {
-  margin-left: 20px;
+    margin: 0 30px;
 }
 
 .nav-wrap button {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  margin-right: 16px;
-  /* margin-bottom: 30px; */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border: none;
-  border-radius: 30px;
-  width: 150px;
-  height: 40px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    margin-right: 16px;
+    /* margin-bottom: 30px; */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 30px;
+    width: 150px;
+    height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .main-wrap {
+        width: 90%;
+        height: 100vh;
+    }
+    .info-title {
+        font-size: 28px;
+        line-height: 36px;
+        margin: 36px 20px 10px;
+    }
+    .infomation-container {
+        flex-direction: column;
+        justify-content: initial;
+    }
+    .info-name,
+    .info-mail,
+    .info-time {
+        font-size: 22px;
+        line-height: 32px;
+        color: var(--font-color);
+    }
+    .info-mail,
+    .info-time {
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .info-time {
+        align-self: end;
+        font-weight: 500;
+    }
+    .mail-wrap {
+        margin: 20px;
+        font-size: 18px;
+        line-height: normal;
+    }
+    .nav-wrap {
+        margin: 0 20px;
+        display: flex;
+    }
+    .nav-wrap button {
+        font-size: 18px;
+        line-height: normal;
+    }
 }
 
 /*End Home*/
 
 /*Modal*/
 .modal-content {
-  background: #ffffff !important;
-  border: 1px solid #000000 !important;
-  border-radius: 50px !important;
-  height: 120px;
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    border-radius: 50px !important;
+    height: 120px;
 }
 
 .modal-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23px;
-  font-family: var(--font-style);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 23px;
+    font-family: var(--font-style);
 }
 
 .modal-body svg {
-  margin-right: 10px;
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content {
+        height: 100px;
+        margin: 0 24px;
+    }
+    .modal-body {
+      font-size: 18px;
+      line-height: normal;
+    }
+    .modal-body svg {
+      height: 33px;
+      width: 33px;
+    }
 }
 /*End Modal*/
