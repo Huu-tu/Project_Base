@@ -1,4 +1,17 @@
 <template>
+    <div class="login-page">
+     <div class="form">
+          <img src="https://inkythuatso.com/uploads/images/2021/12/logo-fpt-polytechnic-inkythuatso-09-12-57-46.jpg"> 
+          <div id="app" class="select-dropdown">
+             <select name="" id="" v-model="selected" @change="onChange($event)" >
+                <option value="" disabled>Chọn cơ sở</option>
+                <option v-for="item in items" >{{ item.content }}</option>
+             </select>
+          </div>
+          <button type="button" class="login-with-google-btn" @click="loginAuth()">
+            Sign in with Google
+          </button>
+       </div>
     <div class="login-wrap">
         <div class="login-container">
             <img :src="require('../assets/images/logo_default.png')" />
@@ -29,6 +42,68 @@
     </div>
 </template>
 
+ export default { 
+   name:'login',
+   data() {
+      return { 
+        items: [],
+        selected: '',
+        onChange(e) {
+              // console.log(e.target.value);
+              this.selected = e.target.value
+        }
+      }
+   },
+   mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      axios.get('http://127.0.0.1:8000/api/campus')
+        .then(response => {
+          this.items = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    loginAuth : function() {
+      window.location.href = 'http://127.0.0.1:8000/google/login?campus_id=' + this.selected;
+    }
+  },
+ }
+ </script>
+  
+ <style>
+ .login-page {
+   width: 360px;
+   padding: 8% 0 0;
+   margin: auto;
+ }
+ .form {
+   position: relative;
+   z-index: 1;
+   background: #FFFFFF;
+   max-width: 360px;
+   margin: 0 auto 100px;
+   border-radius: 50px 10px;
+   padding: 30px;
+   text-align: center;
+   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+ }
+ 
+ img {
+   display: block;
+   width: 200px;
+   margin: auto;
+   /* margin-left: 3px; */
+   /* box-shadow: 0 5px 10px -7px #333333; */
+   /* border-radius: 50%; */
+ }
+ 
+ .select-dropdown {
+     position: relative;
+     background-color: rgb(255, 255, 255);
 <script>
 import axios from "axios";
 import "../assets/styles/global.css";

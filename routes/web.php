@@ -6,10 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', [
     HomeController::class,
     'home'
@@ -20,12 +16,10 @@ Route::get('/api/campus', [
     'campus'
 ]);
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');;
-
-Route::get('/show', function () {
-    return view('show');
+Route::group(['middleware' =>['cusTomAuth']], function (){
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 });
 
 Route::prefix('google')->name('google.')->group( function(){

@@ -10,7 +10,6 @@ import '../../node_modules/bootstrap-vue/dist/bootstrap-vue.css';
 import "./assets/styles/global.css";
 
 Vue.component('home-view', require('./components/Home.vue').default);
-Vue.component('show-view', require('./components/Show.vue').default);
 Vue.component('app', require('./components/App.vue').default);
 
 Vue.use(BootstrapVue);

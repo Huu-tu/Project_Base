@@ -7,12 +7,21 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Cookie;
 
 
 class AuthController extends Controller
 {
-    public function loginWithGoogle()
+    public function loginWithGoogle(Request $request)
     {
+        $campus = $request->campus_id;
+
+        if (session()->has('campus')) {
+            session()->forget('campus');
+        }
+
+        session()->put('campus', $campus);
+
         return Socialite::driver('google')->with(['access_type' => 'offline'])->redirect();
     }
 
@@ -21,7 +30,6 @@ class AuthController extends Controller
         try {
             $user = Socialite::driver('google')->stateless()->user();
 
-            // Check Users Email If Already There
             $is_user = User::where('email', $user->getEmail())->first();
             if(!$is_user){
 
@@ -38,9 +46,11 @@ class AuthController extends Controller
                 ]);
                 $saveUser = User::where('email', $user->getEmail())->first();
             }
+
+            Cookie::queue('asscess-token', $user->token, 120);
             
             return redirect()->route('home');
-
+            // return response()->json(['token' => $user->token]);
         } catch (\Throwable $th) {
             throw $th;
         }
