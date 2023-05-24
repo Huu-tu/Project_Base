@@ -16,53 +16,53 @@ Route::get('/api/campus', [
     'campus'
 ]);
 
-Route::group(['middleware' =>['cusTomAuth']], function (){
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
-});
-
 Route::prefix('google')->name('google.')->group( function(){
     Route::get('login', [AuthController::class, 'loginWithGoogle'])->name('login');
     Route::any('callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 });
 
-Route::get('/permissions' ,[
-    PermissionController::class,
-    'index'
-]);
+Route::group(['middleware' =>['customAuTh']], function (){
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 
-Route::get('/permission' ,[
-    PermissionController::class,
-    'search'
-]);
-
-Route::get('/permission/{id}',[
-    PermissionController::class,
-    'show'
-]);
-
-Route::get('/permission/confirm/{id}',[
-    PermissionController::class,
-    'confirm'
-]);
-
-Route::get('/permission/reject/{id}',[
-    PermissionController::class,
-    'reject'
-]);
-
-Route::post('/permissions/store',[
-    PermissionController::class,
-    'store'
-]);
-
-Route::put('/permission/edit/{id}',[
-    PermissionController::class,
-    'edit'
-]);
-
-Route::delete('/permission/delete/{id}',[
-    PermissionController::class,
-    'delete'
-]);
+    Route::get('/permissions' ,[
+        PermissionController::class,
+        'index'
+    ]);
+    
+    Route::get('/permission' ,[
+        PermissionController::class,
+        'search'
+    ]);
+    
+    Route::get('/permission/{id}',[
+        PermissionController::class,
+        'show'
+    ]);
+    
+    Route::get('/permission/confirm/{id}',[
+        PermissionController::class,
+        'confirm'
+    ]);
+    
+    Route::get('/permission/reject/{id}',[
+        PermissionController::class,
+        'reject'
+    ]);
+    
+    Route::post('/permissions/store',[
+        PermissionController::class,
+        'store'
+    ]);
+    
+    Route::put('/permission/edit/{id}',[
+        PermissionController::class,
+        'edit'
+    ]);
+    
+    Route::delete('/permission/delete/{id}',[
+        PermissionController::class,
+        'delete'
+    ]);
+});
