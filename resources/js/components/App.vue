@@ -1,11 +1,12 @@
 <template>
-   <div class="app">
+   <div id="app">
       <router-link to="/"></router-link>
       <router-view />
    </div>
 </template>
 
 <script> 
+
     export default {
         name: "app",
       //   props: [
@@ -16,4 +17,6 @@
       //   }
     }
 </script>
+
+
  
