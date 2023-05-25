@@ -95,8 +95,10 @@
 
 <script>
 import router from '../routes'
+
 export default {
     name: "Show",
+    
     props: {
         title: String,
         userName: String,
@@ -107,7 +109,7 @@ export default {
     data() {
         return {};
     },
-    methods: {},
+    
 };
 </script>
 

@@ -17,13 +17,13 @@
                 </select>
             </div>
             <div class="google-login">
-                <a href="http://127.0.0.1:8000/google/login" class="login-text" @click="loginAuth()">
+                <a class="login-text" @click="loginAuth()">
                     <img :src="require('../assets/images/google.png')" />
                     <!-- <button type="button" class="login-text" onclick="">
                     Sign in with Google
                 </button> -->
                     Sign in with Google
-                </a>
+              </a>
             </div>
         </div>
     </div>

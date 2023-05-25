@@ -40,7 +40,7 @@
                         </a>
                     </li>
                     <li>
-                        <router-link to="/" class="dropdown-item account-logout">
+                        <router-link to="/" class="dropdown-item account-logout" @click="Logout">
                             Đăng xuất
                         </router-link>
                     </li>
@@ -51,11 +51,22 @@
 </template>
 
 <script>
+import axios from "axios";
 import "../assets/styles/global.css";
 export default {
     name: "Header",
     props: {
         userName: String,
+    },
+    methods: {
+        Logout() {
+            axios.get('http://127.0.0.1:8000/Logout')
+            .then((Response) => {
+                console.log(Response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
     }
 };
 </script>
