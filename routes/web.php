@@ -8,7 +8,7 @@ use App\Http\Controllers\PermissionController;
 
 Route::get('/', [
     HomeController::class,
-    'home'
+    'index'
 ]);
 
 Route::get('/api/campus', [
@@ -21,10 +21,16 @@ Route::prefix('google')->name('google.')->group( function(){
     Route::any('callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 });
 
+Route::post('/permissions/store',[
+    PermissionController::class,
+    'store'
+]);
+
 Route::group(['middleware' =>['customAuTh']], function (){
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/home/{id}', [
+        HomeController::class,
+        'home'
+    ])->name('home');
 
     Route::get('/permissions' ,[
         PermissionController::class,
@@ -51,10 +57,6 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'reject'
     ]);
     
-    Route::post('/permissions/store',[
-        PermissionController::class,
-        'store'
-    ]);
     
     Route::put('/permission/edit/{id}',[
         PermissionController::class,
