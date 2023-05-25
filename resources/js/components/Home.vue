@@ -8,6 +8,7 @@
                 :email="index_email"
                 :time="index_time"
                 :content="index_content"
+                :status="index_status"
             ></Notify>
         </template>
         <template v-else-if="type === 'pheduyet'">
@@ -17,6 +18,8 @@
                 :email="index_email"
                 :time="index_time"
                 :content="index_content"
+                :status="index_status"
+                :id="index_id"
             ></Show>
         </template>
     </div>
@@ -36,21 +39,6 @@ export default {
         Notify: Notify,
         Show: Show,
     },
-    // computed: {
-    //     ...mapState(["title", "userName", "email", "time", "content"]),
-    //     ...mapGetters({
-    //         get_Title: "getTitle",
-    //         get_UserName: "getUserName",
-    //         get_Email: "getEmail",
-    //         get_Time: "getTime",
-    //         get_Content: "getContent",
-    //     }),
-    // },
-    // watch: {
-    //     get_Title(value) {
-    //         this.title2 = value;
-    //     },
-    // },
     mounted() {
         this.fetchData();
     },
@@ -62,22 +50,37 @@ export default {
             index_email: "",
             index_time: "",
             index_content: "",
-        }
+            index_status: "",
+            index_id: "",
+        };
     },
     methods: {
         fetchData() {
+            let post_id = this.$route.params.id;
+            let dateObj = new Date();
+            let formattedDate = dateObj.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            });
+            let formattedTime = dateObj.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
             axios
-                .get("http://127.0.0.1:8000/permission")
+                .get(`http://127.0.0.1:8000/permission/${post_id}`)
                 .then((response) => {
-                    console.log(response.data.data[0])
+                    console.log(response.data.data[0]);
                     var apiPath = response.data.data[0];
-                    console.log()
                     this.index_title = apiPath.title;
                     this.index_userName = apiPath.sender;
                     this.index_email = apiPath.email;
-                    this.index_time = apiPath.created_at;
+                    apiPath.time = `${formattedDate} ${formattedTime}`;
+                    this.index_time = apiPath.time;
                     this.index_content = apiPath.content;
-
+                    this.index_id = apiPath.id;
+                    this.index_status = apiPath.status;
                 })
                 .catch((error) => {
                     console.log(error);
