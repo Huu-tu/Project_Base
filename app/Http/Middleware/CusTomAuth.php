@@ -6,12 +6,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Laravel\Socialite\Facades\Socialite;
+use Cookie;
 
 class CustomAuth
 {
     public function handle(Request $request, Closure $next)
     {
         if (!$request->hasCookie('asscess-token')){
+            $backTo = $request->url();
+            Cookie::queue('back-to',$backTo);
             return redirect('/');
         }else{
             $token = $request->cookie('asscess-token');
@@ -24,12 +27,10 @@ class CustomAuth
     function decryptToken($token) {
         if ($this->isGoogleAccessTokenValid($token)) {
             // Token is valid
-            // Proceed with the desired logic
-            return response()->json(['message' => 'Token is valid'], 200);
+            return true;
         } else {
             // Token is invalid
-            // Handle the invalid token scenario
-            return response()->json(['message' => 'Token is invalid'], 401);
+            return false;
         }
     }
 

@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Cookie;
-
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -48,12 +48,25 @@ class AuthController extends Controller
             }
 
             Cookie::queue('asscess-token', $user->token, 120);
+
+            $backTo = Cookie::get('back-to');
+
+            if($backTo){
+                return redirect($backTo);
+            }
             
-            return redirect()->route('home');
-            // return response()->json(['token' => $user->token]);
+            return redirect('/');
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
+    public function logout(Request $request){
+        if($request->hasCookie('asscess-token')){
+            Cookie::forget('asscess-token');
+            return response()->json(['message' => 'Logout success'], 200);
+        }else{
+            return response()->json(['message' => 'Logout fail'], 400);
+        }
+    }
 }
