@@ -8,6 +8,7 @@
                 :email="index_email"
                 :time="index_time"
                 :content="index_content"
+                :status="index_status"
             ></Notify>
         </template>
         <template v-else-if="type === 'pheduyet'">
@@ -17,6 +18,8 @@
                 :email="index_email"
                 :time="index_time"
                 :content="index_content"
+                :status="index_status"
+                :id="index_id"
             ></Show>
         </template>
     </div>
@@ -36,21 +39,6 @@ export default {
         Notify: Notify,
         Show: Show,
     },
-    // computed: {
-    //     ...mapState(["title", "userName", "email", "time", "content"]),
-    //     ...mapGetters({
-    //         get_Title: "getTitle",
-    //         get_UserName: "getUserName",
-    //         get_Email: "getEmail",
-    //         get_Time: "getTime",
-    //         get_Content: "getContent",
-    //     }),
-    // },
-    // watch: {
-    //     get_Title(value) {
-    //         this.title2 = value;
-    //     },
-    // },
     mounted() {
         this.fetchData();
     },
@@ -62,6 +50,8 @@ export default {
             index_email: "",
             index_time: "",
             index_content: "",
+            index_status: "",
+            index_id: "",
         }
     },
     methods: {
@@ -69,15 +59,14 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/permission")
                 .then((response) => {
-                    console.log(response.data.data[0])
-                    var apiPath = response.data.data[0];
-                    console.log()
+                    console.log(response.data.data[2])
+                    var apiPath = response.data.data[2];
                     this.index_title = apiPath.title;
                     this.index_userName = apiPath.sender;
                     this.index_email = apiPath.email;
                     this.index_time = apiPath.created_at;
                     this.index_content = apiPath.content;
-
+                    this.index_id = apiPath.id;
                 })
                 .catch((error) => {
                     console.log(error);

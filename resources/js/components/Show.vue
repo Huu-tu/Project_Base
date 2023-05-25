@@ -15,12 +15,14 @@
             <div class="mail-wrap">
                 {{ content }}
             </div>
+            <div class="tesst"><h1>{{ status }} {{ id }}</h1></div>
             <div class="nav-wrap">
                 <button
                     type="button"
                     class="btn btn-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#modalAccepted"
+                    @click="hambamnut"
                 >
                     Xác nhận
                 </button>
@@ -83,7 +85,9 @@
                                         fill="#dc3545"
                                     />
                                 </svg>
-                                <div class="model-content">Đã từ chối đơn thành công!</div>
+                                <div class="model-content">
+                                    Đã từ chối đơn thành công!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,7 +98,11 @@
 </template>
 
 <script>
-import router from '../routes'
+import routes from "../routes";
+import bootstrap from "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Modal } from "bootstrap";
+import axios from "axios";
+
 export default {
     name: "Show",
     props: {
@@ -103,11 +111,38 @@ export default {
         email: String,
         time: String,
         content: String,
+        status: String,
+        id: null,
     },
-    data() {
-        return {};
+    methods: {
+        closeModal() {
+            setTimeout(() => {
+                const modal = document.getElementById("modalAccepted");
+                const modalInstance = new Modal(modal);
+                modalInstance.hide();
+                // const backdrop1 = document.getElementsByClassName('modal-backdrop')[0];
+                // const backdrop2 = document.getElementsByClassName('modal-backdrop')[1];
+                // backdrop1.parentNode.removeChild(backdrop1);
+                // backdrop2.parentNode.removeChild(backdrop2);
+                // routes.push("/");
+            }, 3000);
+        },
+        hambamnut() {
+            axios
+                .get("http://127.0.0.1:8000/permission/edit",{
+                    params:{
+                        id: this.id
+                    }
+                })
+                .then((response) => {
+                    console.log(response.data.id)
+                    console.log(response.data.status)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     },
-    methods: {},
 };
 </script>
 
