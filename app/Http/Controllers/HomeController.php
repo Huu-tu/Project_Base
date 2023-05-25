@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function home(){
         $backTo = Cookie::get('back-to');
         if($backTo){
-            Cookie::forget('asscess-token');
+            Cookie::queue(Cookie::forget('back-to'));
         }
 
         return view('home');

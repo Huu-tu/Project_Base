@@ -37,6 +37,7 @@ class PermissionController extends Controller
             'content' => 'required',
             'email' => 'required',
             'sender' => 'required',
+            'type' => 'required',
         ]);
 
         $result = Permission::create([
@@ -44,6 +45,7 @@ class PermissionController extends Controller
             'content' => request('content'),
             'email' => request('email'),
             'sender' => request('sender'),
+            'type' => request('type'),
         ]);
         return [
             "status" => 200,

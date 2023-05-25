@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import "../assets/styles/global.css";
 import axios from "axios";
 

@@ -131,6 +131,7 @@ import axios from "axios";
 
 export default {
     name: "Show",
+    
     props: {
         title: String,
         userName: String,

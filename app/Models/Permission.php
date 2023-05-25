@@ -16,6 +16,7 @@ class Permission extends Model
         'content',
         'email',
         'sender',
+        'type',
         'status'
     ];
 

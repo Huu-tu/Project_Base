@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -15,11 +16,15 @@ class AuthController extends Controller
     public function loginWithGoogle(Request $request)
     {
         $campus = $request->campus_id;
+        
 
         if (session()->has('campus')) {
             session()->forget('campus');
         }
-
+        
+        if(!$campus){
+            return response()->json(['message' => 'Login fail'], 400);
+        }
         session()->put('campus', $campus);
 
         return Socialite::driver('google')->with(['access_type' => 'offline'])->redirect();
@@ -54,7 +59,6 @@ class AuthController extends Controller
             if($backTo){
                 return redirect($backTo);
             }
-            
             return redirect('/');
         } catch (\Throwable $th) {
             throw $th;
@@ -63,7 +67,8 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         if($request->hasCookie('asscess-token')){
-            Cookie::forget('asscess-token');
+            // \Cookie::forget('asscess-token');
+            Cookie::queue(Cookie::forget('asscess-token'));
             return response()->json(['message' => 'Logout success'], 200);
         }else{
             return response()->json(['message' => 'Logout fail'], 400);
