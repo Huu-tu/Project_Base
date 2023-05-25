@@ -17,20 +17,15 @@
                 <img
                     :src="require('../assets/images/avatar.png')"
                     class="dropdown-toggle"
-                    type="button"
+                    role="button"
                     id="dropdownMenuButton"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                 />
-                <!-- <div
-                    class="dropdown-menu dropdown-menu-right"
+                <ul
+                    class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="dropdownMenuButton"
                 >
-                    <router-link to="/" class="dropdown-item "
-                        >Đăng xuất</router-link
-                    >
-                </div> -->
-                <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         <a class="dropdown-item account-info" href="#">
                             <img
@@ -40,9 +35,18 @@
                         </a>
                     </li>
                     <li>
-                        <router-link to="/" class="dropdown-item account-logout">
+                        <!-- <router-link to="/" class="dropdown-item account-logout"
+                        @click="onLogout"
+                        >
                             Đăng xuất
-                        </router-link>
+                        </router-link> -->
+                        <a
+                            href="/"
+                            class="dropdown-item account-logout"
+                            @click="onLogout"
+                        >
+                            Đăng xuất
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -52,13 +56,26 @@
 
 <script>
 import "../assets/styles/global.css";
+import axios from "axios";
+
 export default {
     name: "Header",
     props: {
         userName: String,
-    }
+    },
+    methods: {
+        onLogout() {
+            axios
+                .get("http://127.0.0.1:8000/logout")
+                .then((respone) => {
+                    console.log(respone.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+    },
 };
 </script>
 
 <style></style>
-

@@ -15,14 +15,13 @@
             <div class="mail-wrap">
                 {{ content }}
             </div>
-            <div class="tesst"><h1>{{ status }} {{ id }}</h1></div>
-            <div class="nav-wrap">
+            <div class="nav-wrap" v-if="status === 'pending'">
                 <button
                     type="button"
                     class="btn btn-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#modalAccepted"
-                    @click="hambamnut"
+                    @click="onConfirm"
                 >
                     Xác nhận
                 </button>
@@ -61,6 +60,7 @@
                     class="btn btn-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#modalCanceled"
+                    @click="onReject"
                 >
                     Từ chối
                 </button>
@@ -93,14 +93,40 @@
                     </div>
                 </div>
             </div>
+            <div class="nav-wrap-after" v-else-if="status === 'Xac nhan'">
+                <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M17.05 29.1L31.2 14.95L28.9 12.7L17.05 24.55L11.05 18.55L8.8 20.8L17.05 29.1ZM20 40C17.2667 40 14.6833 39.475 12.25 38.425C9.81667 37.375 7.69167 35.9417 5.875 34.125C4.05833 32.3083 2.625 30.1833 1.575 27.75C0.525 25.3167 0 22.7333 0 20C0 17.2333 0.525 14.6333 1.575 12.2C2.625 9.76667 4.05833 7.65 5.875 5.85C7.69167 4.05 9.81667 2.625 12.25 1.575C14.6833 0.525 17.2667 0 20 0C22.7667 0 25.3667 0.525 27.8 1.575C30.2333 2.625 32.35 4.05 34.15 5.85C35.95 7.65 37.375 9.76667 38.425 12.2C39.475 14.6333 40 17.2333 40 20C40 22.7333 39.475 25.3167 38.425 27.75C37.375 30.1833 35.95 32.3083 34.15 34.125C32.35 35.9417 30.2333 37.375 27.8 38.425C25.3667 39.475 22.7667 40 20 40ZM20 37C24.7333 37 28.75 35.3417 32.05 32.025C35.35 28.7083 37 24.7 37 20C37 15.2667 35.35 11.25 32.05 7.95C28.75 4.65 24.7333 3 20 3C15.3 3 11.2917 4.65 7.975 7.95C4.65833 11.25 3 15.2667 3 20C3 24.7 4.65833 28.7083 7.975 32.025C11.2917 35.3417 15.3 37 20 37Z"
+                        fill="#4EBF19"
+                    />
+                </svg>
+                <div class="nav-wrap-after-text accepted">Đơn đã được chấp nhận!</div>
+            </div>
+            <div class="nav-wrap-after" v-else-if="status === 'Tu choi'">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="48"
+                    viewBox="0 -960 960 960"
+                    width="48"
+                >
+                    <path
+                        d="m330-288 150-150 150 150 42-42-150-150 150-150-42-42-150 150-150-150-42 42 150 150-150 150 42 42ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"
+                        fill="#dc3545"
+                    />
+                </svg>
+                <div class="nav-wrap-after-text rejected">Đơn đã bị từ chối!</div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import routes from "../routes";
-import bootstrap from "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { Modal } from "bootstrap";
 import axios from "axios";
 
 export default {
@@ -114,34 +140,50 @@ export default {
         status: String,
         id: null,
     },
+    mounted() {
+        console.log(this.status);
+    },
     methods: {
-        closeModal() {
-            setTimeout(() => {
-                const modal = document.getElementById("modalAccepted");
-                const modalInstance = new Modal(modal);
-                modalInstance.hide();
-                // const backdrop1 = document.getElementsByClassName('modal-backdrop')[0];
-                // const backdrop2 = document.getElementsByClassName('modal-backdrop')[1];
-                // backdrop1.parentNode.removeChild(backdrop1);
-                // backdrop2.parentNode.removeChild(backdrop2);
-                // routes.push("/");
-            }, 3000);
-        },
-        hambamnut() {
+        // closeModal() {
+        //     setTimeout(() => {
+        //         const modal = document.getElementById("modalAccepted");
+        //         const modalInstance = new Modal(modal);
+        //         modalInstance.hide();
+        //         // const backdrop1 = document.getElementsByClassName('modal-backdrop')[0];
+        //         // const backdrop2 = document.getElementsByClassName('modal-backdrop')[1];
+        //         // backdrop1.parentNode.removeChild(backdrop1);
+        //         // backdrop2.parentNode.removeChild(backdrop2);
+        //         // routes.push("/");
+        //     }, 3000);
+        // },
+        onConfirm() {
+            let url = "http://127.0.0.1:8000/permission/confirm/" + this.id;
             axios
-                .get("http://127.0.0.1:8000/permission/edit",{
-                    params:{
-                        id: this.id
-                    }
-                })
-                .then((response) => {
-                    console.log(response.data.id)
-                    console.log(response.data.status)
+                .get(url)
+                .then((res) => {
+                    console.log(res.data);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+            window.location.reload();
+        },
+        onReject() {
+            let url = "http://127.0.0.1:8000/permission/reject/" + this.id;
+            console.log(url);
+            axios
+                .get(url)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            window.location.reload();
+        },
+        in(param) {
+            console.log(param);
+        },
     },
 };
 </script>
