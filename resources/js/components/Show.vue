@@ -161,11 +161,11 @@ export default {
         //     }, 3000);
         // },
         onConfirm() {
-            let url = "http://127.0.0.1:8000/permission/confirm/" + this.id;
             axios
-                .get(url)
+                .get(`http://127.0.0.1:8000/permission/confirm/${this.id_request}`)
                 .then((res) => {
                     console.log(res.data);
+                    console.log(this.id);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -173,10 +173,8 @@ export default {
             window.location.reload();
         },
         onReject() {
-            let url = "http://127.0.0.1:8000/permission/reject/" + this.id;
-            console.log(url);
             axios
-                .get(url)
+                .get(`http://127.0.0.1:8000/permission/reject/${this.id_request}"`)
                 .then((res) => {
                     console.log(res.data);
                 })
