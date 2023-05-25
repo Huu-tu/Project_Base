@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header :userName="index_userName"></Header>
-        <template v-if="type === 'thongbao'">
+        <template v-if="type === '2'">
             <Notify
                 :title="index_title"
                 :userName="index_userName"
@@ -9,9 +9,10 @@
                 :time="index_time"
                 :content="index_content"
                 :status="index_status"
+                :id_request="index_id"
             ></Notify>
         </template>
-        <template v-else-if="type === 'pheduyet'">
+        <template v-else-if="type === '1'">
             <Show
                 :title="index_title"
                 :userName="index_userName"
@@ -19,7 +20,7 @@
                 :time="index_time"
                 :content="index_content"
                 :status="index_status"
-                :id="index_id"
+                :id_request="index_id"
             ></Show>
         </template>
     </div>
@@ -44,7 +45,7 @@ export default {
     },
     data() {
         return {
-            type: "pheduyet",
+            type: "",
             index_title: "",
             index_userName: "",
             index_email: "",
@@ -55,19 +56,23 @@ export default {
         };
     },
     methods: {
+        convertDate(inputDate) {
+            let date = new Date(inputDate);
+            // Chuyển đổi sang định dạng AM/PM
+            let hours = date.getHours() % 12 || 12;
+            let minutes = date.getMinutes();
+            let period = date.getHours() >= 12 ? "pm" : "am";
+            // Chuyển đổi sang định dạng ngày/tháng/năm
+            let day = date.getDate();
+            let month = date.getMonth() + 1; // Tháng trong JavaScript đếm từ 0, nên cần +1
+            let year = date.getFullYear();
+            // Xuất giờ cuối cùng
+            let outputDate = `${hours}:${minutes.toString().padStart(2, "0")}${period} ${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year}`;
+            return outputDate;
+        },
         fetchData() {
             let post_id = this.$route.params.id;
-            let dateObj = new Date();
-            let formattedDate = dateObj.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-            });
-            let formattedTime = dateObj.toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-            });
+            
             axios
                 .get(`http://127.0.0.1:8000/permission/${post_id}`)
                 .then((response) => {
@@ -76,11 +81,11 @@ export default {
                     this.index_title = apiPath.title;
                     this.index_userName = apiPath.sender;
                     this.index_email = apiPath.email;
-                    apiPath.time = `${formattedDate} ${formattedTime}`;
-                    this.index_time = apiPath.time;
+                    this.index_time = this.convertDate(apiPath.created_at);
                     this.index_content = apiPath.content;
                     this.index_id = apiPath.id;
                     this.index_status = apiPath.status;
+                    this.type = apiPath.type;
                 })
                 .catch((error) => {
                     console.log(error);

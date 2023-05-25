@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+    <div class="main-container">
         <div class="main-wrap">
             <div class="infomation-wrap">
                 <div class="info-title">{{ title }}</div>
@@ -21,10 +21,17 @@
 
 <script>
 export default {
-  name: "Notify",
-}
+    name: "Notify",
+    props: {
+        title: String,
+        userName: String,
+        email: String,
+        time: String,
+        content: String,
+        status: String,
+        id_request: null,
+    },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
