@@ -68,8 +68,8 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'delete'
     ]);
 
-    Route::delete('/logout',[
+    Route::get('/logout',[
         AuthController::class,
-        'delete'
+        'logout'
     ]);
 });
