@@ -17,10 +17,10 @@ class HomeController extends Controller
     }
 
     public function home(){
-        $backTo = Cookie::get('back-to');
-        if($backTo){
-            Cookie::queue(Cookie::forget('back-to'));
-        }
+        // $backTo = Cookie::get('back-to');
+        // if($backTo){
+        //     Cookie::queue(Cookie::forget('back-to'));
+        // }
 
         return view('home');
     }

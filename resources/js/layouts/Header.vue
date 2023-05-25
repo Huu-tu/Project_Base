@@ -41,9 +41,8 @@
                             Đăng xuất
                         </router-link> -->
                         <a
-                            href="/"
                             class="dropdown-item account-logout"
-                            @click="onLogout"
+                            @click="onLogout()"
                         >
                             Đăng xuất
                         </a>
@@ -65,14 +64,15 @@ export default {
     },
     methods: {
         onLogout() {
-            axios
-                .get("http://127.0.0.1:8000/logout")
-                .then((respone) => {
-                    console.log(respone.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            window.location.href = 'http://127.0.0.1:8000/logout';
+            // axios
+            //     .get("http://127.0.0.1:8000/logout")
+            //     .then((respone) => {
+            //         console.log(respone.data);
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
         },
     },
 };

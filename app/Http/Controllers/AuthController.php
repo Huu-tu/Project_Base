@@ -59,7 +59,7 @@ class AuthController extends Controller
             if($backTo){
                 return redirect($backTo);
             }
-            return redirect('/');
+            return redirect()->route('home');
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -67,9 +67,8 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         if($request->hasCookie('asscess-token')){
-            // \Cookie::forget('asscess-token');
             Cookie::queue(Cookie::forget('asscess-token'));
-            return response()->json(['message' => 'Logout success'], 200);
+            return redirect('/');
         }else{
             return response()->json(['message' => 'Logout fail'], 400);
         }
