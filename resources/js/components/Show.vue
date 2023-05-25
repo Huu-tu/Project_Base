@@ -106,7 +106,9 @@
                         fill="#4EBF19"
                     />
                 </svg>
-                <div class="nav-wrap-after-text accepted">Đơn đã được chấp nhận!</div>
+                <div class="nav-wrap-after-text accepted">
+                    Đơn đã được chấp nhận!
+                </div>
             </div>
             <div class="nav-wrap-after" v-else-if="status === 'Tu choi'">
                 <svg
@@ -120,7 +122,9 @@
                         fill="#dc3545"
                     />
                 </svg>
-                <div class="nav-wrap-after-text rejected">Đơn đã bị từ chối!</div>
+                <div class="nav-wrap-after-text rejected">
+                    Đơn đã bị từ chối!
+                </div>
             </div>
         </div>
     </div>
@@ -131,7 +135,6 @@ import axios from "axios";
 
 export default {
     name: "Show",
-    
     props: {
         title: String,
         userName: String,
@@ -139,7 +142,7 @@ export default {
         time: String,
         content: String,
         status: String,
-        id: null,
+        id_request: null,
     },
     mounted() {
         console.log(this.status);
@@ -181,9 +184,6 @@ export default {
                     console.log(err);
                 });
             window.location.reload();
-        },
-        in(param) {
-            console.log(param);
         },
     },
 };
