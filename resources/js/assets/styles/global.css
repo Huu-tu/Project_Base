@@ -356,7 +356,7 @@ option {
     height: 40px;
 }
 
-.nav-wrap-after {
+.nav-wrap-after#accepted, .nav-wrap-after#rejected {
     display: flex;
     margin: 0 30px;
     align-items: center;

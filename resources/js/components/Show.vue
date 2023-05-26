@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Xac nhan'">
+            <div class="nav-wrap-after" v-else-if="status === 'Xac nhan'" id="accepted">
                 <svg
                     width="40"
                     height="40"
@@ -110,19 +110,20 @@
                     Đơn đã được chấp nhận!
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Tu choi'">
+            <div class="nav-wrap-after" v-else-if="status === 'Tu choi'" id="rejected">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="48"
                     viewBox="0 -960 960 960"
                     width="48"
+                    fill="none"
                 >
                     <path
                         d="m330-288 150-150 150 150 42-42-150-150 150-150-42-42-150 150-150-150-42 42 150 150-150 150 42 42ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"
                         fill="#dc3545"
                     />
                 </svg>
-                <div class="nav-wrap-after-text rejected">
+                <div style="display: block;" class="nav-wrap-after-text rejected">
                     Đơn đã bị từ chối!
                 </div>
             </div>
@@ -148,40 +149,38 @@ export default {
         console.log(this.status);
     },
     methods: {
-        // closeModal() {
-        //     setTimeout(() => {
-        //         const modal = document.getElementById("modalAccepted");
-        //         const modalInstance = new Modal(modal);
-        //         modalInstance.hide();
-        //         // const backdrop1 = document.getElementsByClassName('modal-backdrop')[0];
-        //         // const backdrop2 = document.getElementsByClassName('modal-backdrop')[1];
-        //         // backdrop1.parentNode.removeChild(backdrop1);
-        //         // backdrop2.parentNode.removeChild(backdrop2);
-        //         // routes.push("/");
-        //     }, 3000);
-        // },
-        onConfirm() {
-            axios
-                .get(`http://127.0.0.1:8000/permission/confirm/${this.id_request}`)
-                .then((res) => {
-                    console.log(res.data);
-                    console.log(this.id);
+        async onConfirm() {
+            try {
+                const res = await axios.get(
+                    `http://127.0.0.1:8000/permission/confirm/${this.id_request}`
+                );
+                console.log("res", res);
+                let vm = this;
+                let myModal = document.getElementById("modalAccepted");
+                myModal.addEventListener('hide.bs.modal', function() {
+                    vm.onFetchData()
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
-            window.location.reload();
+            } catch (err) {
+                console.log(err);
+            }
         },
-        onReject() {
-            axios
-                .get(`http://127.0.0.1:8000/permission/reject/${this.id_request}"`)
-                .then((res) => {
-                    console.log(res.data);
+        async onReject() {
+            try {
+                const res = await axios.get(
+                    `http://127.0.0.1:8000/permission/reject/${this.id_request}`
+                );
+                console.log("res", res);
+                let vm = this;
+                let myModal = document.getElementById("modalCanceled");
+                myModal.addEventListener('hide.bs.modal', function() {
+                    vm.onFetchData()
                 })
-                .catch((err) => {
-                    console.log(err);
-                });
-            window.location.reload();
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        onFetchData() {
+            this.$emit("onFetchData");
         },
     },
 };
