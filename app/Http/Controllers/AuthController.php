@@ -52,8 +52,8 @@ class AuthController extends Controller
                 $saveUser = User::where('email', $user->getEmail())->first();
             } 
 
-            $campusDb = User::where('campus',$campus)->first();
-            if($campusDb){
+            $campusDb = $is_user->campus;
+            if($campusDb === $campus){
                 Cookie::queue('asscess-token', $user->token, 120);
 
                 $backTo = Cookie::get('back-to');

@@ -19,7 +19,7 @@ class PermissionController extends Controller
         $result = Permission::where('title', 'LIKE','%'.$request->keyword.'%')->get();
         return [
             "status" => 200,
-            "data" => $result
+            "data" => $result 
         ];
     }
     
