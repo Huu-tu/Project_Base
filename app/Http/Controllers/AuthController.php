@@ -63,7 +63,8 @@ class AuthController extends Controller
                 }
                 return redirect()->route('home');    
             }else{
-                return response()->json(['message' => 'Login fail'], 400);
+                // return response()->json(['message' => 'Login fail'], 400);
+                return redirect()->route('index');    
             }
 
         } catch (\Throwable $th) {

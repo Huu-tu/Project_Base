@@ -9,12 +9,15 @@ use App\Http\Controllers\PermissionController;
 Route::get('/', [
     HomeController::class,
     'index'
-]);
+])->name('index');
 
 Route::get('/api/campus', [
     HomeController::class,
     'campus'
 ]);
+
+// Route::get('/google/login', [AuthController::class, 'loginWithGoogle'])->name('login');
+// Route::get('/google/callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 
 Route::prefix('google')->name('google.')->group( function(){
     Route::get('login', [AuthController::class, 'loginWithGoogle'])->name('login');
