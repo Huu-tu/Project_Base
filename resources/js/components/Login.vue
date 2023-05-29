@@ -3,10 +3,14 @@
         <div class="login-container">
             <img :src="require('../assets/images/logo_default.png')" />
             <div class="select-dropdown">
-                <select name="" id="" v-model="selected" class="form-select" @change="onChange($event)">
-                    <option selected hidden value="">
-                        Chọn cơ sở
-                    </option>
+                <select
+                    name=""
+                    id=""
+                    v-model="selected"
+                    class="form-select"
+                    @change="onChange($event)"
+                >
+                    <option selected hidden value="">Chọn cơ sở</option>
                     <option
                         v-for="(item, index) in items"
                         :key="index"
@@ -23,7 +27,7 @@
                     Sign in with Google
                 </button> -->
                     Sign in with Google
-              </a>
+                </a>
             </div>
         </div>
     </div>
@@ -33,36 +37,37 @@
 import axios from "axios";
 import "../assets/styles/global.css";
 
-export default { 
-   name:'login',
-   data() {
-      return { 
-        items: [],
-        selected: '',
-        onChange(e) {
-              // console.log(e.target.value);
-              this.selected = e.target.value
-        }
-      }
-   },
-   mounted() {
-    this.fetchData();
-  },
-  methods: {
-    fetchData() {
-      axios.get('http://127.0.0.1:8000/api/campus')
-        .then(response => {
-          this.items = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+export default {
+    name: "login",
+    data() {
+        return {
+            items: [],
+            selected: "",
+            onChange(e) {
+                // console.log(e.target.value);
+                this.selected = e.target.value;
+            },
+        };
     },
-    loginAuth : function() {
-      window.location.href = 'http://127.0.0.1:8000/google/login?campus_id=' + this.selected;
-    }
-  },
- }
+    mounted() {
+        this.fetchData();
+    },
+    methods: {
+        async fetchData() {
+            try {
+                let url = "http://127.0.0.1:8000/api/campus";
+                let res = await axios.get(url);
+                this.items = res.data;
+            } catch (err) {
+                console.log(err);
+            }
+        },
+        loginAuth: function () {
+            window.location.href =
+                "http://127.0.0.1:8000/google/login?campus_id=" + this.selected;
+        },
+    },
+};
 </script>
 
 <style></style>

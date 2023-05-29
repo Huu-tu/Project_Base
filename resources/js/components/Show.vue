@@ -3,7 +3,7 @@
         <div class="main-wrap">
             <div class="infomation-wrap">
                 <div class="info-title">{{ title }}</div>
-                <div class="infomation-container">
+                <div class="infomation-container">              
                     <div class="info-wrap">
                         <img :src="require('../assets/images/avatar.png')" />
                         <div class="info-name">{{ userName }}</div>
@@ -151,24 +151,22 @@ export default {
     methods: {
         async onConfirm() {
             try {
-                const res = await axios.get(
-                    `http://127.0.0.1:8000/permission/confirm/${this.id_request}`
-                );
+                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}`;
+                let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
                 let myModal = document.getElementById("modalAccepted");
                 myModal.addEventListener('hide.bs.modal', function() {
                     vm.onFetchData()
-                })
+                })   
             } catch (err) {
                 console.log(err);
             }
         },
         async onReject() {
             try {
-                const res = await axios.get(
-                    `http://127.0.0.1:8000/permission/reject/${this.id_request}`
-                );
+                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}`;
+                let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
                 let myModal = document.getElementById("modalCanceled");

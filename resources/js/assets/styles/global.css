@@ -1,5 +1,4 @@
 :root {
-    --font-style: Roboto;
     --font-color: #394867;
     --var-light: #ffffff;
 }
@@ -68,7 +67,7 @@ body {
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    font-family: var(--font-style);
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
     padding: 6px 12px;
     display: flex;
@@ -79,7 +78,7 @@ select {
     border: none !important;
     font-size: 20px !important;
     line-height: 23px !important;
-    font-family: var(--font-style) !important;
+    font-family: 'Roboto', 'san-serif' !important;
     color: var(--font-color) !important;
     height: 90%;
     -webkit-appearance: none;
@@ -108,7 +107,7 @@ option {
     font-weight: 400;
     font-size: 20px;
     line-height: 23px;
-    font-family: var(--font-style);
+    font-family: 'Roboto', sans-serif;
 }
 
 @media screen and (max-width: 768px) {
@@ -202,7 +201,7 @@ option {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 23px !important;
-    font-family: var(--font-style) !important;
+    font-family: 'Roboto', 'san-serif' !important;
 }
 
 .dropdown-menu.dropdown-menu-end {
@@ -220,7 +219,7 @@ option {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 23px !important;
-    font-family: var(--font-style) !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .account-logout:hover {
@@ -232,10 +231,12 @@ option {
     .header-container img {
         width: 179px;
         height: 70px;
+        /* width: 50%; */
+        /* height: 60%; */
     }
     .noti-container img {
-        width: 33px;
-        height: 33px;
+        width: 36px;
+        height: 36px;
     }
     .dropdown-menu.dropdown-menu-end {
         width: 260px;
@@ -265,19 +266,19 @@ option {
 .main-wrap {
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.11);
-    box-shadow: inset 0px 10px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 50px 50px 0px 0px;
-    /* border-radius: 50px; */
+    box-shadow: 20px 20px 5px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
     width: 1000px;
-    /* height: max-content; */
-    height: 800px;
-    margin-top: 50px;
+    height: max-content;
+    margin-top: 36px;
+    padding: 30px;
 }
 
 .infomation-container {
     display: flex;
     justify-content: space-between;
-    margin: 0 30px;
+    align-items: center;
+    margin: 1rem 0;
 }
 
 .infomation-container img {
@@ -295,14 +296,14 @@ option {
     font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
-    font-size: 32px;
-    line-height: 39px;
+    font-size: 1.8rem;
+    line-height: 36px;
     color: var(--font-color);
-    margin: 50px 30px 10px;
+    /* margin: 50px 30px 10px; */
 }
 
 .info-name {
-    margin-right: 16px;
+    font-weight: bold;
 }
 
 .info-name,
@@ -310,55 +311,51 @@ option {
 .info-time {
     font-family: "Roboto";
     font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 39px;
+    font-size: 1.3rem;
+    line-height: 36px;
     color: var(--font-color);
 }
 
 .info-mail {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 1.1rem;
+    margin: 0 6px;
 }
 
 .info-time {
-    display: flex;
-    align-items: center;
-    font-size: 20px;
+    font-size: 1.1rem;
     font-weight: 500;
 }
 
 .mail-wrap {
-    margin: 20px 30px;
     font-family: "Roboto";
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-size: 1.2rem;
     line-height: 24px;
+    padding: 0 60px;
 }
 
 .nav-wrap {
-    margin: 0 30px;
+    padding: 2rem 0 0 0;
 }
 
 .nav-wrap button {
     font-family: "Roboto";
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 1.2rem;
     line-height: 24px;
     margin-right: 16px;
-    /* margin-bottom: 30px; */
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border: none;
-    border-radius: 30px;
+    border-radius: 2rem;
     width: 150px;
     height: 40px;
 }
 
-.nav-wrap-after#accepted, .nav-wrap-after#rejected {
+.nav-wrap-after#accepted,
+.nav-wrap-after#rejected {
     display: flex;
-    margin: 0 30px;
+    padding: 1.2rem 0 0 0;
     align-items: center;
 }
 
@@ -372,26 +369,27 @@ option {
 }
 
 .nav-wrap-after-text.rejected {
-    color: #DC3545;
+    color: #dc3545;
 }
 
 .nav-wrap-after-text.accepted {
-    color: #4EBF19;
+    color: #4ebf19;
 }
 
 @media screen and (max-width: 768px) {
     .main-wrap {
         width: 90%;
-        height: 100vh;
+        /* height: 100vh; */
     }
     .info-title {
         font-size: 28px;
         line-height: 36px;
-        margin: 36px 20px 10px;
+        /* margin: 36px 20px 10px; */
     }
     .infomation-container {
         flex-direction: column;
         justify-content: initial;
+        align-items: initial;
     }
     .info-name,
     .info-mail,
@@ -410,17 +408,20 @@ option {
         font-weight: 500;
     }
     .mail-wrap {
-        margin: 20px;
+        padding: 0;
         font-size: 18px;
         line-height: normal;
     }
     .nav-wrap {
-        margin: 0 20px;
+        /* margin: 0 20px; */
         display: flex;
     }
     .nav-wrap button {
         font-size: 18px;
         line-height: normal;
+    }
+    .nav-wrap-after-text {
+        font-size: 18px;
     }
 }
 
@@ -441,7 +442,7 @@ option {
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    font-family: var(--font-style);
+    font-family: 'Roboto';
 }
 
 .modal-body svg {
@@ -454,12 +455,12 @@ option {
         margin: 0 24px;
     }
     .modal-body {
-      font-size: 18px;
-      line-height: normal;
+        font-size: 18px;
+        line-height: normal;
     }
     .modal-body svg {
-      height: 33px;
-      width: 33px;
+        height: 33px;
+        width: 33px;
     }
 }
 /*End Modal*/

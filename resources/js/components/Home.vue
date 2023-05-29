@@ -80,11 +80,11 @@ export default {
         async fetchData() {
             try {
                 let post_id = this.$route.params.id;
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/permission/${post_id}`
-                );
-                console.log(response.data.data[0]);
+                let url = `http://127.0.0.1:8000/permission/${post_id}`;
+                let response = await axios.get(url);
                 var apiPath = response.data.data[0];
+                // console.log(response.data.data[0]);
+
                 this.index_title = apiPath.title;
                 this.index_userName = apiPath.sender;
                 this.index_email = apiPath.email;
