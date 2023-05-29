@@ -21,6 +21,7 @@
                 :content="index_content"
                 :status="index_status"
                 :id_request="index_id"
+                @onFetchData="fetchData"
             ></Show>
         </template>
     </div>
@@ -67,29 +68,34 @@ export default {
             let month = date.getMonth() + 1; // Tháng trong JavaScript đếm từ 0, nên cần +1
             let year = date.getFullYear();
             // Xuất giờ cuối cùng
-            let outputDate = `${hours}:${minutes.toString().padStart(2, "0")}${period} ${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year}`;
+            let outputDate = `${hours}:${minutes
+                .toString()
+                .padStart(2, "0")}${period} ${day
+                .toString()
+                .padStart(2, "0")}/${month
+                .toString()
+                .padStart(2, "0")}/${year}`;
             return outputDate;
         },
-        fetchData() {
-            let post_id = this.$route.params.id;
-            
-            axios
-                .get(`http://127.0.0.1:8000/permission/${post_id}`)
-                .then((response) => {
-                    console.log(response.data.data[0]);
-                    var apiPath = response.data.data[0];
-                    this.index_title = apiPath.title;
-                    this.index_userName = apiPath.sender;
-                    this.index_email = apiPath.email;
-                    this.index_time = this.convertDate(apiPath.created_at);
-                    this.index_content = apiPath.content;
-                    this.index_id = apiPath.id;
-                    this.index_status = apiPath.status;
-                    this.type = apiPath.type;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        async fetchData() {
+            try {
+                let post_id = this.$route.params.id;
+                let url = `http://127.0.0.1:8000/permission/${post_id}`;
+                let response = await axios.get(url);
+                var apiPath = response.data.data[0];
+                // console.log(response.data.data[0]);
+
+                this.index_title = apiPath.title;
+                this.index_userName = apiPath.sender;
+                this.index_email = apiPath.email;
+                this.index_time = this.convertDate(apiPath.created_at);
+                this.index_content = apiPath.content;
+                this.index_id = apiPath.id;
+                this.index_status = apiPath.status;
+                this.type = apiPath.type;
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 };
