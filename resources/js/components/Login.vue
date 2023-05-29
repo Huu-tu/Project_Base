@@ -35,6 +35,7 @@ import "../assets/styles/global.css";
 
 export default { 
    name:'login',
+   props: ['error'],
    data() {
       return { 
         items: [],
@@ -47,6 +48,7 @@ export default {
    },
    mounted() {
     this.fetchData();
+    console.log(this.error); // Access and use the data
   },
   methods: {
     fetchData() {
@@ -58,7 +60,7 @@ export default {
           console.log(error);
         });
     },
-    loginAuth : function() {
+    loginAuth () {
       window.location.href = 'http://127.0.0.1:8000/google/login?campus_id=' + this.selected;
     }
   },

@@ -45,17 +45,9 @@ class AuthController extends Controller
                     'password' => Hash::make($user->getName().'@'.$user->getId()),
                     'campus' => $campus
                 ]);
-            }else{
-                $saveUser = User::where('email',  $user->getEmail())->update([
-                    'google_id' => $user->getId(),
-                ]);
-                $saveUser = User::where('email', $user->getEmail())->first();
-            } 
 
-            $campusDb = $is_user->campus;
-            if($campusDb === $campus){
                 Cookie::queue('asscess-token', $user->token, 120);
-
+    
                 $backTo = Cookie::get('back-to');
     
                 if($backTo){
@@ -63,12 +55,26 @@ class AuthController extends Controller
                 }
                 return redirect()->route('home');    
             }else{
-                // return response()->json(['message' => 'Login fail'], 400);
-                return redirect()->route('index');    
-            }
-
-        } catch (\Throwable $th) {
-            throw $th;
+                // $saveUser = User::where('email',  $user->getEmail())->update([
+                //     'google_id' => $user->getId(),
+                // ]);
+                // $saveUser = User::where('email', $user->getEmail())->first();
+                $campusDb = $is_user->campus;
+                if($campusDb === $campus){
+                    Cookie::queue('asscess-token', $user->token, 120);
+    
+                    $backTo = Cookie::get('back-to');
+        
+                    if($backTo){
+                        return redirect($backTo);
+                    }
+                    return redirect()->route('home');    
+                }else{
+                    return redirect()->route('index')->with(['error' => 'Login failed']); 
+                }
+            } 
+        } catch (\Throwable $e) {
+            return redirect()->route('index')->with(['error' => $e]); 
         }
     }
 
