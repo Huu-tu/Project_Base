@@ -1,6 +1,10 @@
 <template>
     <div>
-        <Header :userName="index_userName"></Header>
+        <Header
+            :userName="user_name"
+            :userAvatar="user_avatar"
+            :userEmail="user_email"
+        ></Header>
         <template v-if="type === '2'">
             <Notify
                 :title="index_title"
@@ -55,6 +59,10 @@ export default {
             index_status: "",
             index_id: "",
             index_avatar: "",
+
+            user_name: "",
+            user_avatar: "",
+            user_email: "",
         };
     },
     methods: {
@@ -84,9 +92,9 @@ export default {
                 let url = `http://127.0.0.1:8000/permission/${post_id}`;
                 let response = await axios.get(url);
                 var apiPath = response.data.data[0];
-                // console.log(response.data.data[0]);
-
-                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(apiPath.sender)}&rounded=true&?bold=true`;
+                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
+                    apiPath.sender
+                )}&rounded=true&?bold=true`;
                 this.index_title = apiPath.title;
                 this.index_userName = apiPath.sender;
                 this.index_email = apiPath.email;
@@ -94,7 +102,14 @@ export default {
                 this.index_content = apiPath.content;
                 this.index_id = apiPath.id;
                 this.index_status = apiPath.status;
-                this.type = apiPath.type;   
+                this.type = apiPath.type;
+
+                let urlUser = `http://127.0.0.1:8000/info-user`;
+                let responseUser = await axios.get(urlUser);
+                var apiUser = responseUser.data;
+                this.user_avatar = apiUser.avatar;
+                this.user_name = apiUser.name;
+                this.user_email = apiUser.email;
             } catch (error) {
                 console.log(error);
             }
