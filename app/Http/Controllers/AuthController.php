@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Cookie;
-use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
@@ -19,23 +18,19 @@ class AuthController extends Controller
         if(!$campus){
             return response()->json(['message' => 'Login fail'], 400);
         }
-
         if (session()->has('campus')) {
             session()->forget('campus');
         }
-        
         session()->put('campus', $campus);
-
-        return Socialite::driver('google')->with(['access_type' => 'offline'])->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function callbackFromGoogle()
     {
         try {
-            $user = Socialite::driver('google')->stateless()->user();
+            $user = Socialite::driver('google')->user();
             $is_user = User::where('email', $user->getEmail())->first();
             $campus = session()->get('campus');
-
             if(!$is_user){
                 $saveUser = User::updateOrCreate([
                     'google_id' => $user->getId(),
@@ -45,11 +40,8 @@ class AuthController extends Controller
                     'password' => Hash::make($user->getName().'@'.$user->getId()),
                     'campus' => $campus
                 ]);
-
                 Cookie::queue('asscess-token', $user->token, 120);
-    
                 $backTo = Cookie::get('back-to');
-    
                 if($backTo){
                     return redirect($backTo);
                 }
@@ -62,9 +54,7 @@ class AuthController extends Controller
                 $campusDb = $is_user->campus;
                 if($campusDb === $campus){
                     Cookie::queue('asscess-token', $user->token, 120);
-    
                     $backTo = Cookie::get('back-to');
-        
                     if($backTo){
                         return redirect($backTo);
                     }
