@@ -70,7 +70,9 @@ class AuthController extends Controller
                     }
                     return redirect()->route('home');    
                 }else{
-                    return redirect()->route('index')->with(['error' => 'Login failed']); 
+                    // $errorData = session()->put('error', 'Login failed');
+                    //return redirect()->route('index'); 
+                    return redirect()->route('index')->with('error', 'Login failed'); 
                 }
             } 
         } catch (\Throwable $e) {
