@@ -5,7 +5,7 @@
                 <div class="info-title">{{ title }}</div>
                 <div class="infomation-container">              
                     <div class="info-wrap">
-                        <img :src="require('../assets/images/avatar.png')" />
+                        <img :src="avatar" />
                         <div class="info-name">{{ userName }}</div>
                         <div class="info-mail">&lt;{{ email }}&gt;</div>
                     </div>
@@ -143,6 +143,7 @@ export default {
         time: String,
         content: String,
         status: String,
+        avatar: String,
         id_request: null,
     },
     mounted() {

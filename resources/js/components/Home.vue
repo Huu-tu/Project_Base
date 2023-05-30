@@ -21,6 +21,7 @@
                 :content="index_content"
                 :status="index_status"
                 :id_request="index_id"
+                :avatar="index_avatar"
                 @onFetchData="fetchData"
             ></Show>
         </template>
@@ -31,7 +32,6 @@
 import Header from "../layouts/Header.vue";
 import Notify from "../components/Notify.vue";
 import Show from "../components/Show.vue";
-import { mapState, mapGetters } from "vuex";
 import axios from "axios";
 
 export default {
@@ -54,6 +54,7 @@ export default {
             index_content: "",
             index_status: "",
             index_id: "",
+            index_avatar: "",
         };
     },
     methods: {
@@ -85,6 +86,7 @@ export default {
                 var apiPath = response.data.data[0];
                 // console.log(response.data.data[0]);
 
+                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(apiPath.sender)}&rounded=true&?bold=true`;
                 this.index_title = apiPath.title;
                 this.index_userName = apiPath.sender;
                 this.index_email = apiPath.email;
@@ -92,7 +94,7 @@ export default {
                 this.index_content = apiPath.content;
                 this.index_id = apiPath.id;
                 this.index_status = apiPath.status;
-                this.type = apiPath.type;
+                this.type = apiPath.type;   
             } catch (error) {
                 console.log(error);
             }
