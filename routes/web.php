@@ -11,13 +11,14 @@ Route::get('/', [
     'index'
 ])->name('index');
 
+Route::get('/list', function() {
+    return view('list');
+});
+
 Route::get('/api/campus', [
     HomeController::class,
     'campus'
 ]);
-
-// Route::get('/google/login', [AuthController::class, 'loginWithGoogle'])->name('login');
-// Route::get('/google/callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 
 Route::prefix('google')->name('google.')->group( function(){
     Route::get('login', [AuthController::class, 'loginWithGoogle'])->name('login');
@@ -25,13 +26,8 @@ Route::prefix('google')->name('google.')->group( function(){
 });
 
 Route::post('/permissions/store',[
-    PermissionController::class,
+    PermissionController::class, 
     'store'
-]);
-
-Route::get('/info-user' ,[
-    HomeController::class,
-    'inFoUser'
 ]);
 
 Route::group(['middleware' =>['customAuTh']], function (){
@@ -40,6 +36,11 @@ Route::group(['middleware' =>['customAuTh']], function (){
         HomeController::class,
         'home'
     ])->name('home');
+
+    Route::get('/info-user' ,[
+        HomeController::class,
+        'inFoUser'
+    ]);
 
     Route::get('/permissions' ,[
         PermissionController::class,
@@ -64,12 +65,6 @@ Route::group(['middleware' =>['customAuTh']], function (){
     Route::get('/permission/reject/{id}',[
         PermissionController::class,
         'reject'
-    ]);
-    
-    
-    Route::put('/permission/edit/{id}',[
-        PermissionController::class,
-        'edit'
     ]);
     
     Route::delete('/permission/delete/{id}',[

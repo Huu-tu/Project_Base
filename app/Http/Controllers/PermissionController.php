@@ -39,7 +39,6 @@ class PermissionController extends Controller
             'sender' => 'required',
             'type' => 'required',
         ]);
-
         $result = Permission::create([
             'title' => request('title'),
             'content' => request('content'),
@@ -71,28 +70,6 @@ class PermissionController extends Controller
             "status" => 200,
             "message" => 'Success'
         ];
-    }
-
-    public function edit(Request $request,$id){
-        $data = $request->only([
-            'title',
-            'content',
-            'status'
-        ]);
-
-        $permission = Permission::findOrFail($id);
-        if($permission){
-            $permission->update($data);
-            return [
-                "status" => 200,
-                "data" => $permission
-            ];
-        }else{
-            return [
-                "status" => 404,
-                "message" => 'Fail'
-            ];        
-        }
     }
 
     public function delete($id){
