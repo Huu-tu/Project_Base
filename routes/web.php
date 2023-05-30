@@ -29,7 +29,13 @@ Route::post('/permissions/store',[
     'store'
 ]);
 
+Route::get('/info-user' ,[
+    HomeController::class,
+    'inFoUser'
+]);
+
 Route::group(['middleware' =>['customAuTh']], function (){
+
     Route::get('/home/{id}', [
         HomeController::class,
         'home'
