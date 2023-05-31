@@ -44,7 +44,8 @@
                             :title="item.title"
                             :content="item.content"
                             :updateTime="convertDate(item.created_at)"
-                            @openNew="selectMail"
+                            :idRequest="item.id"
+                            @onFetchData="fetchData"
                         ></ListItem>
                     </tbody>
                 </table>
@@ -95,7 +96,7 @@ export default {
                 //permission
                 let url = `http://127.0.0.1:8000/permissions`;
                 let respone = await axios.get(url);
-                // console.log(respone)
+                console.log(respone)
                 var apiPath = respone.data.data;
                 this.items = apiPath;
             } catch (e) {
@@ -132,12 +133,7 @@ export default {
                 console.log(e);
             }
         },
-        selectMail(itemId) {
-            this.isNew[itemId] = true; // Mark mail as not new
-            this.selectedMail = itemId;
-            console.log(this.isNew[itemId]);
-            console.log(this.isNew)
-        },
+        
     },
 };
 </script>
