@@ -30,6 +30,11 @@ Route::post('/permissions/store',[
     'store'
 ]);
 
+Route::get('/permission/is_checked/{id}',[
+    PermissionController::class,
+    'isChecked'
+]);
+
 Route::group(['middleware' =>['customAuTh']], function (){
 
     Route::get('/home/{id}', [
@@ -57,10 +62,6 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'show'
     ]);
 
-    Route::get('/permission/is_checked/{id}',[
-        PermissionController::class,
-        'isChecked'
-    ]);
     
     Route::get('/permission/confirm/{id}',[
         PermissionController::class,
