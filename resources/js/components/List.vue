@@ -14,9 +14,10 @@
                         placeholder="Tìm kiếm..."
                         aria-label="Tìm kiếm..."
                         aria-describedby="basic-addon2"
+                        v-model="keyword"
                     />
                     <div class="input-group-append">
-                        <a href="javascript:void(0)" @click="onSearch">
+                        <a href="javascript:void(0)" @click="onSearch(keyword)">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -64,6 +65,11 @@ export default {
         Header: Header,
         ListItem: ListItem,
     },
+    // setup() {
+    //     onMounted((getProducts) => {
+            
+    //     }),
+    // }
     mounted() {
         this.fetchData();
     },
@@ -74,6 +80,7 @@ export default {
             user_email: "",
             items: [],
             isNew: {},
+            keyword: null,
         };
     },
     methods: {
@@ -93,11 +100,6 @@ export default {
                 // console.log(respone)
                 var apiPath = respone.data.data;
                 this.items = apiPath;
-
-                // var index = this.items.indexOf(item);
-                // if (index !== -1) {
-                //     this.items[index].isVisited = item.isVisited;
-                // }
             } catch (e) {
                 console.log(e);
             }
@@ -122,11 +124,12 @@ export default {
                 .padStart(2, "0")}/${year}`;
             return outputDate;
         },
-        async onSearch() {
+        async onSearch(keyword) {
             try {
                 let urlSearch = "http://127.0.0.1:8000/permission";
-                let resSearch = await axios.get(urlSearch);
+                let resSearch = await axios.get(urlSearch, {params: {keyword: keyword}});
                 console.log(resSearch);
+                this.items = resSearch.data.data;
             } catch (e) {
                 console.log(e);
             }
