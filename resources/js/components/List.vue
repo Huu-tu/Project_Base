@@ -14,6 +14,7 @@
                         placeholder="Tìm kiếm..."
                         aria-label="Tìm kiếm..."
                         aria-describedby="basic-addon2"
+                        autocomplete="on"
                         v-model="keyword"
                     />
                     <div class="input-group-append">
@@ -43,8 +44,6 @@
                             :title="item.title"
                             :content="item.content"
                             :updateTime="convertDate(item.created_at)"
-                            :object="item"
-                            :isVisted="isNew[index]"
                             @openNew="selectMail"
                         ></ListItem>
                     </tbody>
@@ -79,7 +78,6 @@ export default {
             user_avatar: "",
             user_email: "",
             items: [],
-            isNew: {},
             keyword: null,
         };
     },

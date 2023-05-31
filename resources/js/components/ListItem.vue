@@ -4,7 +4,7 @@
     <td scope="col">{{ userName }}</td>
     <td class="msg-title" scope="col">{{ title }}</td>
     <td scope="col">
-      <div class="msg-updatetag" v-if="isVisted === false">{{ updateTag }}</div>
+      <div class="msg-updatetag" v-if="isChecked === false">{{ updateTag }}</div>
     </td>
     <td class="msg-content" scope="col">{{ content }}</td>
     <td class="msg-time" scope="col">{{ updateTime }}</td>
@@ -28,7 +28,7 @@ export default {
     title: String,
     content: String,
     updateTime: String,
-    isVisted: Boolean,
+    isChecked: Boolean,
     object: null,
   },
   data() {
@@ -46,7 +46,7 @@ export default {
   methods: {
     openNew() {
       // this.$router.push("/home");
-      this.$emit('openNew', this.object.id)
+      this.$emit('openNew')
     },
     myEventHandler() {
       if (window.innerWidth < 768) {
