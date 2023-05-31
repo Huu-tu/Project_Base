@@ -5,7 +5,9 @@
 
 html,
 body {
-    background: #394867 !important;
+    /* background: #394867 !important; */
+    background: rgb(13,176,75);
+    background: linear-gradient(320deg, rgba(13,176,75,1) 0%, rgba(242,111,33,1) 25%, rgba(0,101,177,1) 100%) no-repeat;
     height: 100%;
     margin: 0;
 }
@@ -72,7 +74,7 @@ body {
     font-size: 18px;
     font-weight: 400;
     line-height: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     text-decoration: none;
     padding: 6px 12px;
     display: flex;
@@ -83,7 +85,7 @@ select {
     border: none !important;
     font-size: 18px !important;
     line-height: 20px !important;
-    font-family: 'Roboto', 'san-serif' !important;
+    font-family: "Roboto", "san-serif" !important;
     color: var(--font-color) !important;
     height: 100%;
     -webkit-appearance: none;
@@ -112,7 +114,7 @@ option {
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 @media screen and (max-width: 768px) {
@@ -193,6 +195,12 @@ option {
 .account-info {
     display: flex !important;
     padding: 20px !important;
+    align-items: center;
+}
+
+.account-info img {
+    width: 44px;
+    height: 44px;
 }
 
 .account-info:active {
@@ -204,14 +212,22 @@ option {
     border-radius: 0.375rem;
 }
 
+.account-info-wrap {
+    margin: 0 1rem;
+}
+
 .account-name {
-    margin: 0 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    font-size: 20px !important;
-    font-weight: 400 !important;
-    line-height: 23px !important;
-    font-family: 'Roboto', 'san-serif' !important;
+    /* margin: 0 20px !important; */
+    /* display: flex !important;
+    align-items: center !important; */
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23px;
+    font-family: "Roboto", "san-serif";
+}
+
+.account-email {
+    font-size: 14px;
 }
 
 .dropdown-menu.dropdown-menu-end {
@@ -229,7 +245,7 @@ option {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 23px !important;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
 }
 
 .account-logout:hover {
@@ -238,7 +254,6 @@ option {
 }
 
 @media screen and (max-width: 768px) {
-
     .noti-container img {
         width: 36px;
         height: 36px;
@@ -250,7 +265,7 @@ option {
         padding: 10px 16px !important;
     }
     .account-name {
-        margin: 0 16px !important;
+        /* margin: 0 16px !important; */
         font-size: 18px !important;
         line-height: 20px !important;
     }
@@ -446,7 +461,7 @@ option {
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    font-family: 'Roboto';
+    font-family: "Roboto";
 }
 
 .modal-body svg {
@@ -468,3 +483,98 @@ option {
     }
 }
 /*End Modal*/
+
+/* List */
+.main-container {
+    width: 100%;
+  }
+  
+  img {
+    width: 33px;
+    height: 33px;
+  }
+  
+  .msg-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .msg-content {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 600px;
+    width: 600px;
+  }
+  
+  .table tbody {
+    width: 100%;
+    display: table;
+  }
+  
+  .table td {
+    vertical-align: middle !important;
+  }
+  
+  .input-group {
+    /* padding: 0; */
+    border-radius: 30px;
+    border: 1px solid #ced4da;
+    align-items: center !important;
+    padding: 0 16px;
+    width: 50% !important;
+  }
+  
+  .input-group input {
+    border: none;
+    padding: 6px 0;
+  }
+  
+  .input-group input:focus,
+  .input-group input:focus-visible {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .input-group-append {
+    margin: 0 !important;
+  }
+  
+  .msg-updatetag {
+    background: #0063b0;
+    border-radius: 30px;
+    color: white;
+    width: 60px;
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .main-wrap.list-wrap {
+    width: initial;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .tr-default {
+      display: none;
+    }
+    .msg-content-responsive,
+    .msg-title-responsive {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 160px;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    .tr-responsive {
+      display: none;
+    }
+  }
+
+/* End List */

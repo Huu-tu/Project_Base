@@ -15,7 +15,7 @@
             </svg>
             <div class="dropdown">
                 <img
-                    :src="require('../assets/images/avatar.png')"
+                    :src="userAvatar"
                     class="dropdown-toggle"
                     role="button"
                     id="dropdownMenuButton"
@@ -28,10 +28,11 @@
                 >
                     <li>
                         <a class="dropdown-item account-info" href="#">
-                            <img
-                                :src="require('../assets/images/avatar.png')"
-                            />
-                            <div class="account-name">{{ userName }}</div>
+                            <img :src="userAvatar" />
+                            <div class="account-info-wrap">
+                                <div class="account-name">{{ userName }}</div>
+                                <div class="account-email">{{ userEmail }}</div>
+                            </div>
                         </a>
                     </li>
                     <li>
@@ -61,10 +62,12 @@ export default {
     name: "Header",
     props: {
         userName: String,
+        userAvatar: String,
+        userEmail: String,
     },
     methods: {
         onLogout() {
-            window.location.href = 'http://127.0.0.1:8000/logout';
+            window.location.href = "http://127.0.0.1:8000/logout";
             // axios
             //     .get("http://127.0.0.1:8000/logout")
             //     .then((respone) => {
