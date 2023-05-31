@@ -56,6 +56,11 @@ Route::group(['middleware' =>['customAuTh']], function (){
         PermissionController::class,
         'show'
     ]);
+
+    Route::get('/permission/is_checked/{id}',[
+        PermissionController::class,
+        'isChecked'
+    ]);
     
     Route::get('/permission/confirm/{id}',[
         PermissionController::class,

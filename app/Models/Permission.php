@@ -17,7 +17,8 @@ class Permission extends Model
         'email',
         'sender',
         'type',
-        'status'
+        'status',
+        'is_checked'
     ];
 
 }
