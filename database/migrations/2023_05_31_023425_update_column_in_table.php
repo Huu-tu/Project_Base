@@ -13,8 +13,8 @@ class UpdateColumnInTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('campus');
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->boolean('is_checked')->default(false);
         });
     }
 
@@ -25,7 +25,7 @@ class UpdateColumnInTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('permissions', function (Blueprint $table) {
             //
         });
     }
