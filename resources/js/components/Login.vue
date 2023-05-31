@@ -52,7 +52,8 @@ export default {
     fetchData() {
       axios.get('http://127.0.0.1:8000/api/campus')
         .then(response => {
-          this.items = response.data;
+          this.items = response.data.data;
+          console.log(response.data.data)
         })
         .catch(error => {
           console.log(error);

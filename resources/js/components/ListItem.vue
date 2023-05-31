@@ -4,12 +4,12 @@
     <td scope="col">{{ userName }}</td>
     <td class="msg-title" scope="col">{{ title }}</td>
     <td scope="col">
-      <div class="msg-updatetag">{{ updateTag }}</div>
+      <div class="msg-updatetag" v-if="isVisted === false">{{ updateTag }}</div>
     </td>
     <td class="msg-content" scope="col">{{ content }}</td>
     <td class="msg-time" scope="col">{{ updateTime }}</td>
   </tr>
-  <tr @click="openNew" class="tr-responsive" v-else>
+  <tr class="tr-responsive" v-else>
     <td><img :src="require('../assets/images/google.png')" /></td>
     <td>
       <div class="msg-name-responsive">{{ userName }}</div>
@@ -26,13 +26,15 @@ export default {
     avatar: String,
     userName: String,
     title: String,
-    updateTag: String,
     content: String,
     updateTime: String,
+    isVisted: Boolean,
+    object: null,
   },
   data() {
     return {
       isRespon: false,
+      updateTag: 'New',
     };
   },
   created() {
@@ -43,7 +45,8 @@ export default {
   },
   methods: {
     openNew() {
-      this.$router.push("/home");
+      // this.$router.push("/home");
+      this.$emit('openNew', this.object.id)
     },
     myEventHandler() {
       if (window.innerWidth < 768) {

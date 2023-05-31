@@ -7,7 +7,7 @@ html,
 body {
     /* background: #394867 !important; */
     background: rgb(13,176,75);
-    background: linear-gradient(320deg, rgba(13,176,75,1) 0%, rgba(242,111,33,1) 25%, rgba(0,101,177,1) 100%);
+    background: linear-gradient(320deg, rgba(13,176,75,1) 0%, rgba(242,111,33,1) 25%, rgba(0,101,177,1) 100%) no-repeat;
     height: 100%;
     margin: 0;
 }
@@ -504,8 +504,8 @@ option {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 800px;
-    width: 800px;
+    max-width: 600px;
+    width: 600px;
   }
   
   .table tbody {
@@ -518,16 +518,17 @@ option {
   }
   
   .input-group {
-    padding: 0;
+    /* padding: 0; */
     border-radius: 30px;
     border: 1px solid #ced4da;
     align-items: center !important;
     padding: 0 16px;
+    width: 50% !important;
   }
   
   .input-group input {
     border: none;
-    padding: 0;
+    padding: 6px 0;
   }
   
   .input-group input:focus,
@@ -551,6 +552,10 @@ option {
     padding: 4px 10px;
     text-transform: uppercase;
     font-weight: 600;
+  }
+
+  .main-wrap.list-wrap {
+    width: initial;
   }
   
   @media screen and (max-width: 768px) {
