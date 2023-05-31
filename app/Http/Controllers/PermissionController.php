@@ -52,6 +52,16 @@ class PermissionController extends Controller
         ];
     }
 
+    public function isChecked($id){
+        $permission = Permission::findOrFail($id);
+        $permission->is_checked = 'true';
+        $permission->save();
+        return [
+            "status" => 200,
+            "message" => 'Success'
+        ];
+    }
+
     public function confirm($id){
         $permission = Permission::findOrFail($id);
         $permission->status = 'Xac nhan';
