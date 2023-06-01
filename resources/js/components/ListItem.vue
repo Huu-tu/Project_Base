@@ -1,31 +1,64 @@
 <template>
-    <tr @click="openNew" class="tr-default" v-if="isRespon === false">
+    <tr
+        @click="openNew"
+        class="tr-default"
+        v-if="isRespon === false"
+        :class="{ newItem: isChecked === 0 }"
+    >
         <td scope="col">
-            <img :src="require('../assets/images/google.png')" />
+            <img :src="avatar" />
         </td>
-        <td scope="col">{{ userName }}</td>
-        <td class="msg-title" scope="col">{{ title }}</td>
         <td scope="col">
-            <div class="msg-updatetag" v-if="isChecked === false">
+            <div class="msg-name">{{ userName }}</div>
+        </td>
+        <td scope="col">
+            <div class="msg-title">{{ title }}</div>
+        </td>
+        <td scope="col">
+            <div class="msg-updatetag" :class="{ hidden: isChecked === 1 }">
                 {{ updateTag }}
             </div>
         </td>
-        <td class="msg-content" scope="col">{{ content }}</td>
-        <td class="msg-time" scope="col">{{ updateTime }}</td>
-    </tr>
-    <tr class="tr-responsive" v-else>
-        <td><img :src="require('../assets/images/google.png')" /></td>
-        <td>
-            <div class="msg-name-responsive">{{ userName }}</div>
-            <div class="msg-title-responsive">{{ title }}</div>
-            <div class="msg-content-responsive">{{ content }}</div>
+        <td scope="col" class="msg-content-wrap">
+            <div class="msg-content">{{ content }}</div>
         </td>
-        <td class="msg-time">{{ updateTime }}</td>
+        <td scope="col">
+            <div class="msg-time">{{ updateTime }}</div>
+        </td>
+    </tr>
+    <tr
+        class="tr-responsive"
+        v-else
+        :class="{ newItem: isChecked === 0 }"
+        @click="openNew"
+    >
+        <td scope="col"><img :src="avatar" /></td>
+        <td scope="col" class="msg-responsive-wrap">
+            <div class="msg-name-responsive">
+                <div class="msg-name-wrap-res">
+                    {{ userName }}
+                </div>
+            </div>
+            <div class="msg-title-responsive">
+                <div class="msg-title-wrap-res">
+                    {{ title }}
+                </div>
+                <span class="badge" :class="{ hidden: isChecked === 1 }">New</span>
+            </div>
+            <div class="msg-content-responsive">
+                <div class="msg-content-wrap-res">{{ content }}</div>
+            </div>
+        </td>
+        <td scope="col">
+            <div class="msg-time-responsive">
+                {{ updateTime }}
+            </div>
+        </td>
     </tr>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     props: {
@@ -34,7 +67,7 @@ export default {
         title: String,
         content: String,
         updateTime: String,
-        isChecked: Boolean,
+        isChecked: null,
         idRequest: null,
     },
     data() {
@@ -44,19 +77,24 @@ export default {
         };
     },
     created() {
-        window.addEventListener("resize", this.myEventHandler);
+        // window.addEventListener("resize", this.myEventHandler);
+        const mediaQuery = window.matchMedia("(max-width: 768px)");
+        mediaQuery.addListener(this.myEventHandler);
+        this.myEventHandler(mediaQuery);
     },
     destroyed() {
-        window.removeEventListener("resize", this.myEventHandler);
+        const mediaQuery = window.matchMedia("(max-width: 768px)");
+        mediaQuery.removeListener(this.myEventHandler);
     },
     methods: {
         async openNew() {
             try {
-                let url = `http://127.0.0.1:8000/permission/confirm/${this.idRequest}`;
+                let url = `http://127.0.0.1:8000/permission/is_checked/${this.idRequest}`;
                 // console.log(this.idRequest)
                 let res = await axios.get(url);
                 console.log("res", res);
                 this.onFetchData();
+                this.$router.push(`/home/${this.idRequest}`);
             } catch (e) {
                 console.log(e);
             }
@@ -64,12 +102,15 @@ export default {
         onFetchData() {
             this.$emit("onFetchData");
         },
-        myEventHandler() {
-            if (window.innerWidth < 768) {
-                this.isRespon = true;
-            } else {
-                this.isRespon = false;
-            }
+        // myEventHandler() {
+        //     if (window.innerWidth < 768) {
+        //         this.isRespon = true;
+        //     } else {
+        //         this.isRespon = false;
+        //     }
+        // },
+        myEventHandler(mediaQuery) {
+            this.isRespon = mediaQuery.matches;
         },
     },
 };
