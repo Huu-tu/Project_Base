@@ -89,12 +89,13 @@ export default {
     methods: {
         async openNew() {
             try {
-                let url = `http://127.0.0.1:8000/permission/is_checked/${this.idRequest}`;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/is_checked/${this.idRequest}?param=${data}`;
                 // console.log(this.idRequest)
                 let res = await axios.get(url);
                 console.log("res", res);
                 this.onFetchData();
-                this.$router.push(`/home/${this.idRequest}`);
+                this.$router.push(`/home/${this.idRequest}?param=${data}`);
             } catch (e) {
                 console.log(e);
             }

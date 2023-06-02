@@ -51,7 +51,7 @@ export default {
     },
     methods: {
         onBackClick() {
-            this.$router.push("/list");
+            this.$router.push({path: "/list", query: {param}});
         },
     }
 };

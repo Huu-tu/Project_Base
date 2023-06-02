@@ -186,7 +186,8 @@ export default {
     methods: {
         async onConfirm() {
             try {
-                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}`;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}?param=${data}`;
                 let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
@@ -200,7 +201,8 @@ export default {
         },
         async onReject() {
             try {
-                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}`;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}?param=${data}`;
                 let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
@@ -216,7 +218,7 @@ export default {
             this.$emit("onFetchData");
         },
         onBackClick() {
-            this.$router.push("/list");
+            this.$router.push({path: "/list", query: {param}});
         },
     },
 };

@@ -101,7 +101,8 @@ export default {
             try {
                 this.loading = true;
                 //user
-                let urlUser = "http://127.0.0.1:8000/info-user";
+                let data = this.$route.query.param;
+                let urlUser = `http://127.0.0.1:8000/info-user?param=${data}`;
                 let responseUser = await axios.get(urlUser);
                 var apiUser = responseUser.data;
                 // console.log(apiUser)
@@ -110,7 +111,7 @@ export default {
                 this.user_email = apiUser.email;
                 //permission
 
-                let url = `http://127.0.0.1:8000/permissions`;
+                let url = `http://127.0.0.1:8000/permissions?param=${data}`;
                 let respone = await axios.get(url);
                 console.log(respone);
                 var apiPath = respone.data.data;
