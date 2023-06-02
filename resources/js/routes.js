@@ -18,7 +18,6 @@ const router = new VueRouter({
             path: '/home/:id',
             component: Home,
             name: 'home',
-            props: true,
         },
         {
             path: '/list',

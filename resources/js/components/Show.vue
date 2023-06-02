@@ -23,8 +23,13 @@
                 <div class="infomation-container">
                     <div class="info-wrap">
                         <img :src="avatar" />
-                        <div class="info-name">{{ userName }}</div>
-                        <div class="info-mail">&lt;{{ email }}&gt;</div>
+                        <div class="info-name-mail-party">
+                            <div class="info-name-mail">
+                                <div class="info-name">{{ userName }}</div>
+                                <div class="info-mail">&lt;{{ email }}&gt;</div>
+                            </div>
+                            <div class="info-party">"12312312"</div>
+                        </div>
                     </div>
                     <div class="info-time">{{ time }}</div>
                 </div>
@@ -172,6 +177,7 @@ export default {
         content: String,
         status: String,
         avatar: String,
+        // party: String,
         id_request: null,
     },
     mounted() {

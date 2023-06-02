@@ -67,6 +67,7 @@ export default {
             index_status: "",
             index_id: "",
             index_avatar: "",
+            index_party: "",
 
             user_name: "",
             user_avatar: "",
@@ -81,7 +82,8 @@ export default {
                 this.loading = true;
 
                 let post_id = this.$route.params.id;
-                let url = `http://127.0.0.1:8000/permission/${post_id}`;
+                let data = this.$route.params.param;
+                let url = `http://127.0.0.1:8000/permission/${post_id}?param=${data}`;
                 let response = await axios.get(url);
                 var apiPath = response.data.data[0];
                 this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
@@ -94,6 +96,7 @@ export default {
                 this.index_content = apiPath.content;
                 this.index_id = apiPath.id;
                 this.index_status = apiPath.status;
+                // this.index_party = apiPath.party;
                 this.type = apiPath.type;
 
                 let urlUser = `http://127.0.0.1:8000/info-user`;
