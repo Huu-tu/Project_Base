@@ -12,16 +12,22 @@ class CustomAuth
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->hasCookie('asscess-token')){
-            $backTo = $request->url();
-            Cookie::queue('back-to',$backTo);
-            return redirect('/');
+        $isAuth = $request->input('param');
+        // dd($isAuth);
+        if($isAuth === 'isAuth'){
+            return $next($request);
         }else{
-            $token = $request->cookie('asscess-token');
-            $this->decryptToken($token);
-        }
+            if (!$request->hasCookie('asscess-token')){
+                $backTo = $request->url();
+                Cookie::queue('back-to',$backTo);
+                return redirect()->route('index');
+            }else{
+                $token = $request->cookie('asscess-token');
+                $this->decryptToken($token);
+            }
 
-        return $next($request);
+            return $next($request);
+        }
     }
 
     function decryptToken($token) {

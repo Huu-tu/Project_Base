@@ -32,12 +32,13 @@ class PermissionController extends Controller
     }
 
     public function store(){
-        request() ->validate([
+        request()->validate([
             'title' => 'required',
             'content' => 'required',
             'email' => 'required',
             'sender' => 'required',
             'type' => 'required',
+            'party' => 'required'
         ]);
         $result = Permission::create([
             'title' => request('title'),
@@ -45,11 +46,9 @@ class PermissionController extends Controller
             'email' => request('email'),
             'sender' => request('sender'),
             'type' => request('type'),
+            'party' => request('party')
         ]);
-        return [
-            "status" => 200,
-            "message" => 'Success'
-        ];
+        return response()->json($result);
     }
 
     public function isChecked($id){
