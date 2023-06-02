@@ -18,7 +18,9 @@ class Permission extends Model
         'sender',
         'type',
         'status',
-        'is_checked'
+        'is_checked',
+        'party',
+        'isAuthen'
     ];
 
 }

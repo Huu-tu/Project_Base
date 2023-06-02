@@ -25,18 +25,7 @@ Route::prefix('google')->name('google.')->group( function(){
     Route::any('callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 });
 
-Route::post('/permissions/store',[
-    PermissionController::class, 
-    'store'
-]);
-
-Route::get('/permission/is_checked/{id}',[
-    PermissionController::class,
-    'isChecked'
-]);
-
 Route::group(['middleware' =>['customAuTh']], function (){
-
     Route::get('/home/{id}', [
         HomeController::class,
         'home'
@@ -62,6 +51,10 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'show'
     ]);
 
+    Route::get('/permission/is_checked/{id}',[
+        PermissionController::class,
+        'isChecked'
+    ]);
     
     Route::get('/permission/confirm/{id}',[
         PermissionController::class,

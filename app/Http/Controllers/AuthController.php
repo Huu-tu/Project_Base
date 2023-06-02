@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         $campus = $request->campus_id;
         if(!$campus){
-            return response()->json(['message' => 'Login fail'], 400);
+            return redirect()->route('index')->with('error', 'Login failed'); 
         }
         if (session()->has('campus')) {
             session()->forget('campus');
@@ -62,7 +62,7 @@ class AuthController extends Controller
                 }else{
                     // $errorData = session()->put('error', 'Login failed');
                     //return redirect()->route('index'); 
-                    return redirect()->route('index')->with('error', 'Login failed'); 
+                    return redirect()->route('index')->withErrors(['error' => 'Your error message']); 
                 }
             } 
         } catch (\Throwable $e) {

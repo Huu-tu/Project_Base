@@ -14,32 +14,6 @@ use App\Http\Controllers\PermissionController;
 |
 */
 
-// Route::get('/permissions' ,[
-//     PermissionController::class,
-//     'index'
-// ]);
-
-Route::get('/permission' ,[
-    PermissionController::class,
-    'search'
-]);
-
-Route::get('/permissions/{id}',[
-    PermissionController::class,
-    'detail'
-]);
-
-// Route::post('/permissions/store',[
-//     PermissionController::class,
-//     'store'
-// ]);
-
-Route::put('/permissions/edit',[
-    PermissionController::class,
-    'storeProduct'
-]);
-
-Route::delete('/permissions/delete',[
-    PermissionController::class,
-    'storeProduct'
-]);
+Route::get('/helllo', function() {
+    return response()->json('Thanh cong');
+});
