@@ -5,7 +5,14 @@
             :userAvatar="user_avatar"
             :userEmail="user_email"
         ></Header>
-        <template v-if="type === '2'">
+        <div class="spinner-wrap" v-if="loading">
+                <div class="overlay"></div>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
+            </div>
+        <template v-if="type === '2' && !loading">
             <Notify
                 :title="index_title"
                 :userName="index_userName"
@@ -13,10 +20,11 @@
                 :time="index_time"
                 :content="index_content"
                 :status="index_status"
+                :avatar="index_avatar"
                 :id_request="index_id"
             ></Notify>
         </template>
-        <template v-else-if="type === '1'">
+        <template v-else-if="type === '1' && !loading">
             <Show
                 :title="index_title"
                 :userName="index_userName"
@@ -59,13 +67,51 @@ export default {
             index_status: "",
             index_id: "",
             index_avatar: "",
+            index_party: "",
 
             user_name: "",
             user_avatar: "",
             user_email: "",
+
+            loading: "",
         };
     },
     methods: {
+        async fetchData() {
+            try {
+                this.loading = true;
+
+                let post_id = this.$route.params.id;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/${post_id}?param=${data}`;
+                let response = await axios.get(url);
+                var apiPath = response.data.data[0];
+                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
+                    apiPath.sender
+                )}&rounded=true&?bold=true`;
+                this.index_title = apiPath.title;
+                this.index_userName = apiPath.sender;
+                this.index_email = apiPath.email;
+                this.index_time = this.convertDate(apiPath.created_at);
+                this.index_content = apiPath.content;
+                this.index_id = apiPath.id;
+                this.index_status = apiPath.status;
+                // this.index_party = apiPath.party;
+                this.type = apiPath.type;
+
+                let urlUser = `http://127.0.0.1:8000/info-user?param=${data}`;
+                let responseUser = await axios.get(urlUser);
+                var apiUser = responseUser.data;
+                this.user_avatar = apiUser.avatar;
+                this.user_name = apiUser.name;
+                this.user_email = apiUser.email;
+
+                this.loading = false;
+            } catch (error) {
+                console.log(error);
+                this.loading = false;
+            }
+        },
         convertDate(inputDate) {
             let date = new Date(inputDate);
             // Chuyển đổi sang định dạng AM/PM
@@ -85,34 +131,6 @@ export default {
                 .toString()
                 .padStart(2, "0")}/${year}`;
             return outputDate;
-        },
-        async fetchData() {
-            try {
-                let post_id = this.$route.params.id;
-                let url = `http://127.0.0.1:8000/permission/${post_id}`;
-                let response = await axios.get(url);
-                var apiPath = response.data.data[0];
-                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
-                    apiPath.sender
-                )}&rounded=true&?bold=true`;
-                this.index_title = apiPath.title;
-                this.index_userName = apiPath.sender;
-                this.index_email = apiPath.email;
-                this.index_time = this.convertDate(apiPath.created_at);
-                this.index_content = apiPath.content;
-                this.index_id = apiPath.id;
-                this.index_status = apiPath.status;
-                this.type = apiPath.type;
-
-                let urlUser = `http://127.0.0.1:8000/info-user`;
-                let responseUser = await axios.get(urlUser);
-                var apiUser = responseUser.data;
-                this.user_avatar = apiUser.avatar;
-                this.user_name = apiUser.name;
-                this.user_email = apiUser.email;
-            } catch (error) {
-                console.log(error);
-            }
         },
     },
 };

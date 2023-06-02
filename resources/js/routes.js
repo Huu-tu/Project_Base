@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import  VueRouter from 'vue-router';
+import VueRouter from 'vue-router';
 import Home from './components/Home.vue';
 import Login from './components/Login.vue';
 import List from './components/List.vue';
@@ -18,7 +18,6 @@ const router = new VueRouter({
             path: '/home/:id',
             component: Home,
             name: 'home',
-            props: true,
         },
         {
             path: '/list',

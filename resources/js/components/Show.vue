@@ -2,12 +2,34 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="infomation-wrap">
-                <div class="info-title">{{ title }}</div>
-                <div class="infomation-container">              
+                <div class="info-title">
+                    <button
+                        type="button"
+                        class="btn btn-back"
+                        @click="onBackClick"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 448 512"
+                        >
+                            <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path
+                                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+                            />
+                        </svg>
+                    </button>
+                    {{ title }}
+                </div>
+                <div class="infomation-container">
                     <div class="info-wrap">
                         <img :src="avatar" />
-                        <div class="info-name">{{ userName }}</div>
-                        <div class="info-mail">&lt;{{ email }}&gt;</div>
+                        <div class="info-name-mail-party">
+                            <div class="info-name-mail">
+                                <div class="info-name">{{ userName }}</div>
+                                <div class="info-mail">&lt;{{ email }}&gt;</div>
+                            </div>
+                            <div class="info-party">"12312312"</div>
+                        </div>
                     </div>
                     <div class="info-time">{{ time }}</div>
                 </div>
@@ -93,7 +115,11 @@
                     </div>
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Xac nhan'" id="accepted">
+            <div
+                class="nav-wrap-after"
+                v-else-if="status === 'Xac nhan'"
+                id="accepted"
+            >
                 <svg
                     width="40"
                     height="40"
@@ -110,7 +136,11 @@
                     Đơn đã được chấp nhận!
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Tu choi'" id="rejected">
+            <div
+                class="nav-wrap-after"
+                v-else-if="status === 'Tu choi'"
+                id="rejected"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="48"
@@ -123,7 +153,10 @@
                         fill="#dc3545"
                     />
                 </svg>
-                <div style="display: block;" class="nav-wrap-after-text rejected">
+                <div
+                    style="display: block"
+                    class="nav-wrap-after-text rejected"
+                >
                     Đơn đã bị từ chối!
                 </div>
             </div>
@@ -144,6 +177,7 @@ export default {
         content: String,
         status: String,
         avatar: String,
+        // party: String,
         id_request: null,
     },
     mounted() {
@@ -152,34 +186,39 @@ export default {
     methods: {
         async onConfirm() {
             try {
-                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}`;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}?param=${data}`;
                 let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
                 let myModal = document.getElementById("modalAccepted");
-                myModal.addEventListener('hide.bs.modal', function() {
-                    vm.onFetchData()
-                })   
+                myModal.addEventListener("hide.bs.modal", function () {
+                    vm.onFetchData();
+                });
             } catch (err) {
                 console.log(err);
             }
         },
         async onReject() {
             try {
-                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}`;
+                let data = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}?param=${data}`;
                 let res = await axios.get(url);
                 console.log("res", res);
                 let vm = this;
                 let myModal = document.getElementById("modalCanceled");
-                myModal.addEventListener('hide.bs.modal', function() {
-                    vm.onFetchData()
-                })
+                myModal.addEventListener("hide.bs.modal", function () {
+                    vm.onFetchData();
+                });
             } catch (err) {
                 console.log(err);
             }
         },
         onFetchData() {
             this.$emit("onFetchData");
+        },
+        onBackClick() {
+            this.$router.push({path: "/list", query: {param}});
         },
     },
 };

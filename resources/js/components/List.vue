@@ -6,15 +6,25 @@
             :userEmail="user_email"
         ></Header>
         <div class="container-fluid main-container">
-            <div class="main-wrap list-wrap">
-                <div class="input-group mb-3">
+            <div class="spinner-wrap" v-if="loading">
+                <div class="overlay"></div>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
+            </div>
+
+            <div class="main-wrap list-wrap" v-if="!loading">
+                <div class="input-group">
                     <input
                         type="text"
                         class="form-control"
                         placeholder="Tìm kiếm..."
                         aria-label="Tìm kiếm..."
                         aria-describedby="basic-addon2"
+                        autocomplete="on"
                         v-model="keyword"
+                        @keyup.enter="onSearch(keyword)"
                     />
                     <div class="input-group-append">
                         <a href="javascript:void(0)" @click="onSearch(keyword)">
@@ -32,23 +42,26 @@
                         </a>
                     </div>
                 </div>
-
-                <table class="table table-responsive table-hover">
-                    <tbody>
-                        <ListItem
-                            v-for="(item, index) in items"
-                            :key="index"
-                            :avatar="item.avatar"
-                            :userName="item.sender"
-                            :title="item.title"
-                            :content="item.content"
-                            :updateTime="convertDate(item.created_at)"
-                            :object="item"
-                            :isVisted="isNew[index]"
-                            @openNew="selectMail"
-                        ></ListItem>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                            <ListItem
+                                v-for="(item, index) in items"
+                                :key="index"
+                                :avatar="`https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
+                                    item.sender
+                                )}&rounded=true&?bold=true`"
+                                :userName="item.sender"
+                                :title="item.title"
+                                :content="item.content"
+                                :updateTime="convertDate(item.created_at)"
+                                :idRequest="item.id"
+                                @onFetchData="fetchData"
+                                :isChecked="item.is_checked"
+                            ></ListItem>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -67,7 +80,7 @@ export default {
     },
     // setup() {
     //     onMounted((getProducts) => {
-            
+
     //     }),
     // }
     mounted() {
@@ -79,15 +92,17 @@ export default {
             user_avatar: "",
             user_email: "",
             items: [],
-            isNew: {},
             keyword: null,
+            loading: true,
         };
     },
     methods: {
-        async fetchData(item) {
+        async fetchData() {
             try {
+                this.loading = true;
                 //user
-                let urlUser = "http://127.0.0.1:8000/info-user";
+                let data = this.$route.query.param;
+                let urlUser = `http://127.0.0.1:8000/info-user?param=${data}`;
                 let responseUser = await axios.get(urlUser);
                 var apiUser = responseUser.data;
                 // console.log(apiUser)
@@ -95,13 +110,25 @@ export default {
                 this.user_name = apiUser.name;
                 this.user_email = apiUser.email;
                 //permission
-                let url = `http://127.0.0.1:8000/permissions`;
+
+                let url = `http://127.0.0.1:8000/permissions?param=${data}`;
                 let respone = await axios.get(url);
-                // console.log(respone)
+                console.log(respone);
                 var apiPath = respone.data.data;
+
+                apiPath.sort((a, b) => {
+                    return new Date(b.created_at) - new Date(a.created_at);
+                });
+                // let arr = [];
+                // arr.push(apiPath[0]);
+                // console.log(arr)
+                // this.items = arr
                 this.items = apiPath;
+                
+                this.loading = false;
             } catch (e) {
                 console.log(e);
+                this.loading = false;
             }
         },
         convertDate(inputDate) {
@@ -127,18 +154,14 @@ export default {
         async onSearch(keyword) {
             try {
                 let urlSearch = "http://127.0.0.1:8000/permission";
-                let resSearch = await axios.get(urlSearch, {params: {keyword: keyword}});
+                let resSearch = await axios.get(urlSearch, {
+                    params: { keyword: keyword },
+                });
                 console.log(resSearch);
                 this.items = resSearch.data.data;
             } catch (e) {
                 console.log(e);
             }
-        },
-        selectMail(itemId) {
-            this.isNew[itemId] = true; // Mark mail as not new
-            this.selectedMail = itemId;
-            console.log(this.isNew[itemId]);
-            console.log(this.isNew)
         },
     },
 };
