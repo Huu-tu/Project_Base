@@ -1,20 +1,18 @@
 <template>
     <div>
         <Header
-            :userName="user_name"
-            :userAvatar="user_avatar"
-            :userEmail="user_email"
+            :userName="userName"
+            :userAvatar="userAvatar"
+            :userEmail="userEmail"
         ></Header>
         <div class="container-fluid main-container">
-            <div class="spinner-wrap" v-if="loading">
+            <div class="spinner-wrap" v-if="loadSpinner">
                 <div class="overlay"></div>
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
             </div>
-
-            <div class="main-wrap list-wrap" v-if="!loading">
+            <div class="main-wrap list-wrap" v-if="!loadSpinner">
                 <div class="input-group">
                     <input
                         type="text"
@@ -34,7 +32,6 @@
                                 width="24"
                                 height="24"
                             >
-                                <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                 <path
                                     d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
                                 />
@@ -48,16 +45,16 @@
                             <ListItem
                                 v-for="(item, index) in items"
                                 :key="index"
+                                :id="item.id"
+                                :title="item.title"
+                                :content="item.content"
+                                :sender="item.sender"
+                                :createdAt="convertDate(item.created_at)"
                                 :avatar="`https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
                                     item.sender
                                 )}&rounded=true&?bold=true`"
-                                :userName="item.sender"
-                                :title="item.title"
-                                :content="item.content"
-                                :updateTime="convertDate(item.created_at)"
-                                :idRequest="item.id"
-                                @onFetchData="fetchData"
                                 :isChecked="item.is_checked"
+                                @onFetchData="fetchData"
                             ></ListItem>
                         </tbody>
                     </table>
@@ -72,63 +69,53 @@ import Header from "../layouts/Header.vue";
 import ListItem from "../components/ListItem.vue";
 import axios from "axios";
 
+const apiPath = process.env.MIX_API_PATH;
+
 export default {
     name: "list",
     components: {
         Header: Header,
         ListItem: ListItem,
     },
-    // setup() {
-    //     onMounted((getProducts) => {
-
-    //     }),
-    // }
     mounted() {
         this.fetchData();
     },
     data() {
         return {
-            user_name: "",
-            user_avatar: "",
-            user_email: "",
+            userName: "",
+            userAvatar: "",
+            userEmail: "",
             items: [],
-            keyword: null,
-            loading: true,
+            keyword: "",
+            loadSpinner: true,
         };
     },
     methods: {
         async fetchData() {
             try {
-                this.loading = true;
+                this.loadSpinner = true;
                 //user
-                let data = this.$route.query.param;
-                let urlUser = `http://127.0.0.1:8000/info-user?param=${data}`;
-                let responseUser = await axios.get(urlUser);
-                var apiUser = responseUser.data;
-                // console.log(apiUser)
-                this.user_avatar = apiUser.avatar;
-                this.user_name = apiUser.name;
-                this.user_email = apiUser.email;
+                let isAuth = this.$route.query.param;
+                let apiUser = `${apiPath}/info-user?param=${isAuth}`;
+                let resUser = (await axios.get(apiUser)).data;
+
+                this.userAvatar = resUser.avatar;
+                this.userName = resUser.name;
+                this.userEmail = resUser.email;
+
                 //permission
+                let apiRequest = `${apiPath}/permissions?param=${isAuth}`;
+                let resRequest = (await axios.get(apiRequest)).data.data;
 
-                let url = `http://127.0.0.1:8000/permissions?param=${data}`;
-                let respone = await axios.get(url);
-                console.log(respone);
-                var apiPath = respone.data.data;
-
-                apiPath.sort((a, b) => {
+                resRequest.sort((a, b) => {
                     return new Date(b.created_at) - new Date(a.created_at);
                 });
-                // let arr = [];
-                // arr.push(apiPath[0]);
-                // console.log(arr)
-                // this.items = arr
-                this.items = apiPath;
-                
-                this.loading = false;
+                this.items = resRequest;
+
+                this.loadSpinner = false;
             } catch (e) {
                 console.log(e);
-                this.loading = false;
+                this.loadSpinner = false;
             }
         },
         convertDate(inputDate) {
@@ -153,12 +140,15 @@ export default {
         },
         async onSearch(keyword) {
             try {
-                let urlSearch = "http://127.0.0.1:8000/permission";
-                let resSearch = await axios.get(urlSearch, {
-                    params: { keyword: keyword },
-                });
+                let apiSearch = `${apiPath}/permission`;
+                let resSearch = (
+                    await axios.get(apiSearch, {
+                        params: { keyword: keyword },
+                    })
+                ).data.data;
+
                 console.log(resSearch);
-                this.items = resSearch.data.data;
+                this.items = resSearch;
             } catch (e) {
                 console.log(e);
             }

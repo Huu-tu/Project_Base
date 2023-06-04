@@ -2,28 +2,28 @@
     <tr
         @click="openNew"
         class="tr-default"
-        v-if="isRespon === false"
+        v-if="!isResponsive"
         :class="{ newItem: isChecked === 0 }"
     >
-        <td scope="col">
+        <td>
             <img :src="avatar" />
         </td>
-        <td scope="col">
-            <div class="msg-name">{{ userName }}</div>
+        <td>
+            <div class="msg-name">{{ sender }}</div>
         </td>
-        <td scope="col">
+        <td>
             <div class="msg-title">{{ title }}</div>
         </td>
-        <td scope="col">
+        <td>
             <div class="msg-updatetag" :class="{ hidden: isChecked === 1 }">
                 {{ updateTag }}
             </div>
         </td>
-        <td scope="col" class="msg-content-wrap">
+        <td class="msg-content-wrap">
             <div class="msg-content">{{ content }}</div>
         </td>
-        <td scope="col">
-            <div class="msg-time">{{ updateTime }}</div>
+        <td>
+            <div class="msg-time">{{ createdAt }}</div>
         </td>
     </tr>
     <tr
@@ -32,26 +32,28 @@
         :class="{ newItem: isChecked === 0 }"
         @click="openNew"
     >
-        <td scope="col"><img :src="avatar" /></td>
-        <td scope="col" class="msg-responsive-wrap">
+        <td><img :src="avatar" /></td>
+        <td class="msg-responsive-wrap">
             <div class="msg-name-responsive">
                 <div class="msg-name-wrap-res">
-                    {{ userName }}
+                    {{ sender }}
                 </div>
             </div>
             <div class="msg-title-responsive">
                 <div class="msg-title-wrap-res">
                     {{ title }}
                 </div>
-                <span class="badge" :class="{ hidden: isChecked === 1 }">New</span>
+                <span class="badge" :class="{ hidden: isChecked === 1 }">
+                    {{ updateTag }}</span
+                >
             </div>
             <div class="msg-content-responsive">
                 <div class="msg-content-wrap-res">{{ content }}</div>
             </div>
         </td>
-        <td scope="col">
+        <td>
             <div class="msg-time-responsive">
-                {{ updateTime }}
+                {{ createdAt }}
             </div>
         </td>
     </tr>
@@ -60,42 +62,42 @@
 <script>
 import axios from "axios";
 
+const mediaQuery = window.matchMedia("(max-width: 768px)");
+const apiPath = process.env.MIX_API_PATH;
+
 export default {
     props: {
-        avatar: String,
-        userName: String,
+        id: Number,
         title: String,
         content: String,
-        updateTime: String,
-        isChecked: null,
-        idRequest: null,
+        sender: String,
+        createdAt: String,
+        avatar: String,
+        isChecked: Number,
     },
     data() {
         return {
-            isRespon: false,
+            isResponsive: false,
             updateTag: "New",
         };
     },
     created() {
-        // window.addEventListener("resize", this.myEventHandler);
-        const mediaQuery = window.matchMedia("(max-width: 768px)");
-        mediaQuery.addListener(this.myEventHandler);
+        mediaQuery.addEventListener("change", this.myEventHandler);
         this.myEventHandler(mediaQuery);
     },
     destroyed() {
-        const mediaQuery = window.matchMedia("(max-width: 768px)");
-        mediaQuery.removeListener(this.myEventHandler);
+        mediaQuery.removeEventListener("change", this.myEventHandler);
     },
     methods: {
         async openNew() {
             try {
-                let data = this.$route.query.param;
-                let url = `http://127.0.0.1:8000/permission/is_checked/${this.idRequest}?param=${data}`;
-                // console.log(this.idRequest)
-                let res = await axios.get(url);
-                console.log("res", res);
+                let isAuth = this.$route.query.param;
+                let apiRequest = `${apiPath}/permission/is_checked/${this.id}?param=${isAuth}`;
+                let resRequest = await axios.get(apiRequest);
+                console.log("res", resRequest);
+
                 this.onFetchData();
-                this.$router.push(`/home/${this.idRequest}?param=${data}`);
+                this.$router.push(`/home/${this.id}`);
             } catch (e) {
                 console.log(e);
             }
@@ -103,15 +105,8 @@ export default {
         onFetchData() {
             this.$emit("onFetchData");
         },
-        // myEventHandler() {
-        //     if (window.innerWidth < 768) {
-        //         this.isRespon = true;
-        //     } else {
-        //         this.isRespon = false;
-        //     }
-        // },
         myEventHandler(mediaQuery) {
-            this.isRespon = mediaQuery.matches;
+            this.isResponsive = mediaQuery.matches;
         },
     },
 };

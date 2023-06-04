@@ -1,39 +1,44 @@
 <template>
     <div>
         <Header
-            :userName="user_name"
-            :userAvatar="user_avatar"
-            :userEmail="user_email"
+            :userName="userName"
+            :userAvatar="userAvatar"
+            :userEmail="userEmail"
+            :authFlag="authFlag"
         ></Header>
-        <div class="spinner-wrap" v-if="loading">
-                <div class="overlay"></div>
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
+        <div class="spinner-wrap" v-if="loadSpinner">
+            <div class="overlay"></div>
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-        <template v-if="type === '2' && !loading">
+            <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
+        </div>
+        <template v-if="requestType === '2' && !loadSpinner">
             <Notify
-                :title="index_title"
-                :userName="index_userName"
-                :email="index_email"
-                :time="index_time"
-                :content="index_content"
-                :status="index_status"
-                :avatar="index_avatar"
-                :id_request="index_id"
+                :id="requestId"
+                :title="requestTitle"
+                :content="requestContent"
+                :email="requestEmail"
+                :sender="requestSender"
+                :status="requestStatus"
+                :createdAt="requestCreatedTime"
+                :party="requestParty"
+                :avatar="requestAvatar"
+                :authFlag="authFlag"
             ></Notify>
         </template>
-        <template v-else-if="type === '1' && !loading">
+        <template v-else-if="requestType === '1' && !loadSpinner">
             <Show
-                :title="index_title"
-                :userName="index_userName"
-                :email="index_email"
-                :time="index_time"
-                :content="index_content"
-                :status="index_status"
-                :id_request="index_id"
-                :avatar="index_avatar"
+                :id="requestId"
+                :title="requestTitle"
+                :content="requestContent"
+                :email="requestEmail"
+                :sender="requestSender"
+                :status="requestStatus"
+                :createdAt="requestCreatedTime"
+                :party="requestParty"
+                :avatar="requestAvatar"
+                :authFlag="authFlag"
                 @onFetchData="fetchData"
             ></Show>
         </template>
@@ -45,6 +50,8 @@ import Header from "../layouts/Header.vue";
 import Notify from "../components/Notify.vue";
 import Show from "../components/Show.vue";
 import axios from "axios";
+
+const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "home",
@@ -58,58 +65,67 @@ export default {
     },
     data() {
         return {
-            type: "",
-            index_title: "",
-            index_userName: "",
-            index_email: "",
-            index_time: "",
-            index_content: "",
-            index_status: "",
-            index_id: "",
-            index_avatar: "",
-            index_party: "",
+            requestId: "",
+            requestTitle: "",
+            requestContent: "",
+            requestEmail: "",
+            requestSender: "",
+            requestStatus: "",
+            requestCreatedTime: "",
+            requestType: "",
+            requestParty: "",
+            requestAvatar: "",
 
-            user_name: "",
-            user_avatar: "",
-            user_email: "",
+            userName: "",
+            userAvatar: "",
+            userEmail: "",
 
-            loading: "",
+            loadSpinner: "",
+            authFlag: false,
         };
     },
     methods: {
         async fetchData() {
             try {
-                this.loading = true;
+                this.loadSpinner = true;
 
-                let post_id = this.$route.params.id;
-                let data = this.$route.query.param;
-                let url = `http://127.0.0.1:8000/permission/${post_id}?param=${data}`;
-                let response = await axios.get(url);
-                var apiPath = response.data.data[0];
-                this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
-                    apiPath.sender
+                let permissionId = this.$route.params.id;
+                let isAuth = this.$route.query.param;
+                let flagCheck = this.$route.fullPath;
+
+                flagCheck.includes("isAuth")
+                    ? (this.authFlag = true)
+                    : (this.authFlag = false);
+
+                let apiRequest = `${apiPath}/permission/${permissionId}?param=${isAuth}`;
+                let resRequest = (await axios.get(apiRequest)).data.data[0];
+
+                this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
+                    resRequest.sender
                 )}&rounded=true&?bold=true`;
-                this.index_title = apiPath.title;
-                this.index_userName = apiPath.sender;
-                this.index_email = apiPath.email;
-                this.index_time = this.convertDate(apiPath.created_at);
-                this.index_content = apiPath.content;
-                this.index_id = apiPath.id;
-                this.index_status = apiPath.status;
-                // this.index_party = apiPath.party;
-                this.type = apiPath.type;
+                this.requestTitle = resRequest.title;
+                this.requestSender = resRequest.sender;
+                this.requestEmail = resRequest.email;
+                this.requestCreatedTime = this.convertDate(
+                    resRequest.created_at
+                );
+                this.requestContent = resRequest.content;
+                this.requestId = resRequest.id;
+                this.requestStatus = resRequest.status;
+                this.requestParty = resRequest.party;
+                this.requestType = resRequest.type;
 
-                let urlUser = `http://127.0.0.1:8000/info-user?param=${data}`;
-                let responseUser = await axios.get(urlUser);
-                var apiUser = responseUser.data;
-                this.user_avatar = apiUser.avatar;
-                this.user_name = apiUser.name;
-                this.user_email = apiUser.email;
+                let apiUser = `${apiPath}/info-user?param=${isAuth}`;
+                let resUser = (await axios.get(apiUser)).data;
 
-                this.loading = false;
+                this.userAvatar = resUser.avatar;
+                this.userName = resUser.name;
+                this.userEmail = resUser.email;
+
+                this.loadSpinner = false;
             } catch (error) {
                 console.log(error);
-                this.loading = false;
+                this.loadSpinner = false;
             }
         },
         convertDate(inputDate) {
