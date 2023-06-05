@@ -89,7 +89,8 @@ export default {
         async fetchData() {
             try {
                 let post_id = this.$route.params.id;
-                let url = `http://127.0.0.1:8000/permission/${post_id}`;
+                let param = this.$route.query.param;
+                let url = `http://127.0.0.1:8000/permission/${post_id}?param=${param}`;
                 let response = await axios.get(url);
                 var apiPath = response.data.data[0];
                 this.index_avatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
