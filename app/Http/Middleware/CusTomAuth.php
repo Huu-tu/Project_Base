@@ -13,7 +13,7 @@ class CustomAuth
     public function handle(Request $request, Closure $next)
     {
         $isAuth = $request->input('param');
-        // dd($isAuth);
+        // dd($isAuth);         
         if($isAuth === 'true'){
             return $next($request);
         }else{
