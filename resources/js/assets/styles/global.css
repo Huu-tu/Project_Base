@@ -311,7 +311,7 @@ option {
     border-radius: 1rem;
     /* border-top-left-radius: 0;
     border-top-right-radius: 0; */
-    width: 1000px;
+    width: 90%;
     height: max-content;
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -530,6 +530,7 @@ option {
         padding: 0;
         font-size: 18px;
         line-height: normal;
+        word-wrap: break-word;
     }
     .nav-wrap {
         /* margin: 0 20px; */
