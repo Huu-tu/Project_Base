@@ -2,14 +2,41 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="infomation-wrap">
-                <div class="info-title">{{ title }}</div>
-                <div class="infomation-container">              
+                <button
+                    type="button"
+                    class="btn btn-back"
+                    @click="onBackClick"
+                    v-if="!authFlag"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 512 512"
+                        fill="#394867"
+                    >
+                        <path
+                            d="M205 34.8c11.5 5.1 19 16.6 19 29.2v64H336c97.2 0 176 78.8 176 176c0 113.3-81.5 163.9-100.2 174.1c-2.5 1.4-5.3 1.9-8.1 1.9c-10.9 0-19.7-8.9-19.7-19.7c0-7.5 4.3-14.4 9.8-19.5c9.4-8.8 22.2-26.4 22.2-56.7c0-53-43-96-96-96H224v64c0 12.6-7.4 24.1-19 29.2s-25 3-34.4-5.4l-160-144C3.9 225.7 0 217.1 0 208s3.9-17.7 10.6-23.8l160-144c9.4-8.5 22.9-10.6 34.4-5.4z"
+                        />
+                    </svg>
+                    <span>Quay lại</span>
+                </button>
+                <div class="info-title">
+                    {{ title }}
+                </div>
+                <div class="infomation-container">
                     <div class="info-wrap">
                         <img :src="avatar" />
-                        <div class="info-name">{{ userName }}</div>
-                        <div class="info-mail">&lt;{{ email }}&gt;</div>
+                        <div class="info-name-mail-party">
+                            <div class="info-name-mail">
+                                <div class="info-name">{{ sender }}</div>
+                                <div class="info-mail">&lt;{{ email }}&gt;</div>
+                            </div>
+                            <div class="info-party">
+                                <span class="badge">{{ party }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="info-time">{{ time }}</div>
+                    <div class="info-time">{{ createdAt }}</div>
                 </div>
             </div>
             <div class="mail-wrap">
@@ -31,20 +58,20 @@
                     tabindex="-1"
                     aria-labelledby="modalAcceptedLabel"
                     aria-hidden="true"
+                    ref="modalAccepted"
                 >
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <svg
-                                    width="40"
-                                    height="40"
-                                    viewBox="0 0 40 40"
-                                    fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
+                                    height="40"
+                                    width="40"
+                                    viewBox="0 0 512 512"
+                                    fill="#4EBF19"
                                 >
                                     <path
-                                        d="M17.05 29.1L31.2 14.95L28.9 12.7L17.05 24.55L11.05 18.55L8.8 20.8L17.05 29.1ZM20 40C17.2667 40 14.6833 39.475 12.25 38.425C9.81667 37.375 7.69167 35.9417 5.875 34.125C4.05833 32.3083 2.625 30.1833 1.575 27.75C0.525 25.3167 0 22.7333 0 20C0 17.2333 0.525 14.6333 1.575 12.2C2.625 9.76667 4.05833 7.65 5.875 5.85C7.69167 4.05 9.81667 2.625 12.25 1.575C14.6833 0.525 17.2667 0 20 0C22.7667 0 25.3667 0.525 27.8 1.575C30.2333 2.625 32.35 4.05 34.15 5.85C35.95 7.65 37.375 9.76667 38.425 12.2C39.475 14.6333 40 17.2333 40 20C40 22.7333 39.475 25.3167 38.425 27.75C37.375 30.1833 35.95 32.3083 34.15 34.125C32.35 35.9417 30.2333 37.375 27.8 38.425C25.3667 39.475 22.7667 40 20 40ZM20 37C24.7333 37 28.75 35.3417 32.05 32.025C35.35 28.7083 37 24.7 37 20C37 15.2667 35.35 11.25 32.05 7.95C28.75 4.65 24.7333 3 20 3C15.3 3 11.2917 4.65 7.975 7.95C4.65833 11.25 3 15.2667 3 20C3 24.7 4.65833 28.7083 7.975 32.025C11.2917 35.3417 15.3 37 20 37Z"
-                                        fill="#4EBF19"
+                                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
                                     />
                                 </svg>
                                 <div class="model-content">
@@ -70,19 +97,20 @@
                     tabindex="-1"
                     aria-labelledby="modalCanceledLabel"
                     aria-hidden="true"
+                    ref="modalCanceled"
                 >
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    height="48"
-                                    viewBox="0 -960 960 960"
-                                    width="48"
+                                    height="40"
+                                    width="40"
+                                    viewBox="0 0 512 512"
+                                    fill="#DC3545"
                                 >
                                     <path
-                                        d="m330-288 150-150 150 150 42-42-150-150 150-150-42-42-150 150-150-150-42 42 150 150-150 150 42 42ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"
-                                        fill="#dc3545"
+                                        d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
                                     />
                                 </svg>
                                 <div class="model-content">
@@ -93,37 +121,46 @@
                     </div>
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Xac nhan'" id="accepted">
+            <div
+                class="nav-wrap-after"
+                v-else-if="status === 'Xac nhan'"
+                id="accepted"
+            >
                 <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    height="40"
+                    width="40"
+                    viewBox="0 0 512 512"
+                    fill="#4EBF19"
                 >
                     <path
-                        d="M17.05 29.1L31.2 14.95L28.9 12.7L17.05 24.55L11.05 18.55L8.8 20.8L17.05 29.1ZM20 40C17.2667 40 14.6833 39.475 12.25 38.425C9.81667 37.375 7.69167 35.9417 5.875 34.125C4.05833 32.3083 2.625 30.1833 1.575 27.75C0.525 25.3167 0 22.7333 0 20C0 17.2333 0.525 14.6333 1.575 12.2C2.625 9.76667 4.05833 7.65 5.875 5.85C7.69167 4.05 9.81667 2.625 12.25 1.575C14.6833 0.525 17.2667 0 20 0C22.7667 0 25.3667 0.525 27.8 1.575C30.2333 2.625 32.35 4.05 34.15 5.85C35.95 7.65 37.375 9.76667 38.425 12.2C39.475 14.6333 40 17.2333 40 20C40 22.7333 39.475 25.3167 38.425 27.75C37.375 30.1833 35.95 32.3083 34.15 34.125C32.35 35.9417 30.2333 37.375 27.8 38.425C25.3667 39.475 22.7667 40 20 40ZM20 37C24.7333 37 28.75 35.3417 32.05 32.025C35.35 28.7083 37 24.7 37 20C37 15.2667 35.35 11.25 32.05 7.95C28.75 4.65 24.7333 3 20 3C15.3 3 11.2917 4.65 7.975 7.95C4.65833 11.25 3 15.2667 3 20C3 24.7 4.65833 28.7083 7.975 32.025C11.2917 35.3417 15.3 37 20 37Z"
-                        fill="#4EBF19"
+                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
                     />
                 </svg>
                 <div class="nav-wrap-after-text accepted">
                     Đơn đã được chấp nhận!
                 </div>
             </div>
-            <div class="nav-wrap-after" v-else-if="status === 'Tu choi'" id="rejected">
+            <div
+                class="nav-wrap-after"
+                v-else-if="status === 'Tu choi'"
+                id="rejected"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    height="48"
-                    viewBox="0 -960 960 960"
-                    width="48"
-                    fill="none"
+                    height="40"
+                    width="40"
+                    viewBox="0 0 512 512"
+                    fill="#DC3545"
                 >
                     <path
-                        d="m330-288 150-150 150 150 42-42-150-150 150-150-42-42-150 150-150-150-42 42 150 150-150 150 42 42ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-156t86-127Q252-817 325-848.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 82-31.5 155T763-197.5q-54 54.5-127 86T480-80Zm0-60q142 0 241-99.5T820-480q0-142-99-241t-241-99q-141 0-240.5 99T140-480q0 141 99.5 240.5T480-140Zm0-340Z"
-                        fill="#dc3545"
+                        d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
                     />
                 </svg>
-                <div style="display: block;" class="nav-wrap-after-text rejected">
+                <div
+                    style="display: block"
+                    class="nav-wrap-after-text rejected"
+                >
                     Đơn đã bị từ chối!
                 </div>
             </div>
@@ -134,52 +171,60 @@
 <script>
 import axios from "axios";
 
+const apiPath = process.env.MIX_API_PATH;
+
 export default {
     name: "Show",
     props: {
+        id: Number,
         title: String,
-        userName: String,
-        email: String,
-        time: String,
         content: String,
+        email: String,
+        sender: String,
         status: String,
+        createdAt: String,
+        party: String,
         avatar: String,
-        id_request: null,
-    },
-    mounted() {
-        console.log(this.status);
+        authFlag: Boolean,
     },
     methods: {
         async onConfirm() {
             try {
-                let url = `http://127.0.0.1:8000/permission/confirm/${this.id_request}`;
-                let res = await axios.get(url);
-                console.log("res", res);
+                let isAuth = this.$route.query.param;
+                let apiRequest = `${apiPath}/permission/confirm/${this.id}?param=${isAuth}`;
+                let resRequest = await axios.get(apiRequest);
+                console.log("res", resRequest);
+
                 let vm = this;
-                let myModal = document.getElementById("modalAccepted");
-                myModal.addEventListener('hide.bs.modal', function() {
-                    vm.onFetchData()
-                })   
+                let modal = this.$refs.modalAccepted;
+                modal.addEventListener("hide.bs.modal", function () {
+                    vm.onFetchData();
+                });
             } catch (err) {
                 console.log(err);
             }
         },
         async onReject() {
             try {
-                let url = `http://127.0.0.1:8000/permission/reject/${this.id_request}`;
-                let res = await axios.get(url);
-                console.log("res", res);
+                let isAuth = this.$route.query.param;
+                let apiRequest = `${apiPath}/permission/reject/${this.id}?param=${isAuth}`;
+                let resRequest = await axios.get(apiRequest);
+                console.log("res", resRequest);
+
                 let vm = this;
-                let myModal = document.getElementById("modalCanceled");
-                myModal.addEventListener('hide.bs.modal', function() {
-                    vm.onFetchData()
-                })
+                let modal = this.$refs.modalCanceled;
+                modal.addEventListener("hide.bs.modal", function () {
+                    vm.onFetchData();
+                });
             } catch (err) {
                 console.log(err);
             }
         },
         onFetchData() {
             this.$emit("onFetchData");
+        },
+        onBackClick() {
+            this.$router.push("/list");
         },
     },
 };
