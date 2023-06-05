@@ -21,11 +21,6 @@ html {
     min-height: 100vh;
 }
 
-/* body {
-    display: flex;
-    flex-direction: column;
-} */
-
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -35,7 +30,6 @@ html {
 }
 
 /* Login */
-
 .login-wrap {
     height: 100%;
     min-height: 100vh;
@@ -169,18 +163,14 @@ option {
         line-height: 20px;
     }
 }
-
 /*End Login*/
 
 /*Header*/
 .header-container {
     background: white;
     display: flex;
-    /* height: 100px; */
     background: #ffffff;
-    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-    /* border-radius: 0px 0px 20px 20px; */
-    padding: 0 16px;
+    padding: 0 1.5rem;
     align-items: center;
     justify-content: space-between;
 }
@@ -188,7 +178,7 @@ option {
 .header-container img {
     width: 160px;
     height: 60px;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
 }
 
 .noti-container {
@@ -208,9 +198,17 @@ option {
     border-radius: 100%;
 }
 
+.login-required svg {
+    margin: 0;
+}
+
+.direct-login svg {
+    margin: 0 0.5rem;
+}
+
 .account-info {
     display: flex !important;
-    padding: .75rem 1.5rem !important;
+    padding: 0.75rem 1.5rem !important;
     align-items: center;
 }
 
@@ -270,12 +268,9 @@ option {
 }
 
 @media screen and (max-width: 768px) {
-    .noti-container img {
-        width: 36px;
-        height: 36px;
-    }
     .dropdown-menu.dropdown-menu-end {
         width: 260px;
+        margin-top: 0.75rem !important;
     }
     .account-info {
         padding: 10px 16px !important;
@@ -288,6 +283,15 @@ option {
     .account-logout {
         font-size: 18px !important;
         line-height: 20px !important;
+    }
+    .header-container img {
+        height: 40px;
+        width: 120px;
+        margin: 0.25rem 0;
+    }
+    .noti-container img {
+        width: 30px;
+        height: 30px;
     }
 }
 /*End Header*/
@@ -368,7 +372,12 @@ option {
 }
 
 .info-party {
-    font-size: .9rem;
+    font-size: 0.9rem;
+}
+
+.info-party .badge {
+    margin: 0;
+    background-color: #0063b0;
 }
 
 .info-time {
@@ -415,7 +424,7 @@ option {
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    margin-left: 10px;
+    margin-left: 0.5rem;
 }
 
 .nav-wrap-after-text.rejected {
@@ -434,10 +443,12 @@ option {
 }
 
 .btn-back {
-    width: 40px;
-    height: 40px;
-    padding: 0 !important;
-    margin-right: .5rem;
+    /* width: fit-content;
+    height: fit-content; */
+    padding: .5rem 0 !important;
+    margin-top: -1rem;
+    display: flex !important;
+    align-items: center;
 }
 
 .btn-back:hover {
@@ -450,6 +461,16 @@ option {
     color: var(--font-color);
 }
 
+.btn-back span {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    margin-left: 0.5rem;
+    color: var(--font-color);
+}
+
 @media screen and (max-width: 768px) {
     .main-wrap {
         width: 90%;
@@ -459,9 +480,9 @@ option {
         align-items: initial;
     }
     .info-title {
-        font-size: 28px;
-        line-height: 36px;
-        /* margin: 36px 20px 10px; */
+        /* font-size: 28px; */
+        line-height: 2rem;
+        align-items: flex-end;
     }
     .infomation-container {
         flex-direction: column;
@@ -470,16 +491,16 @@ option {
     }
     .info-name-mail {
         flex-direction: column;
-
     }
     .info-name-mail-party {
         width: calc(100% - 60px);
     }
     .info-name,
     .info-mail,
+    .info-party,
     .info-time {
         font-size: 20px;
-        line-height: 28px;
+        line-height: 24px;
         color: var(--font-color);
         margin: 0;
         text-overflow: ellipsis;
@@ -493,13 +514,16 @@ option {
         overflow: hidden;
     } */
     .info-mail,
+    .info-party,
     .info-time {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
     }
     .info-time {
-        align-self: end;
+        text-align: end;
         font-weight: 500;
+        font-size: 1rem;
+        line-height: initial;
     }
     .mail-wrap {
         padding: 0;
@@ -514,14 +538,18 @@ option {
         font-size: 18px;
         line-height: normal;
     }
+    .nav-wrap-after svg {
+        width: 2rem;
+        height: 2rem;
+    }
     .nav-wrap-after-text {
         font-size: 18px;
     }
-    /* body, html {
-        height: 100% !important;
-    } */
+    .btn-back {
+        margin: initial;
+        padding: 0 0 .5rem !important;
+    }
 }
-
 /*End Home*/
 
 /*Modal*/
@@ -641,7 +669,7 @@ td img {
     width: 50% !important;
     margin-left: 1.5rem;
     margin-bottom: 1.5rem;
-    margin-top: -.5rem;
+    margin-top: -0.5rem;
 }
 
 .input-group input {
@@ -727,7 +755,7 @@ td img {
     }
 
     .main-wrap {
-        padding: 2rem;
+        padding: 1.5rem;
     }
 
     .input-group {
@@ -772,40 +800,27 @@ td img {
 
     .badge {
         background-color: #0063b0 !important;
-        padding: .4rem;
-        margin-left: .4rem;
+        padding: 0.4rem;
+        margin-left: 0.4rem;
     }
 
     .table-responsive {
         /* height: 100%; */
-        height: 500px;
+        height: 600px;
     }
-
-    /* body, html {
-        height: auto;
-    } */
 }
-
 /* End List */
 
 /* Spinner */
-
-/* .spinner-grow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  } */
-
-  .spinner-wrap {
+.spinner-wrap {
     height: calc(100vh - 80px);
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-  
-  .overlay {
+}
+
+.overlay {
     position: fixed;
     background-color: #a9a9a9af;
     width: 100%;
@@ -816,15 +831,15 @@ td img {
     display: block;
     overflow-y: hidden;
     overflow-x: hidden;
-  }
+}
 
-  .spinner-border, .spinner-text {
+.spinner-border,
+.spinner-text {
     z-index: 100;
     color: #ffffff;
-  }
+}
 
-  .spinner-text {
+.spinner-text {
     margin-top: 1rem;
-  }
-
+}
 /* End Spinner */
