@@ -96,7 +96,7 @@ export default {
                 this.loadSpinner = true;
                 //user
                 let isAuth = this.$route.query.param;
-                let apiUser = `${apiPath}/info-user?param=${isAuth}`;
+                let apiUser = `${apiPath}/info-user?isAuth=${isAuth}`;
                 let resUser = (await axios.get(apiUser)).data;
 
                 this.userAvatar = resUser.avatar;
@@ -104,7 +104,7 @@ export default {
                 this.userEmail = resUser.email;
 
                 //permission
-                let apiRequest = `${apiPath}/permissions?param=${isAuth}`;
+                let apiRequest = `${apiPath}/permissions?isAuth=${isAuth}`;
                 let resRequest = (await axios.get(apiRequest)).data.data;
 
                 resRequest.sort((a, b) => {

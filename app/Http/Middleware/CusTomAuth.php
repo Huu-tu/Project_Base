@@ -14,7 +14,7 @@ class CustomAuth
     {
         $isAuth = $request->input('param');
         // dd($isAuth);
-        if($isAuth === 'isAuth'){
+        if($isAuth === 'true'){
             return $next($request);
         }else{
             if (!$request->hasCookie('asscess-token')){

@@ -97,7 +97,7 @@ export default {
                     ? (this.authFlag = true)
                     : (this.authFlag = false);
 
-                let apiRequest = `${apiPath}/permission/${permissionId}?param=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${isAuth}`;
                 let resRequest = (await axios.get(apiRequest)).data.data[0];
 
                 this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
@@ -115,7 +115,7 @@ export default {
                 this.requestParty = resRequest.party;
                 this.requestType = resRequest.type;
 
-                let apiUser = `${apiPath}/info-user?param=${isAuth}`;
+                let apiUser = `${apiPath}/info-user?isAuth=${isAuth}`;
                 let resUser = (await axios.get(apiUser)).data;
 
                 this.userAvatar = resUser.avatar;

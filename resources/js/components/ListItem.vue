@@ -92,7 +92,7 @@ export default {
         async openNew() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/is_checked/${this.id}?param=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/is_checked/${this.id}?isAuth=${isAuth}`;
                 let resRequest = await axios.get(apiRequest);
                 console.log("res", resRequest);
 

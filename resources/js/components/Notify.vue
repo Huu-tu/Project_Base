@@ -2,9 +2,8 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="infomation-wrap">
-                <button
-                    type="button"
-                    class="btn btn-back"
+                <a
+                    class="btn-back"
                     @click="onBackClick"
                     v-if="!authFlag"
                 >
@@ -19,7 +18,7 @@
                         />
                     </svg>
                     <span>Quay lại</span>
-                </button>
+                </a>
                 <div class="info-title">
                     {{ title }}
                 </div>

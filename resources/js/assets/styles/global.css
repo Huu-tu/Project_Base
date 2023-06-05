@@ -443,30 +443,32 @@ option {
 }
 
 .btn-back {
-    /* width: fit-content;
-    height: fit-content; */
+    width: fit-content;
+    height: fit-content;
     padding: .5rem 0 !important;
     margin-top: -1rem;
     display: flex !important;
     align-items: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.btn-back:hover {
+/* .btn-back:hover {
     background-color: #a5a5a5;
-}
+} */
 
 .btn-back svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.1rem;
+    height: 1.1rem;
     color: var(--font-color);
 }
 
 .btn-back span {
     font-family: "Roboto";
-    font-style: normal;
+    /* font-style: normal; */
     font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 1.1rem;
+    /* line-height: 24px; */
     margin-left: 0.5rem;
     color: var(--font-color);
 }
@@ -729,6 +731,7 @@ td img {
 .tr-default,
 .tr-responsive {
     background-color: #ebebeb;
+    cursor: pointer;
 }
 
 .tr-default.newItem,
