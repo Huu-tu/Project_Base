@@ -19,7 +19,11 @@ class CreatePermissionsTable extends Migration
             $table->string('content');
             $table->string('email');
             $table->string('sender');
+            $table->string('type');
             $table->string('status')->default('pending');
+            $table->boolean('is_checked')->default(false);
+            $table->string('party');
+            $table->boolean('isAuthen')->default(false);
             $table->timestamps();
         });
     }
