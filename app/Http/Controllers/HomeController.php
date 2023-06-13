@@ -25,8 +25,8 @@ class HomeController extends Controller
         ];
     }
      
-    public function inFoUser(Request $request){
-        $token = $request->cookie('asscess-token');
+    public function inFoUser(){
+        $token = session()->get('asscess-token');
         $user = Socialite::driver('google')->userFromToken($token);
         return response()->json($user);
     }

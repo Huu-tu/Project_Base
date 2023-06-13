@@ -8,74 +8,30 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Cookie;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+    protected $authService;
+    public function __construct(AuthService $authService){
+        $this->authService = $authService;
+    }
+
     public function loginWithGoogle(Request $request)
     {
-        $campus = $request->campus_id;
-        if(!$campus){
-            return redirect()->route('index')->with('error', 'Login failed'); 
-        }
-        if (session()->has('campus')) {
-            session()->forget('campus');
-        }
-        session()->put('campus', $campus);
-        return Socialite::driver('google')->redirect();
+        return $this->authService->loginWithGoogle($request);
     }
 
     public function callbackFromGoogle()
     {
         try {
-            $user = Socialite::driver('google')->user();
-            $is_user = User::where('email', $user->getEmail())->first();
-            $campus = session()->get('campus');
-            if(!$is_user){
-                $saveUser = User::updateOrCreate([
-                    'google_id' => $user->getId(),
-                ],[
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'password' => Hash::make($user->getName().'@'.$user->getId()),
-                    'campus' => $campus
-                ]);
-                Cookie::queue('asscess-token', $user->token, 120);
-                $backTo = Cookie::get('back-to');
-                if($backTo){
-                    return redirect($backTo);
-                }
-                return redirect()->route('home');    
-            }else{
-                // $saveUser = User::where('email',  $user->getEmail())->update([
-                //     'google_id' => $user->getId(),
-                // ]);
-                // $saveUser = User::where('email', $user->getEmail())->first();
-                $campusDb = $is_user->campus;
-                if($campusDb === $campus){
-                    Cookie::queue('asscess-token', $user->token, 120);
-                    $backTo = Cookie::get('back-to');
-                    if($backTo){
-                        return redirect($backTo);
-                    }
-                    return redirect()->route('home');    
-                }else{
-                    // $errorData = session()->put('error', 'Login failed');
-                    //return redirect()->route('index'); 
-                    return redirect()->route('index')->withErrors(['error' => 'Your error message']); 
-                }
-            } 
+            return $this->authService->callbackFromGoogle();
         } catch (\Throwable $e) {
             return redirect()->route('index')->with(['error' => $e]); 
         }
     }
 
-    public function logout(Request $request){
-        if($request->hasCookie('asscess-token')){
-            Cookie::queue(Cookie::forget('asscess-token'));
-            return redirect('/');
-        }else{
-            return response()->json(['message' => 'Logout fail'], 400);
-        }
+    public function logout(){
+        return $this->authService->logOut();
     }
 }

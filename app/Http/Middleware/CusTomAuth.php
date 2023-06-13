@@ -13,16 +13,15 @@ class CustomAuth
     public function handle(Request $request, Closure $next)
     {
         $isAuth = $request->input('param');
-        // dd($isAuth);         
-        if($isAuth === 'true'){
+        if($isAuth === true){
             return $next($request);
         }else{
-            if (!$request->hasCookie('asscess-token')){
+            if (!session()->get('asscess-token')){
                 $backTo = $request->url();
-                Cookie::queue('back-to',$backTo);
+                session()->put('back-to',$backTo);
                 return redirect()->route('index');
             }else{
-                $token = $request->cookie('asscess-token');
+                $token = session()->get('asscess-token');
                 $this->decryptToken($token);
             }
 
