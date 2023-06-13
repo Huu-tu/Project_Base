@@ -202,6 +202,11 @@
 
 <script>
 import axios from "axios";
+import JSEncrypt from "jsencrypt";
+import cryptoJs from "crypto-js";
+
+const key = '82f2ceed4c503896c8a291e560bd4325' // change to your key
+const iv = 'sinasinasisinaaa' // change to your iv
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -223,7 +228,22 @@ export default {
         async onConfirm() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
+                // let encrypt = new JSEncrypt();
+                // encrypt.setPublicKey(this.publicKey);
+                // let encryptedParams = encrypt.encrypt(
+                //     `permission/confirm/${this.id}?isAuth=${isAuth}`
+                // );
+
+                const txt = `permission/confirm/${this.id}?isAuth=${isAuth}`;
+                const cipher = cryptoJs.AES.encrypt(txt, cryptoJs.enc.Utf8.parse(key), {
+                        iv: cryptoJs.enc.Utf8.parse(iv),
+                        mode: cryptoJs.mode.CBC
+                    })
+
+                console.log("cipher " + cipher)
+
+                let apiRequest = `${apiPath}/${cipher}`;
+                // let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
                 let resRequest = await axios.get(apiRequest);
                 console.log("res", resRequest);
 

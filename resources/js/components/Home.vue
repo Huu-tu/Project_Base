@@ -52,6 +52,7 @@ import Show from "../components/Show.vue";
 import axios from "axios";
 import JSEncrypt from "jsencrypt";
 import CryptoJS from "crypto-js";
+import { convertDate } from "../convert.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -85,9 +86,9 @@ export default {
             loadSpinner: "",
             authFlag: false,
             publicKey:
-                "-----BEGIN PUBLIC KEY----- MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+6Lkd8xoz1uPrbClQACWTFI2J +6DoY32PgV0YgMkwwVtBD8AJOTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/dd iKzjYaxy3zF00sWIx0RaevIw0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8Ot twVW0jfNdjF85n06JQIDAQAB -----END PUBLIC KEY-----",
+                "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+6Lkd8xoz1uPrbClQACWTFI2J +6DoY32PgV0YgMkwwVtBD8AJOTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/dd iKzjYaxy3zF00sWIx0RaevIw0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8Ot twVW0jfNdjF85n06JQIDAQAB",
             privateKey:
-                "-----BEGIN RSA PRIVATE KEY----- MIICXgIBAAKBgQC+6Lkd8xoz1uPrbClQACWTFI2J+6DoY32PgV0YgMkwwVtBD8AJ OTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/ddiKzjYaxy3zF00sWIx0RaevIw 0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8OttwVW0jfNdjF85n06JQIDAQAB AoGATnboXt7kDhpsYv55nF/zEZiI9AVwBROfL7RDxyZnippuHzeR/jh7wkdNwf/y vwrcwSPxefddVkwaCkhOhCflTSvwghWQd+aUl+fGaF4gBag0ojps1zpuhJaPeRRO kaQ0iDFGQZ8wAuOZd8J2ovROLsb67uFpkurPBvltEeTVm6ECQQDfiSe5OTX5qWzK 7vzXf4r+6s1yevODQZyJR0GtKsx5g16AvBj9uhcbwwvaNVH1l01L2i3YFWwTTRNC JQG6vDwDAkEA2qKJ/wYQLlY3nEwMH/5B1EPbz629HlQcQ9kgFGbu9uG9iy4zZ8jI jQsEE5Oe4tCp/wx+nO/gNjFYHhzy08octwJBAIAlHnKei4S+TbHgY24enc4ZSQGx 3luGh3hjMxFUkbevScO/EQyTW5/8ppTHMF78B8HOJ63SSgyeiMXIdT9ZnYUCQQDO +2nhQYA4He9vzJ79+tufdM64gia0e7R2lyvDpN8+Yt/qz8ZizrbusCsfzXVyDVGi 39VOBdoh8/0UJRvOXV1pAkEAoV4nfjdiYlaNFhNA8+K0sUCAKOkR4AuHv4j0S/J4 YjSKZD8gk7tDbuoitE4YBAgNkEnLtoMPzLueeGw5QrHwAg== -----END RSA PRIVATE KEY-----",
+                "MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8Qu KUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEm o3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2k TQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp7 9mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uy v/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs /5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00",
         };
     },
     methods: {
@@ -105,18 +106,19 @@ export default {
 
                 /*Encode for params (?)*/
                 let encrypt = new JSEncrypt();
-                encrypt.setPublicKey(this.publicKey);
+                encrypt.setPrivateKey(this.privateKey);
 
                 let encryptedParams = encrypt.encrypt(
-                    `${permissionId}&isAuth=${isAuth}`
+                    `${permissionId}?isAuth=${isAuth}`
                 );
-                // console.log("encryptedParams " + encryptedParams);
+                console.log("encryptedParams " + encryptedParams);
                 let encodedParams = encodeURIComponent(
                     window.btoa(encryptedParams)
                 );
-                // console.log("encode " + encodedParams);
+                console.log("encode " + encodedParams);
                 // let apiRequest = `${apiPath}/permission/${encodedParams}`;
-                let apiRequest = `${apiPath}/permission/${permissionId}&isAuth=${isAuth}`;
+
+                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${isAuth}`;
                 let resRequest = (await axios.get(apiRequest)).data.data[0];
 
                 /*End encode for params */
@@ -124,41 +126,48 @@ export default {
                 /*Encode for json */
 
                 let jsonString = JSON.stringify(resRequest);
+                let encrypteJson = encrypt.encrypt(jsonString);
+                console.log("encrypteJson: " + encrypteJson)
+
+                let encodeJson = encodeURIComponent(window.btoa(encrypteJson));
+                console.log("encodeJson: " + encodeJson)
 
                 let symmetricKey = CryptoJS.lib.WordArray.random(16).toString(); // Generate a random 128-bit AES key
-                console.log("symmetric " + symmetricKey);
+                // console.log("symmetric " + symmetricKey);
 
                 let encryptedJson = CryptoJS.AES.encrypt(
                     jsonString,
                     symmetricKey
                 ).toString();
 
-                console.log("encrypted Json: " + encryptedJson);
+                // console.log("encrypted Json: " + encryptedJson);
 
                 // Encrypt the symmetric key using RSA
                 let encryptedSymmetricKey = encrypt.encrypt(
                     symmetricKey.toString()
                 );
-                console.log(
-                    "encrypted Symmetric Key: " + encryptedSymmetricKey
-                );
+                // console.log(
+                //     "encrypted Symmetric Key: " + encryptedSymmetricKey
+                // );
                 /* End encode for json */
 
                 /* Decode for json */
-                let decrypt = new JSEncrypt();
-                decrypt.setPrivateKey(this.privateKey);
-                let decryptedSymmetricKey = decrypt.decrypt(
-                    encryptedSymmetricKey
-                );
-                console.log("decryptedSymmetricKey: " + decryptedSymmetricKey);
-                // Decrypt the JSON data using AES
-                let decryptedJson = CryptoJS.AES.decrypt(
-                    encryptedJson,
-                    decryptedSymmetricKey
-                );
-                let jsonStringDecoded = decryptedJson.toString(CryptoJS.enc.Utf8);
-                let decryptedData = JSON.parse(jsonStringDecoded);
-                console.log("decryptedData: " + decryptedData)
+                // let decrypt = new JSEncrypt();
+                // decrypt.setPrivateKey(this.privateKey);
+                // let decryptedSymmetricKey = decrypt.decrypt(
+                //     encryptedSymmetricKey
+                // );
+                // // console.log("decryptedSymmetricKey: " + decryptedSymmetricKey);
+                // // Decrypt the JSON data using AES
+                // let decryptedJson = CryptoJS.AES.decrypt(
+                //     encryptedJson,
+                //     decryptedSymmetricKey
+                // );
+                // let jsonStringDecoded = decryptedJson.toString(
+                //     CryptoJS.enc.Utf8
+                // );
+                // let decryptedData = JSON.parse(jsonStringDecoded);
+                // console.log("decryptedData: " + decryptedData);
 
                 /* End decode for json */
 
@@ -168,9 +177,7 @@ export default {
                 this.requestTitle = resRequest.title;
                 this.requestSender = resRequest.sender;
                 this.requestEmail = resRequest.email;
-                this.requestCreatedTime = this.convertDate(
-                    resRequest.created_at
-                );
+                this.requestCreatedTime = convertDate(resRequest.created_at);
                 this.requestContent = resRequest.content;
                 this.requestId = resRequest.id;
                 this.requestStatus = resRequest.status;
@@ -189,26 +196,6 @@ export default {
                 console.log(error);
                 this.loadSpinner = false;
             }
-        },
-        convertDate(inputDate) {
-            let date = new Date(inputDate);
-            // Chuyển đổi sang định dạng AM/PM
-            let hours = date.getHours() % 12 || 12;
-            let minutes = date.getMinutes();
-            let period = date.getHours() >= 12 ? " PM" : " AM";
-            // Chuyển đổi sang định dạng ngày/tháng/năm
-            let day = date.getDate();
-            let month = date.getMonth() + 1; // Tháng trong JavaScript đếm từ 0, nên cần +1
-            let year = date.getFullYear();
-            // Xuất giờ cuối cùng
-            let outputDate = `${hours}:${minutes
-                .toString()
-                .padStart(2, "0")}${period} ${day
-                .toString()
-                .padStart(2, "0")}/${month
-                .toString()
-                .padStart(2, "0")}/${year}`;
-            return outputDate;
         },
     },
 };

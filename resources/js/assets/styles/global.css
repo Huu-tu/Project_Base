@@ -583,7 +583,7 @@ option {
         font-size: 18px;
     }
     .btn-back {
-        margin: initial;
+        /* margin: initial; */
         /* padding: 0 0 .5rem !important; */
     }
 }
@@ -668,6 +668,7 @@ img {
 .msg-time {
     width: 150px;
     font-size: 0.9rem;
+    text-align: right;
 }
 
 table {
