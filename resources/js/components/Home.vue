@@ -85,9 +85,9 @@ export default {
             loadSpinner: "",
             authFlag: false,
             publicKey:
-                "-----BEGIN PUBLIC KEY----- MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+6Lkd8xoz1uPrbClQACWTFI2J +6DoY32PgV0YgMkwwVtBD8AJOTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/dd iKzjYaxy3zF00sWIx0RaevIw0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8Ot twVW0jfNdjF85n06JQIDAQAB -----END PUBLIC KEY-----",
+                "-----BEGIN RSA PUBLIC KEY-----MEgCQQCo9+BpMRYQ/dL3DS2CyJxRF+j6ctbT3/Qp84+KeFhnii7NT7fELilKUSnxS30WAvQCCo2yU1orfgqr41mM70MBAgMBAAE=-----END RSA PUBLIC KEY-----",
             privateKey:
-                "-----BEGIN RSA PRIVATE KEY----- MIICXgIBAAKBgQC+6Lkd8xoz1uPrbClQACWTFI2J+6DoY32PgV0YgMkwwVtBD8AJ OTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/ddiKzjYaxy3zF00sWIx0RaevIw 0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8OttwVW0jfNdjF85n06JQIDAQAB AoGATnboXt7kDhpsYv55nF/zEZiI9AVwBROfL7RDxyZnippuHzeR/jh7wkdNwf/y vwrcwSPxefddVkwaCkhOhCflTSvwghWQd+aUl+fGaF4gBag0ojps1zpuhJaPeRRO kaQ0iDFGQZ8wAuOZd8J2ovROLsb67uFpkurPBvltEeTVm6ECQQDfiSe5OTX5qWzK 7vzXf4r+6s1yevODQZyJR0GtKsx5g16AvBj9uhcbwwvaNVH1l01L2i3YFWwTTRNC JQG6vDwDAkEA2qKJ/wYQLlY3nEwMH/5B1EPbz629HlQcQ9kgFGbu9uG9iy4zZ8jI jQsEE5Oe4tCp/wx+nO/gNjFYHhzy08octwJBAIAlHnKei4S+TbHgY24enc4ZSQGx 3luGh3hjMxFUkbevScO/EQyTW5/8ppTHMF78B8HOJ63SSgyeiMXIdT9ZnYUCQQDO +2nhQYA4He9vzJ79+tufdM64gia0e7R2lyvDpN8+Yt/qz8ZizrbusCsfzXVyDVGi 39VOBdoh8/0UJRvOXV1pAkEAoV4nfjdiYlaNFhNA8+K0sUCAKOkR4AuHv4j0S/J4 YjSKZD8gk7tDbuoitE4YBAgNkEnLtoMPzLueeGw5QrHwAg== -----END RSA PRIVATE KEY-----",
+                "-----BEGIN RSA PRIVATE KEY-----MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8QuKUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEmo3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2kTQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp79mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uyv/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs/5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00-----END RSA PRIVATE KEY-----",
         };
     },
     methods: {
@@ -108,15 +108,15 @@ export default {
                 encrypt.setPublicKey(this.publicKey);
 
                 let encryptedParams = encrypt.encrypt(
-                    `${permissionId}&isAuth=${isAuth}`
+                    `${isAuth}`
                 );
-                // console.log("encryptedParams " + encryptedParams);
+                console.log("encryptedParams " + encryptedParams);
                 let encodedParams = encodeURIComponent(
                     window.btoa(encryptedParams)
                 );
-                // console.log("encode " + encodedParams);
+                console.log("encode " + encodedParams);
                 // let apiRequest = `${apiPath}/permission/${encodedParams}`;
-                let apiRequest = `${apiPath}/permission/${permissionId}&isAuth=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${encodedParams}`;
                 let resRequest = (await axios.get(apiRequest)).data.data[0];
 
                 /*End encode for params */
@@ -126,22 +126,22 @@ export default {
                 let jsonString = JSON.stringify(resRequest);
 
                 let symmetricKey = CryptoJS.lib.WordArray.random(16).toString(); // Generate a random 128-bit AES key
-                console.log("symmetric " + symmetricKey);
+                // console.log("symmetric " + symmetricKey);
 
                 let encryptedJson = CryptoJS.AES.encrypt(
                     jsonString,
                     symmetricKey
                 ).toString();
 
-                console.log("encrypted Json: " + encryptedJson);
+                // console.log("encrypted Json: " + encryptedJson);
 
                 // Encrypt the symmetric key using RSA
                 let encryptedSymmetricKey = encrypt.encrypt(
                     symmetricKey.toString()
                 );
-                console.log(
-                    "encrypted Symmetric Key: " + encryptedSymmetricKey
-                );
+                // console.log(
+                //     "encrypted Symmetric Key: " + encryptedSymmetricKey
+                // );
                 /* End encode for json */
 
                 /* Decode for json */
@@ -150,7 +150,7 @@ export default {
                 let decryptedSymmetricKey = decrypt.decrypt(
                     encryptedSymmetricKey
                 );
-                console.log("decryptedSymmetricKey: " + decryptedSymmetricKey);
+                // console.log("decryptedSymmetricKey: " + decryptedSymmetricKey);
                 // Decrypt the JSON data using AES
                 let decryptedJson = CryptoJS.AES.decrypt(
                     encryptedJson,
@@ -158,7 +158,7 @@ export default {
                 );
                 let jsonStringDecoded = decryptedJson.toString(CryptoJS.enc.Utf8);
                 let decryptedData = JSON.parse(jsonStringDecoded);
-                console.log("decryptedData: " + decryptedData)
+                // console.log("decryptedData: " + decryptedData)
 
                 /* End decode for json */
 

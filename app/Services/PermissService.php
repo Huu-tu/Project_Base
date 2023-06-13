@@ -5,6 +5,9 @@ namespace App\Services;
 use App\Repositories\PermissionRepository;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Key;
+use Illuminate\Support\Facades\Crypt;
 
 class PermissService{
     protected $permissionRepository;
@@ -14,10 +17,17 @@ class PermissService{
     }
 
     public function getAll(){
-        $result = $this->permissionRepository->getAll();
+        $responseData = $this->permissionRepository->getAll();
+        $encryptionKey = 'key';
+        $encryptionMethod = 'AES-256-CBC';
+        $iv = substr(md5($encryptionKey), 0, 16);
+        
+        $ResponseData = openssl_encrypt($responseData, $encryptionMethod, $encryptionKey, 0, $iv);
+        // $decryptedData = openssl_decrypt($encryptedData, $encryptionMethod, $encryptionKey, 0, $iv);
+
         return [
             "status" => 200,
-            "data" => $result
+            "data" => $ResponseData
         ];
     }
 

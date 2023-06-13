@@ -12,8 +12,28 @@ class CustomAuth
 {
     public function handle(Request $request, Closure $next)
     {
-        $isAuth = $request->input('param');
-        if($isAuth === true){
+        $isAuth = $request->input('isAuth');
+
+        // dd($isAuth);
+        // $private = '-----BEGIN RSA PRIVATE KEY-----
+        // MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8Qu
+        // KUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEm
+        // o3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2k
+        // TQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp7
+        // 9mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uy
+        // v/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs
+        // /5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00
+        // -----END RSA PRIVATE KEY-----';
+        
+        // // $ciphertext = 'TUpQL0tMQVVoK2N6Z1QyT0JpZEtsU1cxcEs5eEZqR2pqSkpxY3lTZWN3d0RRTnJ0TlRnWFFCa25uZ3c4MnNkOHNWdkRpUzgvMEdYVi9hdjdSSy9QOGRpVGZJMlBza0FIOHJUMnhxdW1HZW5aWmRJYTRIZzc1NzRSWmk2ajJmMWZWTmpqbGk1bTVueW1vTDI0cTI1a1V4OGhPUU5NOU04UFFPWTNmL0RnSVRzPQ%3D%3D';
+        
+        // $private = openssl_get_privatekey($private);
+        
+        // openssl_private_decrypt(base64_decode($isAuth), $plaintext, $private, OPENSSL_PKCS1_PADDING);
+        
+        // echo $plaintext;        
+
+        if($isAuth === 'true'){
             return $next($request);
         }else{
             if (!session()->get('asscess-token')){
