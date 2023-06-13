@@ -1,13 +1,8 @@
 <template>
     <div class="main-container">
         <div class="main-wrap">
-            <div class="infomation-wrap">
-                <button
-                    type="button"
-                    class="btn btn-back"
-                    @click="onBackClick"
-                    v-if="!authFlag"
-                >
+            <div class="navigation-wrap">
+                <a class="btn-back" @click="onBackClick" v-if="!authFlag">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         height="1em"
@@ -19,7 +14,22 @@
                         />
                     </svg>
                     <span>Quay lại</span>
-                </button>
+                </a>
+                <a class="btn-back" v-if="!authFlag">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 448 512"
+                        fill="#394867"
+                    >
+                        <path
+                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"
+                        />
+                    </svg>
+                    <span>Xóa</span>
+                </a>
+            </div>
+            <div class="infomation-wrap">
                 <div class="info-title">
                     {{ title }}
                 </div>
@@ -38,18 +48,29 @@
                     </div>
                     <div class="info-time">{{ createdAt }}</div>
                 </div>
+                <div class="mail-wrap">
+                    <span v-html="content"></span>
+                </div>
             </div>
-            <div class="mail-wrap">
-                {{ content }}
-            </div>
-            <div class="nav-wrap" v-if="status === 'pending'">
+            <div class="process-wrap" v-if="status === 'pending'">
                 <button
                     type="button"
-                    class="btn btn-primary"
+                    class="btn btn-success"
                     data-bs-toggle="modal"
                     data-bs-target="#modalAccepted"
                     @click="onConfirm"
                 >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1.1rem"
+                        width="1.1rem"
+                        fill="#fff"
+                        viewBox="0 0 448 512"
+                    >
+                        <path
+                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                        />
+                    </svg>
                     Xác nhận
                 </button>
                 <div
@@ -89,6 +110,17 @@
                     data-bs-target="#modalCanceled"
                     @click="onReject"
                 >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1.1rem"
+                        width="1.1rem"
+                        fill="#fff"
+                        viewBox="0 0 384 512"
+                    >
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                        />
+                    </svg>
                     Từ chối
                 </button>
                 <div
@@ -107,10 +139,10 @@
                                     height="40"
                                     width="40"
                                     viewBox="0 0 512 512"
-                                    fill="#DC3545"
+                                    fill="#dc3545"
                                 >
                                     <path
-                                        d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+                                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
                                     />
                                 </svg>
                                 <div class="model-content">
@@ -122,7 +154,7 @@
                 </div>
             </div>
             <div
-                class="nav-wrap-after"
+                class="process-wrap-after"
                 v-else-if="status === 'Xac nhan'"
                 id="accepted"
             >
@@ -137,12 +169,12 @@
                         d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
                     />
                 </svg>
-                <div class="nav-wrap-after-text accepted">
+                <div class="process-wrap-after-text accepted">
                     Đơn đã được chấp nhận!
                 </div>
             </div>
             <div
-                class="nav-wrap-after"
+                class="process-wrap-after"
                 v-else-if="status === 'Tu choi'"
                 id="rejected"
             >
@@ -151,15 +183,15 @@
                     height="40"
                     width="40"
                     viewBox="0 0 512 512"
-                    fill="#DC3545"
+                    fill="#dc3545"
                 >
                     <path
-                        d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"
+                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
                     />
                 </svg>
                 <div
                     style="display: block"
-                    class="nav-wrap-after-text rejected"
+                    class="process-wrap-after-text rejected"
                 >
                     Đơn đã bị từ chối!
                 </div>
@@ -191,7 +223,7 @@ export default {
         async onConfirm() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/confirm/${this.id}?param=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
                 let resRequest = await axios.get(apiRequest);
                 console.log("res", resRequest);
 
@@ -207,7 +239,7 @@ export default {
         async onReject() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/reject/${this.id}?param=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/reject/${this.id}?isAuth=${isAuth}`;
                 let resRequest = await axios.get(apiRequest);
                 console.log("res", resRequest);
 
