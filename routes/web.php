@@ -1,10 +1,12 @@
 <?php
 
+use phpseclib3\Crypt\RSA;
+use phpseclib3\Crypt\PublicKeyLoader;
+use phpseclib3\Crypt\loadPrivateKey;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
-
 
 Route::get('/', [
     HomeController::class,
@@ -25,6 +27,11 @@ Route::prefix('google')->name('google.')->group( function(){
     Route::any('callback', [AuthController::class, 'callbackFromGoogle'])->name('callback');
 });
 
+Route::get('/permissions' ,[
+    PermissionController::class,
+    'index'
+]);
+
 Route::group(['middleware' =>['customAuTh']], function (){
     Route::get('/home/{id}', [
         HomeController::class,
@@ -36,10 +43,6 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'inFoUser'
     ]);
 
-    Route::get('/permissions' ,[
-        PermissionController::class,
-        'index'
-    ]);
     
     Route::get('/permission' ,[
         PermissionController::class,

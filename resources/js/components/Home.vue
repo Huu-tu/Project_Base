@@ -86,9 +86,9 @@ export default {
             loadSpinner: "",
             authFlag: false,
             publicKey:
-                "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+6Lkd8xoz1uPrbClQACWTFI2J +6DoY32PgV0YgMkwwVtBD8AJOTHnPh5ZZFTXmq9xrLGXT9O6I+PtxkybUYUv4/dd iKzjYaxy3zF00sWIx0RaevIw0HmoH1sTQDxArHFke/jFpLWbV0OQTvBNBjAwD8Ot twVW0jfNdjF85n06JQIDAQAB",
+                "-----BEGIN RSA PUBLIC KEY-----MEgCQQCo9+BpMRYQ/dL3DS2CyJxRF+j6ctbT3/Qp84+KeFhnii7NT7fELilKUSnxS30WAvQCCo2yU1orfgqr41mM70MBAgMBAAE=-----END RSA PUBLIC KEY-----",
             privateKey:
-                "MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8Qu KUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEm o3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2k TQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp7 9mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uy v/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs /5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00",
+                "-----BEGIN RSA PRIVATE KEY-----MIIBOgIBAAJBAKj34GkxFhD90vcNLYLInFEX6Ppy1tPf9Cnzj4p4WGeKLs1Pt8QuKUpRKfFLfRYC9AIKjbJTWit+CqvjWYzvQwECAwEAAQJAIJLixBy2qpFoS4DSmoEmo3qGy0t6z09AIJtH+5OeRV1be+N4cDYJKffGzDa88vQENZiRm0GRq6a+HPGQMd2kTQIhAKMSvzIBnni7ot/OSie2TmJLY4SwTQAevXysE2RbFDYdAiEBCUEaRQnMnbp79mxDXDf6AU0cN/RPBjb9qSHDcWZHGzUCIG2Es59z8ugGrDY+pxLQnwfotadxd+Uyv/Ow5T0q5gIJAiEAyS4RaI9YG8EWx/2w0T67ZUVAw8eOMB6BIUg0Xcu+3okCIBOs/5OiPgoTdSy7bcF9IGpSE8ZgGKzgYQVZeN97YE00-----END RSA PRIVATE KEY-----",
         };
     },
     methods: {
@@ -109,7 +109,7 @@ export default {
                 encrypt.setPrivateKey(this.privateKey);
 
                 let encryptedParams = encrypt.encrypt(
-                    `${permissionId}?isAuth=${isAuth}`
+                    `${isAuth}`
                 );
                 console.log("encryptedParams " + encryptedParams);
                 let encodedParams = encodeURIComponent(
@@ -117,8 +117,7 @@ export default {
                 );
                 console.log("encode " + encodedParams);
                 // let apiRequest = `${apiPath}/permission/${encodedParams}`;
-
-                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${isAuth}`;
+                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${encodedParams}`;
                 let resRequest = (await axios.get(apiRequest)).data.data[0];
 
                 /*End encode for params */
