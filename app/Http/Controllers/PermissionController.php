@@ -4,87 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Permission;
+use App\Services\PermissService;
 
 class PermissionController extends Controller
 {
+    protected $permissService;
+    public function __construct(PermissService $permissService){
+        $this->permissService = $permissService;
+    }
+
     public function index(){
-        $result = Permission::all();
-        return [
-            "status" => 200,
-            "data" => $result
-        ];
+        return $this->permissService->getAll();
     }
 
     public function search(Request $request){
-        $result = Permission::where('title', 'LIKE','%'.$request->keyword.'%')->get();
-        return [
-            "status" => 200,
-            "data" => $result 
-        ];
+        return $this->permissService->search($request);
     }
     
     public function show($id){
-        $result = Permission::where('id', $id)->get();
-        return [
-            "status" => 200,
-            "data" => $result
-        ];
+        return $this->permissService->show($id);
     }
 
-    public function store(){
-        request()->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'email' => 'required',
-            'sender' => 'required',
-            'type' => 'required',
-            'party' => 'required'
-        ]);
-        $result = Permission::create([
-            'title' => request('title'),
-            'content' => request('content'),
-            'email' => request('email'),
-            'sender' => request('sender'),
-            'type' => request('type'),
-            'party' => request('party')
-        ]);
-        return response()->json($result);
+    public function store(Request $request){
+        return $this->permissService->store($request);
     }
 
     public function isChecked($id){
-        $permission = Permission::findOrFail($id);
-        $permission->update(['is_checked' => true]);
-        return [
-            "status" => 200,
-            "message" => 'Success'
-        ];
+        return $this->permissService->isChecked($id);
     }
 
     public function confirm($id){
-        $permission = Permission::findOrFail($id);
-        $permission->status = 'Xac nhan';
-        $permission->save();
-        return [
-            "status" => 200,
-            "message" => 'Success'
-        ];
+        return $this->permissService->confirm($id);
     }
 
     public function reject($id){
-        $permission = Permission::findOrFail($id);
-        $permission->status = 'Tu choi';
-        $permission->save();
-        return [
-            "status" => 200,
-            "message" => 'Success'
-        ];
+        return $this->permissService->reject($id);
     }
 
     public function delete($id){
-        $result = Permission::find($id)->delete();
-        return [
-            "status" => 200,
-            "message" => 'Success'
-        ];    
+        return $this->permissService->delete($id);    
     }
 }

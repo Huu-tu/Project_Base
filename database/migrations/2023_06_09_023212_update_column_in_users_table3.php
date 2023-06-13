@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateColumnInTable extends Migration
+class UpdateColumnInUsersTable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateColumnInTable extends Migration
      */
     public function up()
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->boolean('is_checked')->default(false);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
         });
     }
 
@@ -25,7 +25,7 @@ class UpdateColumnInTable extends Migration
      */
     public function down()
     {
-        Schema::table('permissions', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateColumnInTable2 extends Migration
+class UpdateColumnInUsersTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class UpdateColumnInTable2 extends Migration
      */
     public function up()
     {
-        Schema::table('permissions', function (Blueprint $table) {
-            $table->string('party');
-            $table->boolean('isAuthen')->default(false);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')->default('pending');
         });
     }
 
@@ -26,7 +25,7 @@ class UpdateColumnInTable2 extends Migration
      */
     public function down()
     {
-        Schema::table('permissions', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
