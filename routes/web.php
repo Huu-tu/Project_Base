@@ -1,12 +1,11 @@
 <?php
 
 use phpseclib3\Crypt\RSA;
-use phpseclib3\Crypt\PublicKeyLoader;
-use phpseclib3\Crypt\loadPrivateKey;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CommentsController;
 
 Route::get('/', [
     HomeController::class,
@@ -32,6 +31,28 @@ Route::get('/permissions' ,[
     'index'
 ]);
 
+// Comment
+Route::get('/comments',[
+    CommentsController::class, 
+    'index'
+]);
+
+Route::get('/comments/get-reply/{id}',[
+    CommentsController::class, 
+    'getReply'
+]);
+
+Route::post('/comment/store',[
+    CommentsController::class, 
+    'store'
+]);
+
+Route::post('/comment/reply',[
+    CommentsController::class, 
+    'reply'
+]);
+
+//
 Route::group(['middleware' =>['customAuTh']], function (){
     Route::get('/home/{id}', [
         HomeController::class,
@@ -42,7 +63,6 @@ Route::group(['middleware' =>['customAuTh']], function (){
         HomeController::class,
         'inFoUser'
     ]);
-
     
     Route::get('/permission' ,[
         PermissionController::class,
@@ -73,6 +93,21 @@ Route::group(['middleware' =>['customAuTh']], function (){
         PermissionController::class,
         'delete'
     ]);
+
+    // Route::get('/comments' ,[
+    //     CommentsController::class,
+    //     'index'
+    // ]);    
+
+    // Route::post('/comments/store',[
+    //     CommentsController::class, 
+    //     'store'
+    // ]);
+
+    // Route::post('/comments/destroy',[
+    //     CommentsController::class, 
+    //     'delete'
+    // ]);
 
     Route::get('/logout',[
         AuthController::class,
