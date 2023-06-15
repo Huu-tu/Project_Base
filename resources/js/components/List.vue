@@ -133,18 +133,18 @@ export default {
                 //permission
                 let apiRequest = `${apiPath}/permissions?isAuth=${isAuth}`;
                 let resRequest = (await axios.get(apiRequest)).data.data;
-                const iv = md5('key').substring(0, 16);
-                console.log(iv)
-                const cipher = CryptoJS.AES.decrypt(resRequest, CryptoJS.enc.Utf8.parse('key'), {
-                    iv: CryptoJS.enc.Utf8.parse(iv),
-                    mode: CryptoJS.mode.CBC
-                })
-                let decode = CryptoJS.enc.Utf8.stringify(cipher).toString();
-                console.log('resutl is',decode)
+                // const iv = md5('key').substring(0, 16);
+                // console.log(iv)
+                // const cipher = CryptoJS.AES.decrypt(resRequest, CryptoJS.enc.Utf8.parse('key'), {
+                //     iv: CryptoJS.enc.Utf8.parse(iv),
+                //     mode: CryptoJS.mode.CBC
+                // })
+                // let decode = CryptoJS.enc.Utf8.stringify(cipher).toString();
+                // console.log('resutl is',decode)
 
-                resRequest.sort((a, b) => {
-                    return new Date(b.created_at) - new Date(a.created_at);
-                });
+                // resRequest.sort((a, b) => {
+                //     return new Date(b.created_at) - new Date(a.created_at);
+                // });
                 this.items = resRequest;
 
                 this.loadSpinner = false;

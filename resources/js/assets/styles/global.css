@@ -3,18 +3,23 @@
     --var-light: #ffffff;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
 
 html,
 body {
-    background: rgb(242, 124, 33);
+    /* background: rgb(242, 124, 33);
     background: linear-gradient(
             135deg,
             rgba(242, 124, 33, 1) 0%,
             rgba(0, 146, 255, 1) 100%
         )
-        no-repeat;
+        no-repeat; */
     /* height: 100%; */
+    /* background: url("https://lh3.googleusercontent.com/-VAblLLiVSIU/WtmwRjlufdI/AAAAAAAAAAM/j15O2wggVKALnxu97khgc5Cvz3z7h2uhgCLcBGAs/w380-h234-p-e365-k-no-nd/starry_sky_galaxy_universe_sky_night_118591_1920x1080.jpg"); */
+    background: url(../images/bg2.jpg);
+    -webkit-background-size: cover;
+    background-size: cover;
+    /* background-repeat: no-repeat; */
     padding: 0;
     margin: 0;
 }
@@ -84,7 +89,7 @@ html {
     font-size: 18px;
     font-weight: 400;
     line-height: 20px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     text-decoration: none;
     padding: 6px 12px;
     display: flex;
@@ -95,7 +100,7 @@ select {
     border: none !important;
     font-size: 18px !important;
     line-height: 20px !important;
-    font-family: 'Roboto Condensed', sans-serif !important;
+    font-family: "Roboto Condensed", sans-serif !important;
     color: var(--font-color) !important;
     height: 100%;
     -webkit-appearance: none;
@@ -124,7 +129,7 @@ option {
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 @media screen and (max-width: 768px) {
@@ -238,7 +243,7 @@ option {
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .account-email {
@@ -260,7 +265,7 @@ option {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 23px !important;
-    font-family: 'Roboto Condensed', sans-serif !important;
+    font-family: "Roboto Condensed", sans-serif !important;
 }
 
 .account-logout:hover {
@@ -310,10 +315,10 @@ option {
     background: #ffffff;
     /* border: 1px solid rgba(0, 0, 0, 0.11); */
     /* box-shadow: 20px 20px 5px 0px rgba(0, 0, 0, 0.25); */
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     /* border-top-left-radius: 0;
     border-top-right-radius: 0; */
-    width: 80%;
+    width: 75%;
     height: max-content;
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -323,14 +328,125 @@ option {
 .navigation-wrap {
     background-color: #ededed;
     padding: 0.5rem 1rem;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
     display: flex;
+    justify-content: space-between;
 }
 
-.infomation-wrap {
+.infomation-wrap,
+.discussion-wrap {
     padding: 1rem;
 }
+
+/* Discuss */
+.list-comment > .row {
+    /* border-top: 1px solid rgba(57, 72, 103, 0.3); */
+    width: 100%;
+    margin: 0;
+    padding: .75rem 0;
+    padding-bottom: 0;
+}
+
+/* .list-comment .row:last-child {
+    border-bottom: 1px solid rgba(57, 72, 103, 0.3);
+} */
+
+.list-comment .row p {
+    margin: 0;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1rem;
+    color: var(--font-color);
+}
+
+.user > .badge {
+    background-color: #0063b0;
+}
+
+.user-discuss {
+    width: calc(100% - 1.5rem - 44px);
+    padding: 0;
+}
+
+.user-discuss .comment {
+    background: rgba(57, 72, 103, 0.1);
+    border-radius: .5rem;
+    padding: .5rem;
+    margin: .5rem 0 !important;
+}
+
+.toggle-reply, .add-comment a {
+    text-decoration: none;
+    color: var(--font-color);
+    opacity: 0.6;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1rem;
+}
+
+.toggle-reply {
+    padding-left: 56px;
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.toggle-reply svg {
+    margin-right: .5rem;
+}
+
+.toggle-reply:hover, .add-comment a:hover {
+    color: #0063b0;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.comment-replies, .add-comment a {
+    /* width: calc(100% - 1.5rem - 44px); */
+    padding-left: 56px;
+}
+
+.comment-replies .row {
+    padding-bottom: 0.5rem;
+}
+
+.add-comment a {
+    font-size: .9rem;
+}
+
+.editor-area {
+    padding: 0;
+}
+
+.editor-area .ck-editor {
+    padding-left: 68px;
+}
+
+.editor-area .btn-submit {
+    float: right;
+}
+
+.wrap-text {
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--font-color);
+}
+
+.user-avatar > img {
+    width: 44px;
+    height: 44px;
+}
+
+.ck-editor__editable {
+    min-height: 80px;
+}
+
+.btn-submit {
+    margin-top: .5rem;
+    background-color: #0063b0;
+}
+
+/*End discuss*/
 
 .infomation-container {
     display: flex;
@@ -351,7 +467,7 @@ option {
 }
 
 .info-title {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 1.6rem;
@@ -373,7 +489,7 @@ option {
 .info-name,
 .info-mail,
 .info-time {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
     font-size: 1.3rem;
     line-height: 36px;
@@ -392,6 +508,10 @@ option {
     opacity: 0.8;
 }
 
+.info-party {
+    opacity: 1;
+}
+
 .info-party .badge {
     margin: 0;
     background-color: #0063b0;
@@ -403,7 +523,7 @@ option {
 } */
 
 .mail-wrap {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
     font-size: 1.2rem;
     line-height: 24px;
@@ -419,7 +539,7 @@ option {
 }
 
 .process-wrap button {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 1.1rem;
@@ -441,7 +561,7 @@ option {
 }
 
 .process-wrap-after-text {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -469,30 +589,83 @@ option {
     height: fit-content; */
     /* padding: .5rem 0 !important; */
     /* margin-top: -1rem; */
-    display: flex;
+    /* display: flex;
     align-items: center;
     text-decoration: none;
-    cursor: pointer;
-    margin-right: 1rem;
+    cursor: pointer; */
+    /* margin-right: 1rem; */
 }
-/* 
-.btn-back:hover {
-    background-color: #a5a5a5;
-} */
 
-.btn-back svg {
+.sample-nav {
+    display: flex;
+}
+
+.btn-back,
+.btn-delete {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    /* border: 1px solid #000; */
+    position: relative;
+    padding-left: 2rem;
+    margin-left: 0.25rem;
+    overflow: hidden;
+    transition: all 0.55s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.btn-back:after {
+    content: url(../images/back.svg);
+    left: 10px;
+    position: absolute;
+    top: 6px;
+    bottom: 0;
+}
+
+.btn-delete:after {
+    content: url(../images/delete.svg);
+    left: 10px;
+    position: absolute;
+    top: 6px;
+    bottom: 0;
+}
+
+.btn-back:hover,
+.btn-delete:hover {
+    border-radius: 999rem;
+    width: 100px;
+    -webkit-transition: all 0.55s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all 0.55s cubic-bezier(0.645, 0.045, 0.355, 1);
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    width: 72px;
+}
+
+.btn-back:hover a,
+.btn-delete:hover a {
+    opacity: 1;
+    -webkit-transition: opacity 0.55s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: opacity 0.55s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.btn-back svg,
+.btn-delete svg {
     width: 1.1rem;
     height: 1.1rem;
     color: var(--font-color);
 }
 
-.btn-back span {
-    font-family: 'Roboto Condensed', sans-serif;
+.btn-back a,
+.btn-delete a,
+.sample-text {
+    font-family: "Roboto Condensed", sans-serif;
     /* font-style: normal; */
     font-weight: 700;
     font-size: 1.1rem;
-    /* line-height: 24px; */
-    margin-left: 0.5rem;
+    line-height: 2rem;
+    /* margin-left: 0.5rem; */
     color: var(--font-color);
 }
 
@@ -605,7 +778,7 @@ option {
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .modal-body svg {
@@ -815,11 +988,11 @@ td img {
     justify-content: center;
     font-size: 1.2rem;
     font-weight: 400;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 .error-wrap svg {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
 }
 
 @media screen and (max-width: 768px) {

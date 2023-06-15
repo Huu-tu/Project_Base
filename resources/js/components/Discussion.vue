@@ -35,14 +35,57 @@
                     {{ content }}
                 </div>
             </div>
-            <div style="padding-bottom: 4rem"></div>
+            <div class="discussion-wrap">
+                <div class="wrap-text">Lorem ipsum</div>
+                <div class="list-comment">
+                    <Comment
+                        v-for="comment in comments"
+                        :key="comment.id"
+                        v-bind="comment"
+                    >
+                    </Comment>
+                </div>
+                <div class="wrap-text">Your comment</div>
+                <ckeditor
+                    :editor="editor"
+                    v-model="editorData"
+                    :config="editorConfig"
+                ></ckeditor>
+                <button class="btn btn-primary btn-submit">Đăng</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Comment from "./Comment.vue";
+
 export default {
-    name: "Notify",
+    name: "Discussion",
+    data() {
+        return {
+            editor: ClassicEditor,
+            editorData: "",
+            editorConfig: {
+                language: "vi",
+            },
+            comments: [
+                {
+                    id: 2217,
+                    author: "George",
+                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    timestamp: "10/21/2022 12:14:19",
+                },
+                {
+                    id: 2216,
+                    author: "Stephanie",
+                    body: "Comment Two",
+                    timestamp: "10/23/2022 12:14:12",
+                },
+            ],
+        };
+    },
     props: {
         id: Number,
         title: String,
@@ -54,6 +97,9 @@ export default {
         party: String,
         avatar: String,
         authFlag: Boolean,
+    },
+    components: {
+        Comment: Comment,
     },
     methods: {
         onBackClick() {
