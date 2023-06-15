@@ -35,14 +35,12 @@ class PermissionRepository extends BaseRepository{
 
     public function confirm($id){
         $permission = $this->_model->findOrFail($id);
-        $permission->status = 'Xac nhan';
-        return $permission->save();
+        return $permission->update(['status' => 1]);
     }
 
     public function reject($id){
         $permission = $this->_model->findOrFail($id);
-        $permission->status = 'Tu choi';
-        return $permission->save();
+        return $permission->update(['status' => 2]);
     }
 
     public function delete($id){

@@ -14,6 +14,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'http://127.0.0.1:8000/permissions/store',
         'http://127.0.0.1:8000/permission/edit/1',
-        'http://127.0.0.1:8000/permission/delete/1'
+        'http://127.0.0.1:8000/permission/delete/1',
+        'http://127.0.0.1:8000/comment/store',
+        'http://127.0.0.1:8000/comment/reply'
     ];
 }

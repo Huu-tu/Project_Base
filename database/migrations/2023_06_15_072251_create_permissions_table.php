@@ -19,8 +19,8 @@ class CreatePermissionsTable extends Migration
             $table->string('content');
             $table->string('email');
             $table->string('sender');
-            $table->string('type');
-            $table->string('status')->default('pending');
+            $table->integer('type');
+            $table->integer('status')->default(0);
             $table->boolean('is_checked')->default(false);
             $table->string('party');
             $table->boolean('isAuthen')->default(false);
