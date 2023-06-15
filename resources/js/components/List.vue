@@ -55,7 +55,7 @@
                                     :title="item.title"
                                     :content="item.content"
                                     :sender="item.sender"
-                                    :createdAt="convertDate(item.created_at)"
+                                    :createdAt="convertDateTime(item.created_at)"
                                     :avatar="`https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
                                         item.sender
                                     )}&rounded=true&?bold=true`"
@@ -87,6 +87,7 @@
 import Header from "../layouts/Header.vue";
 import ListItem from "../components/ListItem.vue";
 import axios from "axios";
+import { convertDate } from "../convert.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -132,18 +133,18 @@ export default {
                 //permission
                 let apiRequest = `${apiPath}/permissions?isAuth=${isAuth}`;
                 let resRequest = (await axios.get(apiRequest)).data.data;
-                const iv = md5('key').substring(0, 16);
-                console.log(iv)
-                const cipher = CryptoJS.AES.decrypt(resRequest, CryptoJS.enc.Utf8.parse('key'), {
-                    iv: CryptoJS.enc.Utf8.parse(iv),
-                    mode: CryptoJS.mode.CBC
-                })
-                let decode = CryptoJS.enc.Utf8.stringify(cipher).toString();
-                console.log('resutl is',decode)
+                // const iv = md5('key').substring(0, 16);
+                // console.log(iv)
+                // const cipher = CryptoJS.AES.decrypt(resRequest, CryptoJS.enc.Utf8.parse('key'), {
+                //     iv: CryptoJS.enc.Utf8.parse(iv),
+                //     mode: CryptoJS.mode.CBC
+                // })
+                // let decode = CryptoJS.enc.Utf8.stringify(cipher).toString();
+                // console.log('resutl is',decode)
 
-                resRequest.sort((a, b) => {
-                    return new Date(b.created_at) - new Date(a.created_at);
-                });
+                // resRequest.sort((a, b) => {
+                //     return new Date(b.created_at) - new Date(a.created_at);
+                // });
                 this.items = resRequest;
 
                 this.loadSpinner = false;
@@ -151,26 +152,6 @@ export default {
                 console.log(e);
                 this.loadSpinner = false;
             }
-        },
-        convertDate(inputDate) {
-            let date = new Date(inputDate);
-            // Chuyển đổi sang định dạng AM/PM
-            let hours = date.getHours() % 12 || 12;
-            let minutes = date.getMinutes();
-            let period = date.getHours() >= 12 ? " PM" : " AM";
-            // Chuyển đổi sang định dạng ngày/tháng/năm
-            let day = date.getDate();
-            let month = date.getMonth() + 1; // Tháng trong JavaScript đếm từ 0, nên cần +1
-            let year = date.getFullYear();
-            // Xuất giờ cuối cùng
-            let outputDate = `${hours}:${minutes
-                .toString()
-                .padStart(2, "0")}${period} ${day
-                .toString()
-                .padStart(2, "0")}/${month
-                .toString()
-                .padStart(2, "0")}/${year}`;
-            return outputDate;
         },
         async onSearch(keyword) {
             try {
@@ -190,6 +171,9 @@ export default {
                 console.log(e);
             }
         },
+        convertDateTime(date) {
+            return convertDate(date);
+        }
     },
 };
 </script>

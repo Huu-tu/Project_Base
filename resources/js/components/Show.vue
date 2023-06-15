@@ -2,32 +2,15 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="navigation-wrap">
-                <a class="btn-back" @click="onBackClick" v-if="!authFlag">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 512 512"
-                        fill="#394867"
-                    >
-                        <path
-                            d="M205 34.8c11.5 5.1 19 16.6 19 29.2v64H336c97.2 0 176 78.8 176 176c0 113.3-81.5 163.9-100.2 174.1c-2.5 1.4-5.3 1.9-8.1 1.9c-10.9 0-19.7-8.9-19.7-19.7c0-7.5 4.3-14.4 9.8-19.5c9.4-8.8 22.2-26.4 22.2-56.7c0-53-43-96-96-96H224v64c0 12.6-7.4 24.1-19 29.2s-25 3-34.4-5.4l-160-144C3.9 225.7 0 217.1 0 208s3.9-17.7 10.6-23.8l160-144c9.4-8.5 22.9-10.6 34.4-5.4z"
-                        />
-                    </svg>
-                    <span>Quay lại</span>
-                </a>
-                <a class="btn-back" v-if="!authFlag">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 448 512"
-                        fill="#394867"
-                    >
-                        <path
-                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"
-                        />
-                    </svg>
-                    <span>Xóa</span>
-                </a>
+                <div class="sample-text">Subject name: Lorem ipsum</div>
+                <div class="sample-nav">
+                    <div class="btn-back">
+                        <a @click="onBackClick" v-if="!authFlag"> Quay lại </a>
+                    </div>
+                    <div class="btn-delete">
+                        <a v-if="!authFlag"> Xóa </a>
+                    </div>
+                </div>
             </div>
             <div class="infomation-wrap">
                 <div class="info-title">
@@ -170,7 +153,7 @@
                     />
                 </svg>
                 <div class="process-wrap-after-text accepted">
-                    Đơn đã được chấp nhận!
+                    Lorem ipsum dolor sit amet
                 </div>
             </div>
             <div
@@ -193,7 +176,7 @@
                     style="display: block"
                     class="process-wrap-after-text rejected"
                 >
-                    Đơn đã bị từ chối!
+                    Lorem ipsum dolor sit amet
                 </div>
             </div>
         </div>
@@ -202,6 +185,11 @@
 
 <script>
 import axios from "axios";
+import JSEncrypt from "jsencrypt";
+import cryptoJs from "crypto-js";
+
+const key = "82f2ceed4c503896c8a291e560bd4325"; // change to your key
+const iv = "sinasinasisinaaa"; // change to your iv
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -223,7 +211,26 @@ export default {
         async onConfirm() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
+                // let encrypt = new JSEncrypt();
+                // encrypt.setPublicKey(this.publicKey);
+                // let encryptedParams = encrypt.encrypt(
+                //     `permission/confirm/${this.id}?isAuth=${isAuth}`
+                // );
+
+                const txt = `permission/confirm/${this.id}?isAuth=${isAuth}`;
+                const cipher = cryptoJs.AES.encrypt(
+                    txt,
+                    cryptoJs.enc.Utf8.parse(key),
+                    {
+                        iv: cryptoJs.enc.Utf8.parse(iv),
+                        mode: cryptoJs.mode.CBC,
+                    }
+                );
+
+                console.log("cipher " + cipher);
+
+                let apiRequest = `${apiPath}/${cipher}`;
+                // let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
                 let resRequest = await axios.get(apiRequest);
                 console.log("res", resRequest);
 

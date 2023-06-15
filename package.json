@@ -19,6 +19,8 @@
         "sass-loader": "^13.2.2"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^38.0.1",
+        "@ckeditor/ckeditor5-vue2": "^3.0.1",
         "bootstrap": "^5.2.3",
         "bootstrap-vue": "^2.23.1",
         "crypto-js": "^4.1.1",
