@@ -12,8 +12,8 @@ class CommentsController extends Controller
         $this->commentService = $commentService;
     }
 
-    public function index(){
-        return $this->commentService->getAll();
+    public function index($id){
+        return $this->commentService->getAll($id);
     }
 
     public function store(Request $request){

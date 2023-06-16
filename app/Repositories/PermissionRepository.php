@@ -24,6 +24,10 @@ class PermissionRepository extends BaseRepository{
         return $this->_model->where('id', $id)->get();
     }
 
+    public function getComment($id){
+        return $this->_model::find($id)->comments;
+    }
+
     public function store($data){
         return $this->create($data);
     }
