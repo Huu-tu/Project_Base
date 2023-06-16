@@ -31,6 +31,10 @@ Route::get('/permissions' ,[
     'index'
 ]);
 
+Route::get('/info-user' ,[
+    HomeController::class,
+    'inFoUser'
+]);
 
 Route::group(['middleware' =>['customAuTh']], function (){
     Route::get('/home/{id}', [
@@ -38,10 +42,10 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'home'
     ])->name('home');
 
-    Route::get('/info-user' ,[
-        HomeController::class,
-        'inFoUser'
-    ]);
+    // Route::get('/info-user' ,[
+    //     HomeController::class,
+    //     'inFoUser'
+    // ]);
     
     Route::get('/permission' ,[
         PermissionController::class,
