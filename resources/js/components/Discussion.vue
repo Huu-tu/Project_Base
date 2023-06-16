@@ -56,7 +56,7 @@
                     v-model="editorData"
                     :config="editorConfig"
                 ></ckeditor>
-                <button class="btn btn-primary btn-submit">Đăng</button>
+                <button class="btn btn-primary btn-submit" @click="onSubmitComment">Đăng</button>
             </div>
         </div>
     </div>
@@ -118,11 +118,33 @@ export default {
         },
         async fetchData() {
             try {
-                let apiRequest = `${apiPath}/comments`;
+                let apiRequest = `${apiPath}/permission/getComment/${this.id}`;
                 let resRequest = (await axios.get(apiRequest)).data;
                 console.log(resRequest)
                 this.comments = resRequest
             } catch(e) {
+                console.log(e)
+            }
+        },
+        async onSubmitComment() {
+            try {
+                let infoUser = (await axios.get(`${apiPath}/info-user`)).data;
+                console.log({
+                    content: this.editorData,
+                    name: infoUser.name,
+                    user_id: infoUser.id,
+                    post_id: this.id,
+                })
+                let apiRequest = `${apiPath}/comment/store`
+                let send = await axios.post(apiRequest, {
+                    content: this.editorData,
+                    name: infoUser.name,
+                    user_id: infoUser.id,
+                    post_id: this.id,
+                })
+                console.log(infoUser)
+                this.fetchData();
+            } catch (e) {
                 console.log(e)
             }
         }

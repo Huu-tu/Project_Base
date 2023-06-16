@@ -65,7 +65,7 @@
                 v-model="editorData"
                 :config="editorConfig"
             ></ckeditor>
-            <button class="btn btn-primary btn-submit">Đăng</button>
+            <button class="btn btn-primary btn-submit" @click="getComment">Đăng</button>
         </div>
     </div>
 </template>
@@ -144,6 +144,9 @@ export default {
                 console.log(e);
             }
         },
+        getComment() {
+            console.log(this.editorData)
+        }
     },
 };
 </script>
