@@ -25,10 +25,12 @@ class CommentService{
     }
 
     public function store($request){
+        $user_id = $request->header('google_id');
+
         $data = $request->only([
             'content',
             'name',
-            'user_id',
+            'user_id' => $user_id,
             'post_id'
         ]);
 
