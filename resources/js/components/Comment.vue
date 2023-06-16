@@ -10,9 +10,7 @@
                 <!-- <span class="badge">chức vụ</span> -->
                 <span>{{ createdAt }}</span>
             </p>
-            <p class="comment">
-                {{ content }}
-            </p>
+            <p class="comment" v-html="content"></p>
         </div>
         <div class="add-comment">
             <a @click="openReply">Add a comment</a>

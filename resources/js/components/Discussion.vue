@@ -129,12 +129,9 @@ export default {
         async onSubmitComment() {
             try {
                 let infoUser = (await axios.get(`${apiPath}/info-user`)).data;
-                console.log({
-                    content: this.editorData,
-                    name: infoUser.name,
-                    user_id: infoUser.id,
-                    post_id: this.id,
-                })
+                console.log(
+                    infoUser
+                )
                 let apiRequest = `${apiPath}/comment/store`
                 let send = await axios.post(apiRequest, {
                     content: this.editorData,
