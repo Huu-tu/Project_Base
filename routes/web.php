@@ -31,28 +31,7 @@ Route::get('/permissions' ,[
     'index'
 ]);
 
-// Comment
-Route::get('/comments',[
-    CommentsController::class, 
-    'index'
-]);
 
-Route::get('/comments/get-reply/{id}',[
-    CommentsController::class, 
-    'getReply'
-]);
-
-Route::post('/comment/store',[
-    CommentsController::class, 
-    'store'
-]);
-
-Route::post('/comment/reply',[
-    CommentsController::class, 
-    'reply'
-]);
-
-//
 Route::group(['middleware' =>['customAuTh']], function (){
     Route::get('/home/{id}', [
         HomeController::class,
@@ -94,20 +73,25 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'delete'
     ]);
 
-    // Route::get('/comments' ,[
-    //     CommentsController::class,
-    //     'index'
-    // ]);    
+    Route::get('/permission/getComment/{id}',[
+        PermissionController::class, 
+        'getComment'
+    ]);
 
-    // Route::post('/comments/store',[
-    //     CommentsController::class, 
-    //     'store'
-    // ]);
-
-    // Route::post('/comments/destroy',[
-    //     CommentsController::class, 
-    //     'delete'
-    // ]);
+    Route::get('/comments/get-reply/{id}',[
+        CommentsController::class, 
+        'getReply'
+    ]);
+    
+    Route::post('/comment/store',[
+        CommentsController::class, 
+        'store'
+    ]);
+    
+    Route::post('/comment/reply',[
+        CommentsController::class, 
+        'reply'
+    ]);
 
     Route::get('/logout',[
         AuthController::class,

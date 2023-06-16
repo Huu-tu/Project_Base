@@ -8,8 +8,8 @@ class CommentRepository extends BaseRepository{
         return Comments::class;
     }
 
-    public function index(){
-        return $this->_model::all();
+    public function index($id){
+        return $this->_model::find($id)->permission;
     }
 
     public function getReply($id){

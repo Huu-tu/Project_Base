@@ -47,6 +47,11 @@ class PermissService{
         ];
     }
 
+    public function getComment($id){
+        $result = $this->permissionRepository->getComment($id);
+        return response()->json($result);
+    }
+
     public function store($request){
         $data = $request->only([
             'title',

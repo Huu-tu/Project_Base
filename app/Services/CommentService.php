@@ -14,8 +14,8 @@ class CommentService{
         $this->repliesRepository = $repliesRepository;
     }
 
-    public function getAll(){
-        $result = $this->commentRepository->index();
+    public function getAll($id){
+        $result = $this->commentRepository->index($id);
         return response()->json($result);
     }
 

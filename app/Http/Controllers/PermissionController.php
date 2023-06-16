@@ -25,6 +25,10 @@ class PermissionController extends Controller
         return $this->permissService->show($id);
     }
 
+    public function getComment($id){
+        return $this->permissService->getComment($id);
+    }
+
     public function store(Request $request){
         return $this->permissService->store($request);
     }
