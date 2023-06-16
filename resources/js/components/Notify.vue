@@ -49,7 +49,7 @@ export default {
         content: String,
         email: String,
         sender: String,
-        status: String,
+        status: Number,
         createdAt: String,
         party: String,
         avatar: String,

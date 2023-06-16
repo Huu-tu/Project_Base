@@ -6,18 +6,18 @@
 
         <div class="user-discuss col-md-auto">
             <p class="user">
-                <span>{{ author }} </span>
-                <span class="badge">chức vụ</span>
-                <span>{{ timestamp }}</span>
+                <span>{{ user }} </span>
+                <!-- <span class="badge">chức vụ</span> -->
+                <span>{{ createdAt }}</span>
             </p>
             <p class="comment">
-                {{ body }}
+                {{ content }}
             </p>
         </div>
         <div class="add-comment">
             <a @click="openReply">Add a comment</a>
         </div>
-        <div class="user-reply col-md-12">
+        <div class="user-reply col-md-12" v-if="hasComment">
             <a @click="openComment" v-if="!isComment" class="toggle-reply">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
                         d="M307 477.2c-11.5-5.1-19-16.6-19-29.2v-64H176C78.8 384 0 305.2 0 208C0 94.7 81.5 44.1 100.2 33.9c2.5-1.4 5.3-1.9 8.1-1.9c10.9 0 19.7 8.9 19.7 19.7c0 7.5-4.3 14.4-9.8 19.5C108.8 80.1 96 97.6 96 128c0 53 43 96 96 96h96v-64c0-12.6 7.4-24.1 19-29.2s25-3 34.4 5.4l160 144c6.7 6.1 10.6 14.7 10.6 23.8s-3.8 17.7-10.6 23.8l-160 144c-9.4 8.5-22.9 10.6-34.4 5.4z"
                     />
                 </svg>
-                Xem tất cả xxx phản hồi
+                Xem tất cả {{ numberOfReplies }} phản hồi
             </a>
             <a @click="openComment" v-if="isComment" class="toggle-reply">
                 <svg
@@ -50,7 +50,11 @@
                     v-for="reply in replies"
                     :key="reply.id"
                     v-bind="reply"
-                    type="reply"
+                    :id="reply.id"
+                    :reply="reply.reply"
+                    :user="reply.name"
+                    :commentId="reply.commentId"
+                    :createdAt="reply.created_at"
                 />
             </div>
         </div>
@@ -69,13 +73,19 @@
 <script>
 import ReplyComment from "./ReplyComment.vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import axios from "axios";
+
+const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "Comment",
     props: {
-        author: { type: String, required: true },
-        body: { type: String, required: true },
-        timestamp: { type: String, required: true },
+        id: Number,
+        content: String,
+        user: String,
+        userId: Number,
+        postId: Number,
+        createdAt: String,
     },
     components: {
         ReplyComment: ReplyComment,
@@ -85,25 +95,37 @@ export default {
             isComment: false,
             isAddComment: false,
             editor: ClassicEditor,
+
             editorData: "",
             editorConfig: {
                 language: "vi",
             },
             replies: [
-                {
-                    id: 2217,
-                    author: "George",
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    timestamp: "10/21/2022 12:14:19",
-                },
-                {
-                    id: 2216,
-                    author: "Stephanie",
-                    body: "Reply Two",
-                    timestamp: "10/23/2022 12:14:12",
-                },
+                // {
+                //     id: 2217,
+                //     author: "George",
+                //     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                //     timestamp: "10/21/2022 12:14:19",
+                // },
+                // {
+                //     id: 2216,
+                //     author: "Stephanie",
+                //     body: "Reply Two",
+                //     timestamp: "10/23/2022 12:14:12",
+                // },
             ],
         };
+    },
+    computed: {
+        numberOfReplies() {
+            return this.replies.length
+        },
+        hasComment() {
+            return this.numberOfReplies > 0 ? true : false;
+        }
+    },
+    mounted() {
+        this.fetchData();
     },
     methods: {
         openComment() {
@@ -111,6 +133,16 @@ export default {
         },
         openReply() {
             this.isAddComment = !this.isAddComment;
+        },
+        async fetchData() {
+            try {
+                let apiRequest = `${apiPath}/comments/get-reply/${this.id}`;
+                let resRequest = (await axios.get(apiRequest)).data;
+                console.log(resRequest);
+                this.replies = resRequest;
+            } catch (e) {
+                console.log(e);
+            }
         },
     },
 };

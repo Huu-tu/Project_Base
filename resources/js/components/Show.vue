@@ -35,7 +35,7 @@
                     <span v-html="content"></span>
                 </div>
             </div>
-            <div class="process-wrap" v-if="status === 'pending'">
+            <div class="process-wrap" v-if="status === 0">
                 <button
                     type="button"
                     class="btn btn-success"
@@ -138,7 +138,7 @@
             </div>
             <div
                 class="process-wrap-after"
-                v-else-if="status === 'Xac nhan'"
+                v-else-if="status === 1"
                 id="accepted"
             >
                 <svg
@@ -158,7 +158,7 @@
             </div>
             <div
                 class="process-wrap-after"
-                v-else-if="status === 'Tu choi'"
+                v-else-if="status === 2"
                 id="rejected"
             >
                 <svg
@@ -201,7 +201,7 @@ export default {
         content: String,
         email: String,
         sender: String,
-        status: String,
+        status: Number,
         createdAt: String,
         party: String,
         avatar: String,

@@ -6,12 +6,12 @@
 
         <div class="user-discuss col-md-auto">
             <p class="user">
-                <span>{{ author }} </span>
-                <span class="badge">chức vụ</span>
-                <span>{{ timestamp }}</span>
+                <span>{{ user }} </span>
+                <!-- <span class="badge">chức vụ</span> -->
+                <span>{{ createdAt }}</span>
             </p>
             <p class="comment">
-                {{ body }}
+                {{ reply }}
             </p>
         </div>
     </div>
@@ -23,9 +23,11 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
     name: "ReplyComment",
     props: {
-        author: { type: String, required: true },
-        body: { type: String, required: true },
-        timestamp: { type: String, required: true },
+        id: Number,
+        reply: String,
+        user: String,
+        commentId: Number,
+        createdAt: String
     },
     data() {
         return {
