@@ -387,7 +387,7 @@ option {
     padding-left: 56px;
     display: flex;
     align-items: center;
-    margin-bottom: .5rem;
+    /* margin-bottom: .5rem; */
 }
 
 .toggle-reply svg {
@@ -405,16 +405,16 @@ option {
     padding-left: 56px;
 }
 
-.comment-replies .row {
+/* .comment-replies .row {
     padding-bottom: 0.5rem;
-}
+} */
 
 .add-comment a {
     font-size: .9rem;
 }
 
 .editor-area {
-    padding: 0;
+    padding: 0.5rem 0 0 0;
 }
 
 .editor-area .ck-editor {

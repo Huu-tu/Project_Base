@@ -41,7 +41,12 @@
                     <Comment
                         v-for="comment in comments"
                         :key="comment.id"
-                        v-bind="comment"
+                        :id="comment.id"
+                        :content="comment.content"
+                        :user="comment.name"
+                        :userId="comment.user_id"
+                        :postId="comment.post_id"
+                        :createdAt="comment.created_at"
                     >
                     </Comment>
                 </div>
@@ -51,7 +56,12 @@
                     v-model="editorData"
                     :config="editorConfig"
                 ></ckeditor>
-                <button class="btn btn-primary btn-submit">Đăng</button>
+                <button
+                    class="btn btn-primary btn-submit"
+                    @click="onSubmitComment"
+                >
+                    Đăng
+                </button>
             </div>
         </div>
     </div>
@@ -60,6 +70,9 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Comment from "./Comment.vue";
+import axios from "axios";
+
+const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "Discussion",
@@ -71,18 +84,18 @@ export default {
                 language: "vi",
             },
             comments: [
-                {
-                    id: 2217,
-                    author: "George",
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    timestamp: "10/21/2022 12:14:19",
-                },
-                {
-                    id: 2216,
-                    author: "Stephanie",
-                    body: "Comment Two",
-                    timestamp: "10/23/2022 12:14:12",
-                },
+                // {
+                //     id: 2217,
+                //     author: "George",
+                //     body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                //     timestamp: "10/21/2022 12:14:19",
+                // },
+                // {
+                //     id: 2216,
+                //     author: "Stephanie",
+                //     body: "Comment Two",
+                //     timestamp: "10/23/2022 12:14:12",
+                // },
             ],
         };
     },
@@ -92,7 +105,7 @@ export default {
         content: String,
         email: String,
         sender: String,
-        status: String,
+        status: Number,
         createdAt: String,
         party: String,
         avatar: String,
@@ -101,9 +114,41 @@ export default {
     components: {
         Comment: Comment,
     },
+    mounted() {
+        this.fetchData();
+    },
     methods: {
         onBackClick() {
             this.$router.push("/list");
+        },
+        async fetchData() {
+            try {
+                let apiRequest = `${apiPath}/permission/getComment/${this.id}`;
+                let resRequest = (await axios.get(apiRequest)).data;
+                console.log(resRequest);
+                this.comments = resRequest;
+            } catch (e) {
+                console.log(e);
+            }
+        },
+        async onSubmitComment() {
+            try {
+                let infoUser = (
+                    await axios.get(`${apiPath}/info-user`)
+                ).data;
+                console.log(infoUser);
+                let apiRequest = `${apiPath}/comment/store?google-id=${infoUser.id}`;
+                let send = await axios.post(apiRequest,{
+                    content: this.editorData,
+                    name: infoUser.name,
+                    // user_id: infoUser.id,
+                    post_id: this.id,
+                });
+                console.log(infoUser);
+                this.fetchData();
+            } catch (e) {
+                console.log(e);
+            }
         },
     },
 };

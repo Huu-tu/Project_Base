@@ -13,7 +13,22 @@
             </div>
             <!-- <div class="spinner-text">ĐANG XỬ LÝ YÊU CẦU</div> -->
         </div>
-        <template v-else-if="requestType === '1' && !loadSpinner">
+        
+        <template v-if="requestType === 0 && !loadSpinner">
+            <Notify
+                :id="requestId"
+                :title="requestTitle"
+                :content="requestContent"
+                :email="requestEmail"
+                :sender="requestSender"
+                :status="requestStatus"
+                :createdAt="requestCreatedTime"
+                :party="requestParty"
+                :avatar="requestAvatar"
+                :authFlag="authFlag"
+            ></Notify>
+        </template>
+        <template v-else-if="requestType === 1 && !loadSpinner">
             <Show
                 :id="requestId"
                 :title="requestTitle"
@@ -28,22 +43,7 @@
                 @onFetchData="fetchData"
             ></Show>
         </template>
-        <template v-if="requestType === '2' && !loadSpinner">
-            <Notify
-                :id="requestId"
-                :title="requestTitle"
-                :content="requestContent"
-                :email="requestEmail"
-                :sender="requestSender"
-                :status="requestStatus"
-                :createdAt="requestCreatedTime"
-                :party="requestParty"
-                :avatar="requestAvatar"
-                :authFlag="authFlag"
-            ></Notify>
-        </template>
-        
-        <template v-else-if="requestType === '3' && !loadSpinner">
+        <template v-else-if="requestType === 2 && !loadSpinner">
             <Discussion
                 :id="requestId"
                 :title="requestTitle"
