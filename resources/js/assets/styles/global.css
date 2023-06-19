@@ -3,7 +3,7 @@
     --var-light: #ffffff;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 html,
 body {
@@ -89,7 +89,7 @@ html {
     font-size: 18px;
     font-weight: 400;
     line-height: 20px;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-decoration: none;
     padding: 6px 12px;
     display: flex;
@@ -100,7 +100,7 @@ select {
     border: none !important;
     font-size: 18px !important;
     line-height: 20px !important;
-    font-family: "Roboto Condensed", sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
     color: var(--font-color) !important;
     height: 100%;
     -webkit-appearance: none;
@@ -129,7 +129,7 @@ option {
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 @media screen and (max-width: 768px) {
@@ -243,7 +243,7 @@ option {
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .account-email {
@@ -265,7 +265,7 @@ option {
     font-size: 20px !important;
     font-weight: 400 !important;
     line-height: 23px !important;
-    font-family: "Roboto Condensed", sans-serif !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .account-logout:hover {
@@ -318,8 +318,8 @@ option {
     border-radius: 0.5rem;
     /* border-top-left-radius: 0;
     border-top-right-radius: 0; */
-    width: 75%;
-    height: max-content;
+    width: 90%;
+    /* height: max-content; */
     margin-top: 2rem;
     margin-bottom: 2rem;
     /* padding: 2rem; */
@@ -335,11 +335,19 @@ option {
 }
 
 .infomation-wrap,
-.discussion-wrap {
+.submit-wrap {
     padding: 1rem;
 }
 
+.submit-wrap {
+    padding-bottom: 4rem;
+}
+
 /* Discuss */
+.list-comment {
+    margin-bottom: 2rem;
+}
+
 .list-comment > .row {
     /* border-top: 1px solid rgba(57, 72, 103, 0.3); */
     width: 100%;
@@ -354,7 +362,7 @@ option {
 
 .list-comment .row p {
     margin: 0;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: var(--font-color);
 }
@@ -369,17 +377,39 @@ option {
 }
 
 .user-discuss .comment {
-    background: rgba(57, 72, 103, 0.1);
+    background: rgba(57, 72, 103, 0.07);
     border-radius: .5rem;
     padding: .5rem;
-    margin: .5rem 0 !important;
+    margin: .25rem 0 !important;
+}
+
+.comment span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: var(--font-color);
+}
+
+.user-discuss .user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-discuss .user span:first-child {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.user-discuss .user span:last-child {
+    opacity: 0.8;
+    font-size: .8rem;
 }
 
 .toggle-reply, .add-comment a {
     text-decoration: none;
     color: var(--font-color);
     opacity: 0.6;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
 }
 
@@ -400,14 +430,10 @@ option {
     cursor: pointer;
 }
 
-.comment-replies, .add-comment a {
-    /* width: calc(100% - 1.5rem - 44px); */
+.comment-replies {
     padding-left: 56px;
+    padding-top: 0.5rem;
 }
-
-/* .comment-replies .row {
-    padding-bottom: 0.5rem;
-} */
 
 .add-comment a {
     font-size: .9rem;
@@ -426,7 +452,7 @@ option {
 }
 
 .wrap-text {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--font-color);
@@ -449,10 +475,10 @@ option {
 /*End discuss*/
 
 .infomation-container {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin: 1rem 0;
+    align-items: flex-start; */
+    padding: 1rem 0;
 }
 
 .infomation-container img {
@@ -467,19 +493,28 @@ option {
 }
 
 .info-title {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 1.6rem;
     line-height: 30px;
     color: var(--font-color);
-    /* display: flex;
-    align-items: center; */
     padding: 0 60px;
 }
 
-.info-name-mail {
+.info-wrap-container {
+    width: 100%;
+}
+
+.info-content {
     display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.info-content-left {
+    display: flex;
+    align-items: baseline;
 }
 
 .info-name {
@@ -489,10 +524,9 @@ option {
 .info-name,
 .info-mail,
 .info-time {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
-    font-size: 1.3rem;
-    line-height: 36px;
+    font-size: 1.2rem;
     color: var(--font-color);
 }
 
@@ -503,7 +537,7 @@ option {
 .info-party,
 .info-time,
 .info-mail {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 400;
     opacity: 0.8;
 }
@@ -523,34 +557,38 @@ option {
 } */
 
 .mail-wrap {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-size: 1.2rem;
     line-height: 24px;
-    /* padding: 0 3.75rem; */
-    padding: 2rem 1rem;
-    margin: 0 3.75rem;
-    border: 1px solid rgba(57, 72, 103, 0.3);
-    border-radius: 0.5rem;
+    padding: 0 7.5rem;
+    /* border: 1px solid rgba(57, 72, 103, 0.3); */
+    /* border-radius: 0.5rem; */
 }
 
 .process-wrap {
-    padding: 1rem 4.75rem 2rem;
+    padding: 0 3.75rem;
 }
 
 .process-wrap button {
-    font-family: "Roboto Condensed", sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 1.1rem;
-    /* line-height: 1.2rem; */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
     margin-right: 8px;
-    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-    border: none;
-    border-radius: 2rem;
-    width: fit-content;
-    height: 40px;
-    padding: 0 1rem;
+    border-radius: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--font-color);
+    padding: .25rem 1rem;
+}
+
+.process-wrap button svg {
+    margin-right: .4rem;
+}
+
+.process-wrap button:hover, .process-wrap button:active, .process-wrap button:focus-visible {
+    background-color: rgba(32,33,36,0.06) !important;
+    color: var(--font-color) !important;
 }
 
 .process-wrap-after#accepted,
@@ -561,7 +599,7 @@ option {
 }
 
 .process-wrap-after-text {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;
@@ -623,7 +661,7 @@ option {
 
 .btn-delete:after {
     content: url(../images/delete.svg);
-    left: 10px;
+    left: 12px;
     position: absolute;
     top: 6px;
     bottom: 0;
@@ -640,7 +678,7 @@ option {
 }
 
 .btn-delete:hover {
-    width: 72px;
+    width: 70px;
 }
 
 .btn-back:hover a,
@@ -660,10 +698,10 @@ option {
 .btn-back a,
 .btn-delete a,
 .sample-text {
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
     /* font-style: normal; */
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 2rem;
     /* margin-left: 0.5rem; */
     color: var(--font-color);
@@ -671,63 +709,59 @@ option {
 
 @media screen and (max-width: 768px) {
     .main-wrap {
-        width: 90%;
-        /* height: 100vh; */
+        width: 100%;
+        margin: 0;
+    }
+    .navigation-wrap {
+        border-radius: 0;
     }
     .info-wrap {
         align-items: initial;
+        /* width: calc(100% - 96px); */
     }
     .info-title {
-        /* font-size: 28px; */
-        /* line-height: 2rem; */
         align-items: flex-end;
         padding: initial;
     }
-    /* .infomation-wrap {
-        padding: 1rem 0;
-    } */
     .infomation-container {
-        flex-direction: column;
+        /* flex-direction: column; */
         justify-content: initial;
         align-items: initial;
     }
-    .info-name-mail {
-        flex-direction: column;
+    .infomation-container img {
+        width: 40px;
+        height: 40px;
     }
-    .info-name-mail-party {
-        width: calc(100% - 60px);
+    .info-wrap-container {
+        width: calc(100% - 56px);
     }
+    .info-content {
+        display: block;
+    }
+
     .info-name,
     .info-mail,
     .info-party,
     .info-time {
-        font-size: 20px;
-        line-height: 24px;
+        font-size: 1rem;
+        /* line-height: 1.6rem; */
         color: var(--font-color);
-        margin: 0;
+        /* margin: 0; */
+        /* text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; */
+    }
+    .info-mail {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
     }
-    /* .info-mail {
-        margin: 0;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    } */
-    .info-mail,
+    /* .info-mail,
     .info-party,
     .info-time {
         font-size: 14px;
         font-weight: 400;
-    }
-    .info-time {
-        text-align: end;
-        font-weight: 500;
-        font-size: 1rem;
-        line-height: initial;
-        margin-top: 1rem;
-    }
+    } */
     .mail-wrap {
         margin: 0;
         font-size: 18px;
@@ -766,23 +800,47 @@ option {
 .modal-content {
     background: #fff;
     /* border: 1px solid #000000 !important; */
-    border-radius: 1.6rem;
+    /* border-radius: 1.6rem; */
     height: fit-content;
-    width: 400px;
+    /* width: 400px; */
 }
 
 .modal-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 20px;
     font-weight: 400;
     line-height: 23px;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
 }
 
 .modal-body svg {
     margin-right: 10px;
+}
+
+.modal-body img {
+    width: 240px;
+    height: 240px;
+}
+
+.modal-body .title {
+    font-weight: 700;
+    margin: 1rem;
+}
+
+.modal-body .sub-title {
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+
+.modal-body .button-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modal-body .button-wrapper button {
+    text-transform: uppercase;
+    border: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -988,7 +1046,7 @@ td img {
     justify-content: center;
     font-size: 1.2rem;
     font-weight: 400;
-    font-family: "Roboto Condensed", sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .error-wrap svg {

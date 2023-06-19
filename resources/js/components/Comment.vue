@@ -10,11 +10,14 @@
                 <!-- <span class="badge">chức vụ</span> -->
                 <span>{{ createdAt }}</span>
             </p>
-            <p class="comment" v-html="content"></p>
+            <div class="comment">
+                <span v-html="content"></span>
+                <div class="add-comment">
+                    <a @click="openReply">Add a comment</a>
+                </div>
+            </div>
         </div>
-        <div class="add-comment">
-            <a @click="openReply">Add a comment</a>
-        </div>
+
         <div class="user-reply col-md-12" v-if="hasComment">
             <a @click="openComment" v-if="!isComment" class="toggle-reply">
                 <svg
@@ -52,7 +55,7 @@
                     :reply="reply.reply"
                     :user="reply.name"
                     :commentId="reply.commentId"
-                    :createdAt="reply.created_at"
+                    :createdAt="convertDateTime(reply.created_at)"
                 />
             </div>
         </div>
@@ -63,7 +66,9 @@
                 v-model="editorData"
                 :config="editorConfig"
             ></ckeditor>
-            <button class="btn btn-primary btn-submit" @click="getComment">Đăng</button>
+            <button class="btn btn-primary btn-submit" @click="getComment">
+                Đăng
+            </button>
         </div>
     </div>
 </template>
@@ -72,6 +77,7 @@
 import ReplyComment from "./ReplyComment.vue";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
+import { convertDate } from "../convert.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -116,11 +122,11 @@ export default {
     },
     computed: {
         numberOfReplies() {
-            return this.replies.length
+            return this.replies.length;
         },
         hasComment() {
             return this.numberOfReplies > 0 ? true : false;
-        }
+        },
     },
     mounted() {
         this.fetchData();
@@ -143,8 +149,11 @@ export default {
             }
         },
         getComment() {
-            console.log(this.editorData)
-        }
+            console.log(this.editorData);
+        },
+        convertDateTime(date) {
+            return convertDate(date);
+        },
     },
 };
 </script>

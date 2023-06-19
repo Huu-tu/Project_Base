@@ -38,7 +38,7 @@
             <div class="discussion-wrap">
                 <div class="wrap-text">Lorem ipsum</div>
                 <div class="list-comment">
-                    <Comment
+                    <!-- <Comment
                         v-for="comment in comments"
                         :key="comment.id"
                         :id="comment.id"
@@ -46,9 +46,9 @@
                         :user="comment.name"
                         :userId="comment.user_id"
                         :postId="comment.post_id"
-                        :createdAt="comment.created_at"
+                        :createdAt="convertDateTime(comment.created_at)"
                     >
-                    </Comment>
+                    </Comment> -->
                 </div>
                 <div class="wrap-text">Your comment</div>
                 <ckeditor
@@ -69,8 +69,9 @@
 
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Comment from "./Comment.vue";
+// import Comment from "./Comment.vue";
 import axios from "axios";
+import { convertDate } from "../convert.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -150,6 +151,9 @@ export default {
                 console.log(e);
             }
         },
+        convertDateTime(date) {
+            return convertDate(date);
+        }
     },
 };
 </script>
