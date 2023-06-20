@@ -12,17 +12,19 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-        <template v-else-if="requestType === 1 && !loadSpinner">
+        <template v-else-if="!loadSpinner">
             <Show
                 :id="requestId"
                 :title="requestTitle"
-                :content="requestContent"
                 :email="requestEmail"
                 :sender="requestSender"
-                :status="requestStatus"
+                :content="requestContent"
+                :needConfirm="requestNeedConfirm"
+                :needFeedback="requestNeedFeedback"
                 :createdAt="requestCreatedTime"
                 :avatar="requestAvatar"
                 :authFlag="authFlag"
+                :userEmail="userEmail"
                 @onFetchData="fetchData"
             ></Show>
         </template>
@@ -50,17 +52,13 @@ export default {
         return {
             requestId: "",
             requestTitle: "",
-            requestContent: "",
             requestEmail: "",
             requestSender: "",
-            requestStatus: "",
+            requestContent: "",
+            requestNeedConfirm: "",
+            requestNeedFeedback: "",
             requestCreatedTime: "",
-            requestType: "",
             requestAvatar: "",
-            /*
-            requestSubmitField: "",
-            requestTextField: "",
-            */
 
             userName: "",
             userAvatar: "",
@@ -75,7 +73,7 @@ export default {
             try {
                 this.loadSpinner = true;
 
-                let permissionId = this.$route.params.id;
+                let mailId = this.$route.params.id;
                 let isAuth = this.$route.query.param;
                 let flagCheck = this.$route.fullPath;
 
@@ -83,27 +81,25 @@ export default {
                     ? (this.authFlag = true)
                     : (this.authFlag = false);
 
-                let apiRequest = `${apiPath}/permission/${permissionId}?isAuth=${isAuth}`;
+                let apiRequest = `${apiPath}/mail/${mailId}`;
                 let resRequest = (await axios.get(apiRequest)).data.data[0];
+                console.log(resRequest);
 
+                this.requestId = resRequest.id;
+                this.requestTitle = resRequest.title;
+                this.requestEmail = resRequest.email;
+                this.requestSender = resRequest.sender;
+                this.requestContent = resRequest.content;
+                this.requestNeedConfirm = resRequest.need_confrim; /*sai chính tả*/
+                this.requestNeedFeedback = resRequest.need_feedback;
+                this.requestCreatedTime = convertDate(resRequest.created_at);
                 this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
                     resRequest.sender
                 )}&rounded=true&?bold=true`;
-                this.requestTitle = resRequest.title;
-                this.requestSender = resRequest.sender;
-                this.requestEmail = resRequest.email;
-                this.requestCreatedTime = convertDate(resRequest.created_at);
-                this.requestContent = resRequest.content;
-                this.requestId = resRequest.id;
-                this.requestStatus = resRequest.status;
-                this.requestType = resRequest.type;
-                /*
-                this.requestSubmitField = resRequest.object.submit ?
-                this.requestTextField = resRequest.object.submit ? 
-                */
+
                 let apiUser = `${apiPath}/info-user?isAuth=${isAuth}`;
                 let resUser = (await axios.get(apiUser)).data;
-
+                    console.log(resUser)
                 this.userAvatar = resUser.avatar;
                 this.userName = resUser.name;
                 this.userEmail = resUser.email;
