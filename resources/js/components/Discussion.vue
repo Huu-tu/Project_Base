@@ -137,7 +137,7 @@ export default {
                     await axios.get(`${apiPath}/info-user`)
                 ).data;
                 console.log(infoUser);
-                let apiRequest = `${apiPath}/comment/store?google-id=${infoUser.id}`;
+                let apiRequest = `${apiPath}/comment/store?google_id=${infoUser.id}`;
                 let send = await axios.post(apiRequest,{
                     content: this.editorData,
                     name: infoUser.name,

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\CommentRepository;
 use App\Repositories\RepliesRepository;
+use App\Models\User;
 
 class CommentService{
     protected $commentRepository;
@@ -25,14 +26,14 @@ class CommentService{
     }
 
     public function store($request){
-        $user_id = $request->header('google_id');
+        $userGg = $request->input('google_id');
 
-        $data = $request->only([
-            'content',
-            'name',
-            'user_id' => $user_id,
-            'post_id'
-        ]);
+        $data = [
+            'content' => request('content'),
+            'name'=> request('name'),
+            'user_id'=> $request->input('google_id'),
+            'post_id'=> request('post_id'),
+        ];
 
         $result = $this->commentRepository->store($data);
         return response()->json($result);

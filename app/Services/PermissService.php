@@ -47,17 +47,17 @@ class PermissService{
         ];
     }
 
-    public function getComment($id){
-        $result = $this->permissionRepository->getComment($id);
-        return response()->json($result);
-    }
+    // public function getFeedback($id){
+    //     $result = $this->permissionRepository->getComment($id);
+    //     return response()->json($result);
+    // }
 
     public function store($request){
         $data = $request->only([
             'title',
             'content',
-            'email',
             'sender',
+            'email',
             'type',
             'party'
         ]);
@@ -66,7 +66,7 @@ class PermissService{
         return response()->json($result);
     }
 
-    public function isChecked($id){
+    public function needAuthent($id){
         $this->permissionRepository->isChecked($id);
         return [
             "status" => 200,
