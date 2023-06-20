@@ -2,14 +2,24 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PermissionController;
-
+use App\Http\Controllers\ReceiverMailController;
+use App\Http\Controllers\MailController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/permissions/store',[
-    PermissionController::class, 
+Route::post('/mail/store',[
+    MailController::class, 
+    'store'
+]);
+
+Route::get('/mails' ,[
+    MailController::class,
+    'index'
+]);
+
+Route::post('/receiver-mail/store',[
+    ReceiverMailController::class, 
     'store'
 ]);
