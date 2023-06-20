@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <a class="user-avatar col-md-auto">
-            <img src="../assets/images/avatar.png" />
+            <img src="../assets/images/PNG/avatar.png" />
         </a>
 
         <div class="user-discuss col-md-auto">

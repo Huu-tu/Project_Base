@@ -2,14 +2,23 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="navigation-wrap">
-                <div class="sample-text">Subject name: Lorem ipsum</div>
-                <div class="sample-nav">
-                    <div class="btn-back">
-                        <a @click="onBackClick" v-if="!authFlag"> Quay lại </a>
-                    </div>
-                    <div class="btn-delete">
-                        <a v-if="!authFlag"> Xóa </a>
-                    </div>
+                <div class="sample-text">Subject name</div>
+                <div class="navigation-wrapper">
+                    <button
+                        v-if="!authFlag"
+                        class="btn btn-outline-secondary"
+                        @click="onBackClick"
+                    >
+                        <img src="../assets/images/SVG/back.svg" />
+                    </button>
+
+                    <button
+                        v-if="!authFlag"
+                        class="btn btn-outline-secondary"
+                        @click="onDelete"
+                    >
+                        <img src="../assets/images/SVG/delete.svg" />
+                    </button>
                 </div>
             </div>
             <div class="infomation-wrap">
@@ -42,24 +51,14 @@
                 </div>
             </div>
             <div class="submit-wrap">
-                <div class="process-wrap">
+                <div class="process-wrap" v-if="type === 'cf'">
                     <button
                         type="button"
                         class="btn btn-outline-secondary"
                         data-bs-toggle="modal"
                         data-bs-target="#modalAccepted"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1.1rem"
-                            width="1.1rem"
-                            fill="currentColor"
-                            viewBox="0 0 448 512"
-                        >
-                            <path
-                                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                            />
-                        </svg>
+                        <img src="../assets/images/SVG/check.svg" />
                         Xác nhận
                     </button>
                     <div
@@ -73,7 +72,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <img src="../assets/images/modal.svg" />
+                                    <img src="../assets/images/SVG/modal.svg" />
                                     <p class="title">
                                         You have selected 'CONFIRM'
                                     </p>
@@ -101,24 +100,13 @@
                             </div>
                         </div>
                     </div>
-
                     <button
                         type="button"
                         class="btn btn-outline-secondary"
                         data-bs-toggle="modal"
                         data-bs-target="#modalCanceled"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="1.1rem"
-                            width="1.1rem"
-                            fill="currentColor"
-                            viewBox="0 0 384 512"
-                        >
-                            <path
-                                d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-                            />
-                        </svg>
+                        <img src="../assets/images/SVG/xmark.svg" />
                         Từ chối
                     </button>
                     <div
@@ -132,7 +120,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <img src="../assets/images/modal.svg" />
+                                    <img src="../assets/images/SVG/modal.svg" />
                                     <p class="title">
                                         You have selected 'REJECT'
                                     </p>
@@ -152,6 +140,54 @@
                                             type="button"
                                             class="btn btn-outline-secondary"
                                             @click="onReject"
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="process-wrap" v-else>
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalFeedBack"
+                    >
+                        <img src="../assets/images/SVG/message.svg" />
+                        Send notes
+                    </button>
+                    <div
+                        class="modal fade"
+                        id="modalFeedBack"
+                        tabindex="-1"
+                        aria-labelledby="modalFeedBackLabel"
+                        aria-hidden="true"
+                        ref="modalFeedBack"
+                    >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="../assets/images/SVG/modal.svg" />
+                                    <!-- <p class="title">
+                                        You have selected 'CONFIRM'
+                                    </p> -->
+                                    <p class="sub-title">Send FeedBack</p>
+                                    <textarea class="form-control"></textarea>
+                                    <div class="button-wrapper">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            @click="onSubmit"
                                         >
                                             Submit
                                         </button>
@@ -197,6 +233,7 @@ export default {
             editorConfig: {
                 language: "vi",
             },
+            type: "cf",
         };
     },
     methods: {
@@ -241,6 +278,10 @@ export default {
         },
         onBackClick() {
             this.$router.push("/list");
+            alert("Back clicked");
+        },
+        onDelete() {
+            alert("delete");
         },
     },
 };

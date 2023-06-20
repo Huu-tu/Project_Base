@@ -1,6 +1,6 @@
 <template>
     <div class="header-container">
-        <img :src="require('../assets/images/logo_default.png')" />
+        <img :src="require('../assets/images/PNG/logo_default.png')" />
         <div class="noti-container" v-if="!authFlag">
             <div class="dropdown">
                 <img
