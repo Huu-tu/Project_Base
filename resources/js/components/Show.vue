@@ -241,7 +241,7 @@ export default {
         async onSubmit() {
             try {
                 let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/api/receiver-mail/store`;
+                let apiRequest = `${apiPath}/receiver-mail/store`;
                 await axios.post(apiRequest, {
                     'user_mail': this.userEmail,
                     'mail_id': this.id,
