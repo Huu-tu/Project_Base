@@ -18,7 +18,7 @@ class Mails extends Model
         'email',
         'sender',
         'variant',
-        'needAuthent',
+        'needAuthen',
         'need_confirm',
         'need_feedback',
     ];
