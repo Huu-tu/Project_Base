@@ -1,5 +1,6 @@
 <template>
-    <div class="text-field-wrap">
+    <div class="editor-wrap">
+        <p>My reaction to that infomation:</p>
         <ckeditor
             :editor="editor"
             v-model="editorData"

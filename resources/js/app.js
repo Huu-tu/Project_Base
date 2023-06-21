@@ -18,6 +18,8 @@ Vue.component("app", require("./components/App.vue").default);
 Vue.use(BootstrapVue);
 Vue.use(CKEditor)
 
+export const EventBus = new Vue();
+
 new Vue({
     router,
     store,
