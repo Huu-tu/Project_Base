@@ -3,9 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ReceiverMailRepository;
-use Phpseclib3\Crypt\RSA;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Collection;
+use App\Models\User;
 
 class ReceiverMailService{
     protected $receiverMailRepository;
@@ -15,9 +13,13 @@ class ReceiverMailService{
     }
 
     public function saveData($request){
+        $idUser = $request['mail_id'];
+
+        $mail_id = User::where('google_id',$idUser)->get('id');
+
         $data = [
             'user_mail' => $request['user_mail'],
-            'mail_id' => $request['mail_id'],
+            'mail_id' => $mail_id[0]['id'],
             'confirm' => $request['confirm'],
             'feedback' => $request['feedback'],
         ];

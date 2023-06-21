@@ -17,8 +17,8 @@ class CreateReceiversMailsTable extends Migration
             $table->id();
             $table->string('user_mail');
             $table->integer('mail_id');
-            $table->boolean('confirm')->default(null);
-            $table->string('feedback', 100);
+            $table->boolean('confirm')->nullable();
+            $table->string('feedback', 100)->nullable();
             $table->timestamps();
         });
     }
