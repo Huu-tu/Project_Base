@@ -2,14 +2,22 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="navigation-wrap">
-                <div class="sample-text">Subject name: Lorem ipsum</div>
-                <div class="sample-nav">
-                    <div class="btn-back">
-                        <a @click="onBackClick" v-if="!authFlag"> Quay lại </a>
-                    </div>
-                    <div class="btn-delete">
-                        <a v-if="!authFlag"> Xóa </a>
-                    </div>
+                <div class="sample-text">Subject name</div>
+                <div class="navigation-wrapper">
+                    <button
+                        v-if="!authFlag"
+                        class="btn btn-outline-secondary"
+                        @click="onBackClick"
+                    >
+                        <img src="../assets/images/SVG/back.svg" />
+                    </button>
+
+                    <button
+                        v-if="!authFlag"
+                        class="btn btn-outline-secondary"
+                    >
+                        <img src="../assets/images/SVG/delete.svg" />
+                    </button>
                 </div>
             </div>
             <div class="infomation-wrap">
@@ -19,164 +27,173 @@
                 <div class="infomation-container">
                     <div class="info-wrap">
                         <img :src="avatar" />
-                        <div class="info-name-mail-party">
-                            <div class="info-name-mail">
-                                <div class="info-name">{{ sender }}</div>
-                                <div class="info-mail">&lt;{{ email }}&gt;</div>
-                            </div>
-                            <div class="info-party">
-                                <span class="badge">{{ party }}</span>
+                        <div class="info-wrap-container">
+                            <div class="info-content">
+                                <div class="info-content-left">
+                                    <div class="info-name">{{ sender }}</div>
+                                    <div class="info-mail">
+                                        &lt;{{ email }}&gt;
+                                    </div>
+                                </div>
+                                <div class="info-time info-content-right">
+                                    {{ createdAt }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="info-time">{{ createdAt }}</div>
                 </div>
                 <div class="mail-wrap">
                     <span v-html="content"></span>
                 </div>
             </div>
-            <div class="process-wrap" v-if="status === 0">
-                <button
-                    type="button"
-                    class="btn btn-success"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalAccepted"
-                    @click="onConfirm"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1.1rem"
-                        width="1.1rem"
-                        fill="#fff"
-                        viewBox="0 0 448 512"
+            <div class="submit-wrap">
+                <div class="process-wrap" v-if="needConfirm == 1">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalAccepted"
+                        @click="submitType(1)"
                     >
-                        <path
-                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
-                        />
-                    </svg>
-                    Xác nhận
-                </button>
-                <div
-                    class="modal fade"
-                    id="modalAccepted"
-                    tabindex="-1"
-                    aria-labelledby="modalAcceptedLabel"
-                    aria-hidden="true"
-                    ref="modalAccepted"
-                >
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="40"
-                                    width="40"
-                                    viewBox="0 0 512 512"
-                                    fill="#4EBF19"
-                                >
-                                    <path
-                                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
-                                    />
-                                </svg>
-                                <div class="model-content">
-                                    Đã duyệt đơn thành công!
+                        <img src="../assets/images/SVG/check.svg" />
+                        Xác nhận
+                    </button>
+                    <div
+                        class="modal fade"
+                        id="modalAccepted"
+                        tabindex="-1"
+                        aria-labelledby="modalAcceptedLabel"
+                        aria-hidden="true"
+                        ref="modalAccepted"
+                    >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="../assets/images/SVG/modal.svg" />
+                                    <p class="title">
+                                        You have selected 'CONFIRM'
+                                    </p>
+                                    <p class="sub-title" v-if="needFeedback == 1">
+                                        Add some notes (Optional)
+                                    </p>
+                                    <textarea class="form-control" v-if="needFeedback == 1" v-model="feedback"></textarea>
+                                    <div class="button-wrapper">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            @click="onSubmit"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalCanceled"
+                        @click="submitType(0)"
+                    >
+                        <img src="../assets/images/SVG/xmark.svg" />
+                        Từ chối
+                    </button>
+                    <div
+                        class="modal fade"
+                        id="modalCanceled"
+                        tabindex="-1"
+                        aria-labelledby="modalCanceledLabel"
+                        aria-hidden="true"
+                        ref="modalCanceled"
+                    >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="../assets/images/SVG/modal.svg" />
+                                    <p class="title">
+                                        You have selected 'REJECT'
+                                    </p>
+                                    <p class="sub-title" v-if="needFeedback == 1">
+                                        Add some notes (Optional)
+                                    </p>
+                                    <textarea class="form-control" v-if="needFeedback == 1" v-model="feedback"></textarea>
+                                    <div class="button-wrapper">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            @click="onSubmit"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <button
-                    type="button"
-                    class="btn btn-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalCanceled"
-                    @click="onReject"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1.1rem"
-                        width="1.1rem"
-                        fill="#fff"
-                        viewBox="0 0 384 512"
+                <div class="process-wrap" v-if="needFeedback == 1 && needConfirm != 1">
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalFeedBack"
                     >
-                        <path
-                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
-                        />
-                    </svg>
-                    Từ chối
-                </button>
-                <div
-                    class="modal fade"
-                    id="modalCanceled"
-                    tabindex="-1"
-                    aria-labelledby="modalCanceledLabel"
-                    aria-hidden="true"
-                    ref="modalCanceled"
-                >
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="40"
-                                    width="40"
-                                    viewBox="0 0 512 512"
-                                    fill="#dc3545"
-                                >
-                                    <path
-                                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
-                                    />
-                                </svg>
-                                <div class="model-content">
-                                    Đã từ chối đơn thành công!
+                        <img src="../assets/images/SVG/message.svg" />
+                        Send notes
+                    </button>
+                    <div
+                        class="modal fade"
+                        id="modalFeedBack"
+                        tabindex="-1"
+                        aria-labelledby="modalFeedBackLabel"
+                        aria-hidden="true"
+                        ref="modalFeedBack"
+                    >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="../assets/images/SVG/modal.svg" />
+                                    <p class="sub-title">Send FeedBack</p>
+                                    <textarea class="form-control" v-model="feedback"></textarea>
+                                    <div class="button-wrapper">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            @click="onSubmit"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div
-                class="process-wrap-after"
-                v-else-if="status === 1"
-                id="accepted"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="40"
-                    width="40"
-                    viewBox="0 0 512 512"
-                    fill="#4EBF19"
-                >
-                    <path
-                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
-                    />
-                </svg>
-                <div class="process-wrap-after-text accepted">
-                    Lorem ipsum dolor sit amet
-                </div>
-            </div>
-            <div
-                class="process-wrap-after"
-                v-else-if="status === 2"
-                id="rejected"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="40"
-                    width="40"
-                    viewBox="0 0 512 512"
-                    fill="#dc3545"
-                >
-                    <path
-                        d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"
-                    />
-                </svg>
-                <div
-                    style="display: block"
-                    class="process-wrap-after-text rejected"
-                >
-                    Lorem ipsum dolor sit amet
                 </div>
             </div>
         </div>
@@ -185,76 +202,59 @@
 
 <script>
 import axios from "axios";
-import JSEncrypt from "jsencrypt";
-import cryptoJs from "crypto-js";
-
-const key = "82f2ceed4c503896c8a291e560bd4325"; // change to your key
-const iv = "sinasinasisinaaa"; // change to your iv
+// import bootstrap from "../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "./Editor.vue";
 
 const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "Show",
+    components: {
+        Editor: Editor,
+    },
     props: {
-        id: Number,
+        id: null,
         title: String,
-        content: String,
         email: String,
         sender: String,
-        status: Number,
+        content: String,
+        needConfirm: null,
+        needFeedback: null, /*Sai kiểu dữ liệu*/
         createdAt: String,
-        party: String,
         avatar: String,
         authFlag: Boolean,
+        userEmail: String,
+    },
+    data() {
+        return {
+            editor: ClassicEditor,
+            editorData: "",
+            editorConfig: {
+                language: "vi",
+            },
+            feedback: "",
+            type: "",
+        };
     },
     methods: {
-        async onConfirm() {
+        async onSubmit() {
             try {
                 let isAuth = this.$route.query.param;
-                // let encrypt = new JSEncrypt();
-                // encrypt.setPublicKey(this.publicKey);
-                // let encryptedParams = encrypt.encrypt(
-                //     `permission/confirm/${this.id}?isAuth=${isAuth}`
-                // );
-
-                const txt = `permission/confirm/${this.id}?isAuth=${isAuth}`;
-                const cipher = cryptoJs.AES.encrypt(
-                    txt,
-                    cryptoJs.enc.Utf8.parse(key),
-                    {
-                        iv: cryptoJs.enc.Utf8.parse(iv),
-                        mode: cryptoJs.mode.CBC,
-                    }
-                );
-
-                console.log("cipher " + cipher);
-
-                let apiRequest = `${apiPath}/${cipher}`;
-                // let apiRequest = `${apiPath}/permission/confirm/${this.id}?isAuth=${isAuth}`;
-                let resRequest = await axios.get(apiRequest);
-                console.log("res", resRequest);
-
-                let vm = this;
-                let modal = this.$refs.modalAccepted;
-                modal.addEventListener("hide.bs.modal", function () {
-                    vm.onFetchData();
+                let apiRequest = `${apiPath}/api/receiver-mail/store`;
+                await axios.post(apiRequest, {
+                    'user_mail': this.userEmail,
+                    'mail_id': this.id,
+                    'confirm': this.type,
+                    'feedback': this.feedback
                 });
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        async onReject() {
-            try {
-                let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/permission/reject/${this.id}?isAuth=${isAuth}`;
-                let resRequest = await axios.get(apiRequest);
-                console.log("res", resRequest);
-
-                let vm = this;
-                let modal = this.$refs.modalCanceled;
-                modal.addEventListener("hide.bs.modal", function () {
-                    vm.onFetchData();
-                });
+                // let vm = this;
+                // let modal = this.$refs.modalAccepted;
+                // modal.addEventListener("hide.bs.modal", function () {
+                //     vm.onFetchData();
+                // });
+                // let bsModal = bootstrap.Modal.getInstance(modal);
+                // bsModal.hide();
             } catch (err) {
                 console.log(err);
             }
@@ -265,6 +265,9 @@ export default {
         onBackClick() {
             this.$router.push("/list");
         },
+        submitType(type) {
+            this.type = type;
+        }
     },
 };
 </script>

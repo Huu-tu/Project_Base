@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="login-container">
-            <img :src="require('../assets/images/logo_default.png')" />
+            <img :src="require('../assets/images/PNG/logo_default.png')" />
             <div class="select-dropdown">
                 <select
                     name
@@ -22,7 +22,7 @@
             </div>
             <div class="google-login">
                 <a class="login-text" @click="loginAuth()">
-                    <img :src="require('../assets/images/google.png')" />
+                    <img :src="require('../assets/images/PNG/google.png')" />
                     Sign in with Google
                 </a>
             </div>

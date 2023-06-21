@@ -19,17 +19,18 @@
                 <div class="infomation-container">
                     <div class="info-wrap">
                         <img :src="avatar" />
-                        <div class="info-name-mail-party">
+                        <div class="info-wrap-container">
                             <div class="info-name-mail">
                                 <div class="info-name">{{ sender }}</div>
                                 <div class="info-mail">&lt;{{ email }}&gt;</div>
+                                <div class="info-time">{{ createdAt }}</div>
                             </div>
                             <div class="info-party">
                                 <span class="badge">{{ party }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="info-time">{{ createdAt }}</div>
+                    
                 </div>
                 <div class="mail-wrap">
                     {{ content }}
