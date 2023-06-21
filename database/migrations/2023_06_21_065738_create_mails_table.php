@@ -18,7 +18,7 @@ class CreateMailsTable extends Migration
             $table->string('title');
             $table->string('email');
             $table->string('sender');
-            $table->string('content');
+            $table->string('content', 500);
             $table->boolean('needAuthen')->nullable();
             $table->string('variant')->nullable();
             $table->boolean('need_confirm')->nullable();
