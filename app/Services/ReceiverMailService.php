@@ -4,9 +4,6 @@ namespace App\Services;
 
 use App\Repositories\ReceiverMailRepository;
 use App\Models\User;
-use Phpseclib3\Crypt\RSA;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Collection;
 
 class ReceiverMailService{
     protected $receiverMailRepository;
@@ -22,12 +19,10 @@ class ReceiverMailService{
 
         $data = [
             'user_mail' => $request['user_mail'],
-            'mail_id' => $mail_id,
+            'mail_id' => $mail_id[0]['id'],
             'confirm' => $request['confirm'],
             'feedback' => $request['feedback'],
         ];
-
-        $data = $request->all();
 
         $result = $this->receiverMailRepository->saveData($data);
         return response()->json($result);

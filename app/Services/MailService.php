@@ -48,11 +48,6 @@ class MailService{
         ];
     }
 
-    // public function getFeedback($id){
-    //     $result = $this->permissionRepository->getComment($id);
-    //     return response()->json($result);
-    // }
-
     public function store($request){
         $variant = [
             (object)[
@@ -67,8 +62,8 @@ class MailService{
             'sender' => $request['sender'],
             'email' => $request['email'],
             'variant' => json_encode($variant),
-            'need_confrim' => $request['need_confrim'],
-            'need_feedback' => $request['need_feedback'],
+            'need_confirm' => $request['submit'],
+            'need_feedback' => $request['textField'],
         ];
 
         $result = $this->mailRepository->store($data);
@@ -77,7 +72,7 @@ class MailService{
 
     public function saveData($request, $id){
         $data = [
-            'need_confrim' => $request['need_confrim'],
+            'need_confirm' => $request['need_confirm'],
             'need_feedback' => $request['need_feedback'],
         ];
 
