@@ -56,7 +56,7 @@ class MailService{
     public function store($request){
         $variant = [
             (object)[
-                'subbmit' => $request['subbmit'], 
+                'submit' => $request['submit'], 
                 'textField' => $request['textField']
             ],
         ];
@@ -66,7 +66,9 @@ class MailService{
             'content' => $request['content'],
             'sender' => $request['sender'],
             'email' => $request['email'],
-            'variant' => json_encode($variant)
+            'variant' => json_encode($variant),
+            'need_confrim' => $request['need_confrim'],
+            'need_feedback' => $request['need_feedback'],
         ];
 
         $result = $this->mailRepository->store($data);
