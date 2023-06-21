@@ -1,9 +1,11 @@
 <template>
-    <div class="text-field-wrap">
+    <div class="editor-wrap">
+        <p>My reaction to that infomation:</p>
         <ckeditor
             :editor="editor"
             v-model="editorData"
             :config="editorConfig"
+            @input="emitFeedback"
         ></ckeditor>
     </div>
 </template>
@@ -24,6 +26,17 @@ export default {
             },
         };
     },
+    methods: {
+        emitFeedback() {
+            const content = this.extractContent();
+            this.$emit("feedback", content)
+        },
+        extractContent() {
+            const div = document.createElement("div");
+            div.innerHTML = this.editorData;
+            return div.textContent || div.innerText || "";
+        },
+    }
 };
 </script>
 

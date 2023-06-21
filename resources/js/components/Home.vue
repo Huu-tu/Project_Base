@@ -25,6 +25,7 @@
                 :avatar="requestAvatar"
                 :authFlag="authFlag"
                 :userEmail="userEmail"
+                :userAvatar="userAvatar"
                 @onFetchData="fetchData"
             ></Show>
         </template>
@@ -36,6 +37,7 @@ import Header from "../layouts/Header.vue";
 import Show from "../components/Show.vue";
 import axios from "axios";
 import { convertDate } from "../convert.js";
+import { EventBus } from '../app.js'
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -48,15 +50,21 @@ export default {
     mounted() {
         this.fetchData();
     },
+    // created() {
+    //     EventBus.$on('onFetchData', this.handler)
+    // },
+    // destroyed() {
+    //     EventBus.$off('onFetchData', this.handler)
+    // },
     data() {
         return {
-            requestId: "",
+            requestId: 0,
             requestTitle: "",
             requestEmail: "",
             requestSender: "",
             requestContent: "",
-            requestNeedConfirm: "",
-            requestNeedFeedback: "",
+            requestNeedConfirm: 0,
+            requestNeedFeedback: 0,
             requestCreatedTime: "",
             requestAvatar: "",
 
@@ -90,7 +98,7 @@ export default {
                 this.requestEmail = resRequest.email;
                 this.requestSender = resRequest.sender;
                 this.requestContent = resRequest.content;
-                this.requestNeedConfirm = resRequest.need_confrim; /*sai chính tả*/
+                this.requestNeedConfirm = resRequest.need_confirm; /*sai chính tả*/
                 this.requestNeedFeedback = resRequest.need_feedback;
                 this.requestCreatedTime = convertDate(resRequest.created_at);
                 this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
@@ -110,6 +118,9 @@ export default {
                 this.loadSpinner = false;
             }
         },
+        handler() {
+            this.fetchData;
+        }
     },
 };
 </script>
