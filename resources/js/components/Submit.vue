@@ -1,6 +1,9 @@
 <template>
     <div class="submit-wrap">
-        <select-option v-if="needConfirm === 1"></select-option>
+        <select-option v-if="needConfirm === 1" 
+        
+            @option-selected="handleOptionSelected"
+        ></select-option>
         <Editor v-if="needFeedback === 1"></Editor>
         <button class="btn btn-primary" type="submit">Button</button>
     </div>
@@ -19,6 +22,7 @@ export default {
     data() {
         return {
             feedback: "",
+            option: "",
             type: "",
         };
     },
@@ -57,6 +61,10 @@ export default {
         // submitType(type) {
         //     this.type = type;
         // },
+        handleOptionSelected(option) {
+            this.option = option;
+            console.log(this.option)
+        }
     },
 };
 </script>

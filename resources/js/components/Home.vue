@@ -50,13 +50,13 @@ export default {
     },
     data() {
         return {
-            requestId: "",
+            requestId: 0,
             requestTitle: "",
             requestEmail: "",
             requestSender: "",
             requestContent: "",
-            requestNeedConfirm: "",
-            requestNeedFeedback: "",
+            requestNeedConfirm: 0,
+            requestNeedFeedback: 0,
             requestCreatedTime: "",
             requestAvatar: "",
 
@@ -90,7 +90,7 @@ export default {
                 this.requestEmail = resRequest.email;
                 this.requestSender = resRequest.sender;
                 this.requestContent = resRequest.content;
-                this.requestNeedConfirm = resRequest.need_confrim; /*sai chính tả*/
+                this.requestNeedConfirm = resRequest.need_confirm; /*sai chính tả*/
                 this.requestNeedFeedback = resRequest.need_feedback;
                 this.requestCreatedTime = convertDate(resRequest.created_at);
                 this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(

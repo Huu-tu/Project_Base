@@ -7,6 +7,9 @@
                 type="radio"
                 name="radioSelect"
                 id="radioConfirm"
+                value= 1
+                v-model="optionSelected"
+                @change="emitSelection"
             />
             <label class="form-check-label" for="radioConfirm">
                 Confirm
@@ -18,6 +21,9 @@
                 type="radio"
                 name="radioSelect"
                 id="radioReject"
+                value=0
+                v-model="optionSelected"
+                @change="emitSelection"
             />
             <label class="form-check-label" for="radioReject">
                 Reject
@@ -29,6 +35,16 @@
 <script>
 export default {
     name: "SelectButton",
+    data() {
+        return {
+            optionSelected: "",
+        }
+    },
+    methods: {
+        emitSelection() {
+            this.$emit("option-selected", this.optionSelected)
+        }
+    }
 };
 </script>
 
