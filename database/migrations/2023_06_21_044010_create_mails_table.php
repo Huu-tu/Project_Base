@@ -19,10 +19,10 @@ class CreateMailsTable extends Migration
             $table->string('email');
             $table->string('sender');
             $table->string('content');
-            $table->boolean('needAuthent')->nullable();
+            $table->boolean('needAuthen')->nullable();
             $table->string('variant')->nullable();
             $table->boolean('need_confirm')->nullable();
-            $table->string('need_feedback')->nullable();
+            $table->boolean('need_feedback')->nullable();
             $table->timestamps();
         });
     }
