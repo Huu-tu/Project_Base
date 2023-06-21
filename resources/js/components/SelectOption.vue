@@ -1,32 +1,32 @@
 <template>
     <div class="select-wrap">
-        <p>Select one:</p>
-        <div class="form-check">
+        <!-- <p>Select one:</p> -->
+        <div class="wrapper">
             <input
                 class="form-check-input"
                 type="radio"
                 name="radioSelect"
                 id="radioConfirm"
-                value= 1
+                value="1"
                 v-model="optionSelected"
                 @change="emitSelection"
             />
-            <label class="form-check-label" for="radioConfirm">
-                Confirm
+            <label class="option optionConfirm" for="radioConfirm">
+                <div class="dot"></div>
+                <span>Confirm</span>
             </label>
-        </div>
-        <div class="form-check">
             <input
                 class="form-check-input"
                 type="radio"
                 name="radioSelect"
                 id="radioReject"
-                value=0
+                value="0"
                 v-model="optionSelected"
                 @change="emitSelection"
             />
-            <label class="form-check-label" for="radioReject">
-                Reject
+            <label class="option optionReject" for="radioReject">
+                <div class="dot"></div>
+                <span>Reject</span>
             </label>
         </div>
     </div>

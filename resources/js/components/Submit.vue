@@ -1,29 +1,38 @@
 <template>
     <div class="submit-wrap">
-        <select-option v-if="needConfirm === 1" 
-        
+        <select-option
+            v-if="needConfirm === 1"
             @option-selected="handleOptionSelected"
         ></select-option>
-        <Editor v-if="needFeedback === 1"></Editor>
-        <button class="btn btn-primary" type="submit">Button</button>
+        <Editor 
+        v-if="needFeedback === 1" 
+        v-model="feedback"
+        @feedback="handleFeedBack"
+        ></Editor>
+        <button class="btn btn-primary" type="submit" @click="onSubmit">Submit</button>
     </div>
 </template>
 
 <script>
 import SelectOption from "./SelectOption.vue";
 import Editor from "./Editor.vue";
+import axios from "axios";
+import { EventBus }  from '../app.js'
+
+const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "Submit",
     props: {
-        needConfirm: null,
-        needFeedback: null,
+        needConfirm: Number,
+        needFeedback: Number,
+        userEmail: String,
+        mailId: Number,
     },
     data() {
         return {
             feedback: "",
             option: "",
-            type: "",
         };
     },
     components: {
@@ -31,40 +40,31 @@ export default {
         Editor,
     },
     methods: {
-        // async onSubmit() {
-        //     try {
-        //         let isAuth = this.$route.query.param;
-        //         let apiRequest = `${apiPath}/api/receiver-mail/store`;
-        //         await axios.post(apiRequest, {
-        //             user_mail: this.userEmail,
-        //             mail_id: this.id,
-        //             confirm: this.type,
-        //             feedback: this.feedback,
-        //         });
-        //         // let vm = this;
-        //         // let modal = this.$refs.modalAccepted;
-        //         // modal.addEventListener("hide.bs.modal", function () {
-        //         //     vm.onFetchData();
-        //         // });
-        //         // let bsModal = bootstrap.Modal.getInstance(modal);
-        //         // bsModal.hide();
-        //     } catch (err) {
-        //         console.log(err);
-        //     }
-        // },
-        // onFetchData() {
-        //     this.$emit("onFetchData");
-        // },
-        // onBackClick() {
-        //     this.$router.push("/list");
-        // },
-        // submitType(type) {
-        //     this.type = type;
-        // },
+        async onSubmit() {
+            try {
+                let isAuth = this.$route.query.param;
+                let apiRequest = `${apiPath}/receiver-mail/store`;
+                await axios.post(apiRequest, {
+                    user_mail: this.userEmail,
+                    mail_id: this.mailId,
+                    confirm: this.option,
+                    feedback: this.feedback,
+                });
+                console.log(this.feedback, this.option)
+                alert("Successfully submitted")
+            } catch (err) {
+                console.log(err);
+            }
+        },
         handleOptionSelected(option) {
             this.option = option;
-            console.log(this.option)
-        }
+        },
+        handleFeedBack(feedback) {
+            this.feedback = feedback;
+        },
+        // onFetchData() {
+        //     EventBus.$emit("onFetchData");
+        // }
     },
 };
 </script>

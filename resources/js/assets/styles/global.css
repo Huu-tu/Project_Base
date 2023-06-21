@@ -7,7 +7,7 @@
 
 html,
 body {
-    background: url(../images/PNG/bg2.jpg);
+    background: url(../images/PNG/bg1.jpg);
     -webkit-background-size: cover;
     background-size: cover;
     padding: 0;
@@ -259,14 +259,15 @@ option {
 }
 
 .main-wrap {
-    background: #fff;
+    /* background: #fff; */
     border-radius: 0.5rem;
-    width: 90%;
+    width: 75%;
     margin: 2rem 0;
 }
 
 .navigation-wrap {
-    background-color: #ededed;
+    background: rgba(248, 243, 240, 0.8);
+
     padding: 0.5rem 1rem;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
@@ -278,30 +279,45 @@ option {
 .body-wrap {
     padding: 1rem;
     display: flex;
+    background-color: rgb(255, 255, 255, .99);
 }
 
 .body-wrap img {
     height: 2.5rem;
     width: 2.5rem;
+    border-radius: 50%;
+}
+
+.body-wrap:nth-child(3) {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
 }
 
 .submit-wrap {
     font-family: "Roboto", sans-serif;
     font-size: 1.2rem;
-    /* padding: 1rem 0; */
-    padding-bottom: 4rem;
+    padding: 1rem;
+    margin: 0 1rem;
+    width: 100%;
+    border-radius: .5rem;
+    border: 1px solid #e1e3e1;
+}
+
+.submit-wrap:hover {
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149);
+    border: 1px solid transparent;
 }
 
 .submit-wrap button {
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 1rem;
-    border-radius: 1.125rem;
+    border-radius: .5rem;
     padding: 0.25rem 1rem;
 }
 
 .submit-wrap p {
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
     font-weight: 700;
     font-size: 1rem;
     color: var(--font-color);
@@ -316,8 +332,6 @@ option {
 .editor-wrap {
     padding: 1rem 0;
 }
-
-
 
 /* Discuss */
 .list-comment {
@@ -454,12 +468,14 @@ option {
 
 .body-container {
     padding: 0 1rem;
+    width: 100%;
 }
 
 .info-wrap {
     display: flex;
     align-items: center;
     width: 100%;
+    height: 40px;
     justify-content: space-between;
 }
 
@@ -508,6 +524,79 @@ option {
     margin-right: 0.375rem;
     width: 1.25rem;
     height: 1.25rem;
+}
+
+.wrapper {
+    display: inline-flex;
+    height: 40px;
+    width: 280px;
+}
+
+.wrapper .option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 2px solid lightgrey;
+    transition: all 0.3s ease;
+}
+.wrapper .option .dot {
+    height: 1rem;
+    width: 1rem;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+.wrapper .option .dot::before {
+    position: absolute;
+    content: "";
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background: #0069d9;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.3s ease;
+}
+.wrapper .option.optionConfirm .dot::before {
+    background-color: #419918;
+}
+.wrapper .option.optionReject .dot::before {
+    background-color: #dc3545;
+}
+input[type="radio"] {
+    display: none;
+}
+#radioConfirm:checked:checked ~ .optionConfirm {
+    border-color: #419918;
+    background: #419918;
+}
+#radioReject:checked:checked ~ .optionReject {
+    border-color: #dc3545;
+    background: #dc3545;
+}
+#radioConfirm:checked:checked ~ .optionConfirm .dot,
+#radioReject:checked:checked ~ .optionReject .dot {
+    background: #fff;
+}
+#radioConfirm:checked:checked ~ .optionConfirm .dot::before,
+#radioReject:checked:checked ~ .optionReject .dot::before {
+    opacity: 1;
+    transform: scale(1);
+}
+.wrapper .option span {
+    font-size: 1rem;
+    color: #808080;
+}
+#radioConfirm:checked:checked ~ .optionConfirm span,
+#radioReject:checked:checked ~ .optionReject span {
+    color: #fff;
 }
 
 /* .process-wrap button:hover,
@@ -595,10 +684,19 @@ option {
 .btn-delete a,
 .sample-text {
     font-family: "Roboto", sans-serif;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1rem;
-    line-height: 2rem;
+    /* line-height: 2rem; */
     color: var(--font-color);
+}
+
+.blind-button {
+    padding: .25rem 0;
+    display: flex;
+}
+
+.blind-button svg {
+    margin-right: .25rem;
 }
 
 @media screen and (max-width: 768px) {

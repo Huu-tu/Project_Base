@@ -25,6 +25,7 @@
                 :avatar="requestAvatar"
                 :authFlag="authFlag"
                 :userEmail="userEmail"
+                :userAvatar="userAvatar"
                 @onFetchData="fetchData"
             ></Show>
         </template>
@@ -36,6 +37,7 @@ import Header from "../layouts/Header.vue";
 import Show from "../components/Show.vue";
 import axios from "axios";
 import { convertDate } from "../convert.js";
+import { EventBus } from '../app.js'
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -48,6 +50,12 @@ export default {
     mounted() {
         this.fetchData();
     },
+    // created() {
+    //     EventBus.$on('onFetchData', this.handler)
+    // },
+    // destroyed() {
+    //     EventBus.$off('onFetchData', this.handler)
+    // },
     data() {
         return {
             requestId: 0,
@@ -110,6 +118,9 @@ export default {
                 this.loadSpinner = false;
             }
         },
+        handler() {
+            this.fetchData;
+        }
     },
 };
 </script>

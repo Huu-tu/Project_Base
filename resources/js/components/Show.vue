@@ -2,19 +2,52 @@
     <div class="main-container">
         <div class="main-wrap">
             <div class="navigation-wrap">
-                <div class="sample-text">Subject name</div>
+                <div class="sample-text">
+                    <div class="blind-button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill="rgba(0, 102, 178, 0.9)"
+                            width="1rem"
+                            height="1rem"
+                        >
+                            <path
+                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
+                            />
+                        </svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill="rgba(242, 111, 33, 0.9)"
+                            width="1rem"
+                            height="1rem"
+                        >
+                            <path
+                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
+                            />
+                        </svg>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill="rgba(13, 176, 75, 0.9)"
+                            width="1rem"
+                            height="1rem"
+                        >
+                            <path
+                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"
+                            />
+                        </svg>
+                    </div>
+                    {{ title }}
+                </div>
                 <div class="navigation-wrapper">
                     <button v-if="!authFlag" class="btn btn-outline-secondary">
                         <img src="../assets/images/SVG/back.svg" />
                     </button>
-
                     <button v-if="!authFlag" class="btn btn-outline-secondary">
                         <img src="../assets/images/SVG/delete.svg" />
                     </button>
                 </div>
-            </div>
-            <div class="title-wrap">
-                {{ title }}
             </div>
             <div class="body-wrap">
                 <img :src="avatar" />
@@ -31,18 +64,22 @@
                     <div class="content-wrap">
                         <span v-html="content"></span>
                     </div>
-                    <Submit
-                        :needConfirm="needConfirm"
-                        :needFeedback="needFeedback"
-                    ></Submit>
                 </div>
+            </div>
+            <div class="body-wrap">
+                <img :src="userAvatar" />
+                <Submit
+                    :needConfirm="needConfirm"
+                    :needFeedback="needFeedback"
+                    :userEmail="userEmail"
+                    :mailId="id"
+                ></Submit>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from "axios";
 import Submit from "./Submit.vue";
 
 const apiPath = process.env.MIX_API_PATH;
@@ -64,6 +101,7 @@ export default {
         avatar: String,
         authFlag: Boolean,
         userEmail: String,
+        userAvatar: String,
     },
     data() {
         return {
@@ -71,28 +109,7 @@ export default {
             type: "",
         };
     },
-    methods: {
-        async onSubmit() {
-            try {
-                let isAuth = this.$route.query.param;
-                let apiRequest = `${apiPath}/receiver-mail/store`;
-                await axios.post(apiRequest, {
-                    user_mail: this.userEmail,
-                    mail_id: this.id,
-                    confirm: this.type,
-                    feedback: this.feedback,
-                });
-            } catch (err) {
-                console.log(err);
-            }
-        },
-        onFetchData() {
-            this.$emit("onFetchData");
-        },
-        submitType(type) {
-            this.type = type;
-        },
-    },
+    methods: {},
 };
 </script>
 
