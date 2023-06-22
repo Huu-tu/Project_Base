@@ -61,7 +61,6 @@ export default {
         return {
             feedback: "",
             option: "",
-            isSubmitted: false,
         };
     },
     components: {
@@ -79,10 +78,8 @@ export default {
                     confirm: this.option,
                     feedback: this.feedback,
                 });
-                this.isSubmitted = true;
-                this.onFetchData()
-                // console.log(this.feedback, this.option);
                 alert("Successfully submitted");
+                this.onfetchSubmit()
             } catch (err) {
                 console.log(err);
             }
@@ -93,8 +90,8 @@ export default {
         handleFeedBack(feedback) {
             this.feedback = feedback;
         },
-        onFetchData() {
-            this.$emit("onFetchData", this.isSubmitted);
+        onfetchSubmit() {
+            this.$emit("fetchSubmit")
         }
     },
 };

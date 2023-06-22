@@ -1,5 +1,11 @@
 <template>
     <div class="main-container">
+        <div class="spinner-wrap" v-if="loadSpinner">
+            <div class="overlay"></div>
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
         <div class="main-wrap">
             <div class="navigation-wrap">
                 <div class="sample-text">
@@ -77,12 +83,15 @@
                         :needFeedback="needFeedback"
                         :userEmail="userEmail"
                         :mailId="id"
-                        @onFetchData="handleFetchData"
+                        @fetchSubmit="handleFetchData"
                     ></Submit>
                 </div>
                 <div class="body-section" v-if="isSubmitted === true">
                     <img :src="userAvatar" />
-                    <Result></Result>
+                    <Result
+                        :userEmail="userEmail"
+                        :mailId="id"
+                    ></Result>
                 </div>
             </div>
         </div>
@@ -113,23 +122,39 @@ export default {
         createdAt: String,
         avatar: String,
         authFlag: Boolean,
-        userEmail: String,
+        userEmail: String, 
         userAvatar: String,
     },
     data() {
         return {
             feedback: "",
             type: "",
-            isSubmitted: false,
+            isSubmitted: null,
+            loadSpinner: "",
         };
     },
+    mounted() {
+        this.handleFetchData()
+    },
     methods: {
-        async handleFetchData(flag) {
+        async handleFetchData() {
             try {
-                this.isSubmitted = flag
-                console.log("submit chưa ? " + this.isSubmitted)
+                this.loadSpinner = true;
+
+                let apiRequest = `${apiPath}/get-receiver/${this.userEmail}/${this.id}`;
+                let resRequest  = (await axios.get(apiRequest)).data;
+
+                if(resRequest.id != null) {
+                    this.isSubmitted = true;
+                    
+                } else {
+                    this.isSubmitted = false;
+                }
+                console.log(this.isSubmitted)
+                this.loadSpinner = false;
             } catch(e) {
                 console.log(e)
+                this.loadSpinner = false;
             }
         }
     },
