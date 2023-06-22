@@ -47,7 +47,7 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'show'
     ]);
 
-    Route::get('/get-receiver/{id}' ,[
+    Route::get('/get-receiver/{mail}/{id}' ,[
         MailController::class,
         'getReceiver'
     ]);    
