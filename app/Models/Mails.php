@@ -23,9 +23,8 @@ class Mails extends Model
         'need_feedback',
     ];
 
-    public function comments(): HasMany
+    public function feedbacks(): HasMany
     {
     	return $this->hasMany(Receivers_mail::class, 'mail_id');
     }
-
 }

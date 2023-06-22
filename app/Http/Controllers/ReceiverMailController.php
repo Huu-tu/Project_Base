@@ -12,6 +12,7 @@ class ReceiverMailController extends Controller{
     } 
 
     public function store(Request $request){
-        return $this->receiverMailService->saveData($request);
+        $receiverMail = $this->receiverMailService->saveData($request);
+        return $receiverMail;  
     }
 }

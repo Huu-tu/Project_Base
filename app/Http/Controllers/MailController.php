@@ -12,39 +12,45 @@ class MailController extends Controller{
     } 
 
     public function index(){
-        return $this->mailService->getAll();
+        $mail = $this->mailService->getAll();
+        return [
+            "status" => 200,
+            "data" => $mail
+        ];
     }
 
     public function search(Request $request){
-        return $this->mailService->search($request);
+        $mail = $this->mailService->search($request);
+        return $mail;
     }
     
     public function show($id){
-        return $this->mailService->show($id);
+        $mail = $this->mailService->show($id);
+        return $mail;
     }
-
-    // public function getComment($id){
-    //     return $this->permissService->getFeedback($id);
-    // }
 
     public function store(Request $request){
-        return $this->mailService->store($request);
+        $mail = $this->mailService->store($request);
+        return $mail;
     }
 
-    public function saveData(Request $request, $id){
-        return $this->mailService->saveData($request, $id);
+    public function getReceiver($id){
+        $mail = $this->mailService->getReceiver($id);
+        return $mail;
     }
 
     public function confirm($id){
-        return $this->mailService->confirm($id);
+        $mail = $this->mailService->confirm($id);
+        return $mail;
     }
 
     public function reject($id){
-        return $this->mailService->reject($id);
+        $mail = $this->mailService->reject($id);
+        return $mail;
     }
 
     public function delete($id){
-        return $this->mailService->delete($id);    
+        $mail = $this->mailService->delete($id);  
+        return $mail;  
     }
-
 }
