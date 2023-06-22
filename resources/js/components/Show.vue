@@ -50,30 +50,40 @@
                 </div>
             </div>
             <div class="body-wrap">
-                <img :src="avatar" />
-                <div class="body-container">
-                    <div class="info-wrap">
-                        <div class="info-wrap-left">
-                            <div class="info-name">{{ sender }}</div>
-                            <div class="info-mail">&lt;{{ email }}&gt;</div>
+                <div class="body-section">
+                    <img :src="avatar" />
+                    <div class="body-container">
+                        <div class="info-wrap">
+                            <div class="info-wrap-left">
+                                <div class="info-name">{{ sender }}</div>
+                                <div class="info-mail">&lt;{{ email }}&gt;</div>
+                            </div>
+                            <div class="info-time info-content-right">
+                                {{ createdAt }}
+                            </div>
                         </div>
-                        <div class="info-time info-content-right">
-                            {{ createdAt }}
+                        <div class="content-wrap">
+                            <span v-html="content"></span>
                         </div>
-                    </div>
-                    <div class="content-wrap">
-                        <span v-html="content"></span>
                     </div>
                 </div>
-            </div>
-            <div class="body-wrap">
-                <img :src="userAvatar" />
-                <Submit
-                    :needConfirm="needConfirm"
-                    :needFeedback="needFeedback"
-                    :userEmail="userEmail"
-                    :mailId="id"
-                ></Submit>
+                <div
+                    class="body-section"
+                    v-if="(needConfirm !== 0 || needFeedback !== 0) && isSubmitted === false"
+                >
+                    <img :src="userAvatar" />
+                    <Submit
+                        :needConfirm="needConfirm"
+                        :needFeedback="needFeedback"
+                        :userEmail="userEmail"
+                        :mailId="id"
+                        @onFetchData="handleFetchData"
+                    ></Submit>
+                </div>
+                <div class="body-section" v-if="isSubmitted === true">
+                    <img :src="userAvatar" />
+                    <Result></Result>
+                </div>
             </div>
         </div>
     </div>
@@ -81,6 +91,8 @@
 
 <script>
 import Submit from "./Submit.vue";
+import Result from './Result.vue'
+import axios from "axios";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -88,6 +100,7 @@ export default {
     name: "Show",
     components: {
         Submit,
+        Result,
     },
     props: {
         id: Number,
@@ -107,9 +120,19 @@ export default {
         return {
             feedback: "",
             type: "",
+            isSubmitted: false,
         };
     },
-    methods: {},
+    methods: {
+        async handleFetchData(flag) {
+            try {
+                this.isSubmitted = flag
+                console.log("submit chưa ? " + this.isSubmitted)
+            } catch(e) {
+                console.log(e)
+            }
+        }
+    },
 };
 </script>
 
