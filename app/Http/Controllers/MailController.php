@@ -13,10 +13,7 @@ class MailController extends Controller{
 
     public function index(){
         $mail = $this->mailService->getAll();
-        return [
-            "status" => 200,
-            "data" => $mail
-        ];
+        return $mail;
     }
 
     public function search(Request $request){
