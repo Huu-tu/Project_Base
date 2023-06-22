@@ -19,7 +19,8 @@ class AuthController extends Controller
 
     public function loginWithGoogle(Request $request)
     {
-        return $this->authService->loginWithGoogle($request);
+        $auth = $this->authService->loginWithGoogle($request);
+        return $auth;  
     }
 
     public function callbackFromGoogle()

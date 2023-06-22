@@ -47,6 +47,11 @@ Route::group(['middleware' =>['customAuTh']], function (){
         'show'
     ]);
 
+    Route::get('/get-receiver/{id}' ,[
+        MailController::class,
+        'getReceiver'
+    ]);    
+
     Route::post('/mail/save-data/{id}',[
         MailController::class,
         'saveData'

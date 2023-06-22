@@ -17,6 +17,13 @@ class ReceiverMailService{
 
         // $mail_id = User::where('google_id',$idUser)->get('id');
 
+        // $data = [
+        //     'user_mail' => $request['user_mail'],
+        //     'mail_id' => $mail_id[0]['id'],
+        //     'confirm' => $request['confirm'],
+        //     'feedback' => $request['feedback'],
+        // ];
+
         $data = [
             'user_mail' => $request['user_mail'],
             'mail_id' => $request['mail_id'],

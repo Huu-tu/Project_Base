@@ -19,6 +19,11 @@ Route::get('/mails' ,[
     'index'
 ]);
 
+Route::get('/get-receiver/{id}' ,[
+    MailController::class,
+    'getReceiver'
+]);
+
 Route::post('/receiver-mail/store',[
     ReceiverMailController::class, 
     'store'

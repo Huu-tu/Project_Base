@@ -28,6 +28,10 @@ class MailRepository extends BaseRepository{
         return $this->create($data);
     }
 
+    public function getReceiver($id){
+        return $this->_model::find($id)->feedbacks;
+    }
+
     public function saveData($data, $id) {
         $mail = $this->_model->findOrFail($id);
         return $mail->update($data);

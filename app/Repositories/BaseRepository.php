@@ -44,8 +44,6 @@ abstract  class BaseRepository
         return $this->_model->updateOrCreate($id,  $data);
     }
 
-
-
     public function update(array $attributes){
         return $this->_model->update($attributes);
 //        $result = $this->find($id);

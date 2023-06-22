@@ -26,6 +26,8 @@ class MailService{
         // $ResponseData = openssl_encrypt($responseData, $encryptionMethod, $encryptionKey, 0, $iv);
         // $decryptedData = openssl_decrypt($encryptedData, $encryptionMethod, $encryptionKey, 0, $iv);
         // dd($ResponseData);
+        return response()->json($result);
+
         return [
             "status" => 200,
             "data" => $responseData
@@ -70,13 +72,9 @@ class MailService{
         return response()->json($result);
     }
 
-    public function saveData($request, $id){
-        $data = [
-            'need_confirm' => $request['need_confirm'],
-            'need_feedback' => $request['need_feedback'],
-        ];
+    public function getReceiver($id){
 
-        $result = $this->mailRepository->saveData($data, $id);
+        $result = $this->mailRepository->getReceiver($id);
         return response()->json($result);
     }
 
