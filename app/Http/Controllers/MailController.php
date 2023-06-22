@@ -31,18 +31,8 @@ class MailController extends Controller{
         return $mail;
     }
 
-    public function getReceiver($id){
-        $mail = $this->mailService->getReceiver($id);
-        return $mail;
-    }
-
-    public function confirm($id){
-        $mail = $this->mailService->confirm($id);
-        return $mail;
-    }
-
-    public function reject($id){
-        $mail = $this->mailService->reject($id);
+    public function getReceiver($mail,$id){
+        $mail = $this->mailService->getReceiver($mail, $id);
         return $mail;
     }
 

@@ -28,8 +28,9 @@ class MailRepository extends BaseRepository{
         return $this->create($data);
     }
 
-    public function getReceiver($id){
-        return $this->_model::find($id)->feedbacks;
+    public function getReceiver($mail, $id){
+        $data = $this->_model::find($id)->feedbacks();
+        return $data->firstWhere('user_mail', $mail); 
     }
 
     public function saveData($data, $id) {
