@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\HomeService;
+use Illuminate\Http\Request;
+use App\Models\Campus;
+use Cookie;
+use Laravel\Socialite\Facades\Socialite;
 
 class HomeController extends Controller
 {
-    protected $homeService;
-    public function __construct(HomeService $homeService){
-        $this->homeService = $homeService;
-    } 
-
     public function index(){
         return view('welcome');
     }
@@ -20,7 +18,7 @@ class HomeController extends Controller
     }
 
     public function campus(){
-        $campus = $this->homeService->campus();  
+        $campus = Campus::all();
         return [
             "status" => 200,
             "data" => $campus
@@ -28,10 +26,8 @@ class HomeController extends Controller
     }
      
     public function inFoUser(){
-        $inFoUser = $this->homeService->inFoUser();  
-        return [
-            "status" => 200,
-            "data" => $inFoUser
-        ];
+        $token = session()->get('asscess-token');
+        $user = Socialite::driver('google')->userFromToken($token);
+        return response()->json($user);
     }
 }
