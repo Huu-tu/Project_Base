@@ -19,7 +19,7 @@ Route::get('/mails' ,[
     'index'
 ]);
 
-Route::get('/get-receiver/{id}' ,[
+Route::get('/get-receiver/{mail}/{id}' ,[
     MailController::class,
     'getReceiver'
 ]);
