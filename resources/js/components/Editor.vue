@@ -1,6 +1,6 @@
 <template>
     <div class="editor-wrap">
-        <p>My reaction to that infomation:</p>
+        <p class="editor-wrap-title">My reaction to that infomation:</p>
         <ckeditor
             :editor="editor"
             v-model="editorData"
@@ -20,7 +20,7 @@ export default {
     data() {
         return {
             editor: ClassicEditor,
-            editorData: "",
+            editorData: '',
             editorConfig: {
                 language: "vi",
             },

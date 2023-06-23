@@ -1,13 +1,13 @@
 <template>
     <div class="select-wrap">
-        <!-- <p>Select one:</p> -->
+        <p class="select-wrap-title">Select:</p>
         <div class="wrapper">
             <input
                 class="form-check-input"
                 type="radio"
                 name="radioSelect"
                 id="radioConfirm"
-                value="1"
+                value='1'
                 v-model="optionSelected"
                 @change="emitSelection"
             />
@@ -20,7 +20,7 @@
                 type="radio"
                 name="radioSelect"
                 id="radioReject"
-                value="0"
+                value='0'
                 v-model="optionSelected"
                 @change="emitSelection"
             />

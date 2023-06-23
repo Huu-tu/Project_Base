@@ -6,13 +6,8 @@
             :userEmail="userEmail"
             :authFlag="authFlag"
         ></Header>
-        <div class="spinner-wrap" v-if="loadSpinner">
-            <div class="overlay"></div>
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-        <template v-else-if="!loadSpinner">
+        <Spinner :loadSpinner="loadSpinner"></Spinner>
+        <template v-if="!loadSpinner">
             <Show
                 :id="requestId"
                 :title="requestTitle"
@@ -34,28 +29,24 @@
 
 <script>
 import Header from "../layouts/Header.vue";
-import Show from "../components/Show.vue";
+import Show from "./Show.vue";
+import Spinner from "./Spinner.vue";
 import axios from "axios";
 import { convertDate } from "../convert.js";
-import { EventBus } from '../app.js'
+import { EventBus } from "../app.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
 export default {
     name: "home",
     components: {
-        Header: Header,
-        Show: Show,
+        Header,
+        Show,
+        Spinner,
     },
-    mounted() {
+    created() {
         this.fetchData();
     },
-    // created() {
-    //     EventBus.$on('onFetchData', this.handler)
-    // },
-    // destroyed() {
-    //     EventBus.$off('onFetchData', this.handler)
-    // },
     data() {
         return {
             requestId: 0,
@@ -98,7 +89,7 @@ export default {
                 this.requestEmail = resRequest.email;
                 this.requestSender = resRequest.sender;
                 this.requestContent = resRequest.content;
-                this.requestNeedConfirm = resRequest.need_confirm; /*sai chính tả*/
+                this.requestNeedConfirm = resRequest.need_confirm;
                 this.requestNeedFeedback = resRequest.need_feedback;
                 this.requestCreatedTime = convertDate(resRequest.created_at);
                 this.requestAvatar = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(
@@ -107,7 +98,7 @@ export default {
 
                 let apiUser = `${apiPath}/info-user?isAuth=${isAuth}`;
                 let resUser = (await axios.get(apiUser)).data;
-                    console.log(resUser)
+                console.log(resUser);
                 this.userAvatar = resUser.avatar;
                 this.userName = resUser.name;
                 this.userEmail = resUser.email;
@@ -118,9 +109,6 @@ export default {
                 this.loadSpinner = false;
             }
         },
-        handler() {
-            this.fetchData;
-        }
     },
 };
 </script>

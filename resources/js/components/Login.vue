@@ -53,8 +53,7 @@ export default {
         async fetchData() {
             try {
                 let apiRequest = `${apiPath}/api/campus`;
-                let resRequest = (await axios.get(apiRequest)).data.data;
-                
+                let resRequest = (await axios.get(apiRequest)).data.data;               
                 this.items = resRequest;
             } catch (e) {
                 console.log(e);

@@ -1,5 +1,6 @@
 <template>
     <div class="main-container">
+        <Spinner :loadSpinner="loadSpinner"></Spinner>
         <div class="main-wrap">
             <div class="navigation-wrap">
                 <div class="sample-text">
@@ -38,7 +39,6 @@
                             />
                         </svg>
                     </div>
-                    {{ title }}
                 </div>
                 <div class="navigation-wrapper">
                     <button v-if="!authFlag" class="btn btn-outline-secondary">
@@ -50,30 +50,44 @@
                 </div>
             </div>
             <div class="body-wrap">
-                <img :src="avatar" />
-                <div class="body-container">
-                    <div class="info-wrap">
-                        <div class="info-wrap-left">
-                            <div class="info-name">{{ sender }}</div>
-                            <div class="info-mail">&lt;{{ email }}&gt;</div>
+                <div class="info-title">{{ title }}</div>
+                <div class="body-section">
+                    <img :src="avatar" />
+                    <div class="body-container">
+                        <div class="info-wrap">
+                            <div class="info-wrap-left">
+                                <div class="info-name">{{ sender }}</div>
+                                <div class="info-mail">&lt;{{ email }}&gt;</div>
+                            </div>
+                            <div class="info-time info-content-right">
+                                {{ createdAt }}
+                            </div>
                         </div>
-                        <div class="info-time info-content-right">
-                            {{ createdAt }}
-                        </div>
-                    </div>
-                    <div class="content-wrap">
-                        <span v-html="content"></span>
                     </div>
                 </div>
-            </div>
-            <div class="body-wrap">
-                <img :src="userAvatar" />
-                <Submit
-                    :needConfirm="needConfirm"
-                    :needFeedback="needFeedback"
-                    :userEmail="userEmail"
-                    :mailId="id"
-                ></Submit>
+                <div class="content-wrap">
+                    <span v-html="content"></span>
+                </div>
+                <div
+                    class="body-section sub-body"
+                    v-if="
+                        (needConfirm !== 0 || needFeedback !== 0) &&
+                        isSubmitted === false
+                    "
+                >
+                    <img :src="userAvatar" />
+                    <Submit
+                        :needConfirm="needConfirm"
+                        :needFeedback="needFeedback"
+                        :userEmail="userEmail"
+                        :mailId="id"
+                        @fetchSubmit="handleFetchData"
+                    />
+                </div>
+                <div class="body-section sub-body" v-if="isSubmitted === true">
+                    <img :src="userAvatar" />
+                    <Result :userEmail="userEmail" :mailId="id" />
+                </div>
             </div>
         </div>
     </div>
@@ -81,6 +95,9 @@
 
 <script>
 import Submit from "./Submit.vue";
+import Result from "./Result.vue";
+import Spinner from "./Spinner.vue";
+import axios from "axios";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -88,6 +105,8 @@ export default {
     name: "Show",
     components: {
         Submit,
+        Result,
+        Spinner,
     },
     props: {
         id: Number,
@@ -107,9 +126,38 @@ export default {
         return {
             feedback: "",
             type: "",
+            isSubmitted: null,
+            loadSpinner: "",
         };
     },
-    methods: {},
+    mounted() {
+        this.handleFetchData();
+    },
+    methods: {
+        async handleFetchData() {
+            try {
+                this.loadSpinner = true;
+
+                let apiRequest = `${apiPath}/get-receiver/${this.userEmail}/${this.id}`;
+                console.log("api show ", apiRequest);
+                let resRequest = (await axios.get(apiRequest)).data;
+                console.log(resRequest);
+
+                if (resRequest != null && resRequest.id != null) {
+                    this.isSubmitted = true;
+                } else {
+                    this.isSubmitted = false;
+                }
+
+                console.log(resRequest.id);
+
+                this.loadSpinner = false;
+            } catch (e) {
+                console.log(e, "loi o show");
+                this.loadSpinner = false;
+            }
+        },
+    },
 };
 </script>
 
