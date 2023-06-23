@@ -267,18 +267,17 @@ option {
 
 .navigation-wrap {
     background: rgba(248, 243, 240, 0.8);
-
     padding: 0.5rem 1rem;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
 }
 
 .body-wrap {
     background-color: rgb(255, 255, 255, .99);
-    padding: 1rem;
+    padding: 1rem 1rem 2rem;
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
 }
@@ -296,11 +295,12 @@ option {
 .submit-wrap, .result-wrap {
     font-family: "Roboto", sans-serif;
     font-size: 1.2rem;
-    padding: 1rem;
+    padding: .75rem 1rem;
     margin: 0 1rem;
-    /* width: 100%; */
     border-radius: .5rem;
     border: 1px solid #e1e3e1;
+    max-width: calc(100% - 56px);
+    /* width: 100%; */
 }
 
 .submit-wrap:hover, .result-wrap:hover {
@@ -316,8 +316,8 @@ option {
     padding: 0.25rem 1rem;
 }
 
-.submit-wrap p {
-    margin-bottom: 0.25rem;
+.editor-wrap-title, .select-wrap-title {
+    margin-bottom: 0.5rem;
     font-weight: 700;
     font-size: 1rem;
     color: var(--font-color);
@@ -331,6 +331,41 @@ option {
 
 .editor-wrap, .select-wrap {
     padding-bottom: 1rem;
+}
+
+.option-wrap {
+    font-weight: 700;
+}
+
+.option-wrap.confirm {
+    color: #419918;
+}
+
+.option-wrap.reject {
+    color: #dc3545;
+}
+
+.option-wrap, .note-wrap {
+    padding-bottom: .5rem;
+}
+
+.note-wrap {
+    display: flex;
+}
+
+.note-wrap img {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 0;
+    opacity: .6;
+}
+
+.note-wrap span {
+    padding-left: .5rem;
+}
+
+.time-post {
+    font-size: .8rem;
 }
 
 /* Discuss */
@@ -492,6 +527,15 @@ option {
     padding: 1rem 4.5rem;
 }
 
+.info-title {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: var(--font-color);
+    padding: 0 3.75rem 1rem;
+}
+
 .info-name {
     font-weight: bold;
 }
@@ -517,7 +561,7 @@ option {
 .content-wrap {
     font-family: "Roboto", sans-serif;
     font-size: 1.2rem;
-    padding: 1rem 0;
+    padding: 1rem 3.75rem;
 }
 
 .process-wrap button img {
@@ -618,7 +662,7 @@ input[type="radio"] {
     border: none;
     border-radius: 50%;
     display: inline-flex;
-    padding: 0.75rem;
+    padding: 0.5rem;
     margin-left: 0.25rem;
 }
 
@@ -713,6 +757,10 @@ input[type="radio"] {
     }
     .info-wrap {
         align-items: initial;
+        display: initial;
+    }
+    .content-wrap {
+        padding: 1rem 0;
     }
     .title-wrap {
         align-items: flex-end;
@@ -721,13 +769,29 @@ input[type="radio"] {
     .body-container {
         justify-content: initial;
         align-items: initial;
+        width: calc(100% - 40px);
     }
+    .body-section {
+        align-items: center;
+    }
+    .body-section.sub-body {
+        align-items: initial;
+    } 
     .body-container img {
         width: 40px;
         height: 40px;
     }
+    .body-wrap {
+        border-radius: 0;
+    }
+    .wrapper {
+        width: 100%;
+    }
     .info-wrap-container {
         width: calc(100% - 56px);
+    }
+    .info-title {
+        padding: 0 0 1rem;
     }
     .info-content {
         display: block;
@@ -779,11 +843,16 @@ input[type="radio"] {
 
 .modal-body .title {
     font-weight: 700;
+    margin-bottom: 1rem;
 }
 
 .modal-body .sub-title {
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.modal-body .sub-title span {
+    font-weight: 500;
 }
 
 .modal-body .button-wrapper {

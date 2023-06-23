@@ -14,6 +14,7 @@
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#modalSubmit"
+            @click="check"
         >
             Submit
         </button>
@@ -29,11 +30,12 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <img src="../assets/images/SVG/modal.svg" />
-                        <div>are you sure ?</div>
-                        <div>you have selected {{ option }}</div>
-                        <div>here is your feedback: {{ feedback }}</div>
+                        <div class="title" v-if="option == null && (feedback == '' || feedback == null)">Fill out something first!</div>
+                        <div class="title" v-else>Are you sure ?</div>
+                        <div v-if="option != null" class="sub-title">You have selected <span>{{ optionText }}</span></div>
+                        <div v-if="feedback != '' && feedback != null" class="sub-title">Here is your feedback:<br><span>{{ feedback }}</span></div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="onSubmit">Save changes</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="onSubmit" v-if="this.option || this.feedback" >Save changes</button>
                     </div>
                 </div>
             </div>
@@ -45,7 +47,6 @@
 import SelectOption from "./SelectOption.vue";
 import Editor from "./Editor.vue";
 import axios from "axios";
-import { EventBus } from "../app.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -59,8 +60,9 @@ export default {
     },
     data() {
         return {
-            feedback: "",
-            option: "",
+            feedback: null,
+            option: null,
+            optionText: '',
         };
     },
     components: {
@@ -71,6 +73,7 @@ export default {
         async onSubmit() {
             try {
                 let isAuth = this.$route.query.param;
+                console.log(this.userEmail, this.mailId, this.option, this.feedback)
                 let apiRequest = `${apiPath}/receiver-mail/store`;
                 await axios.post(apiRequest, {
                     user_mail: this.userEmail,
@@ -85,13 +88,22 @@ export default {
             }
         },
         handleOptionSelected(option) {
-            this.option = option;
+            this.option = option
+            if(option == 1) {
+                this.optionText = 'CONFIRM'
+            } else {
+                this.optionText = 'REJECT'
+            }
         },
         handleFeedBack(feedback) {
             this.feedback = feedback;
         },
         onfetchSubmit() {
             this.$emit("fetchSubmit")
+        },
+        check() {
+            console.log('option', this.option)
+            console.log('text', this.feedback)
         }
     },
 };

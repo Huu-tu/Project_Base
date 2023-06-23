@@ -1,16 +1,23 @@
 <template>
-  <div class="result-wrap">
-    <div v-if="option !== null">{{ option }}</div>
-    <div class="note-wrap" v-if="feedback !== null">
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 216C0 149.7 53.7 96 120 96h8c17.7 0 32 14.3 32 32s-14.3 32-32 32h-8c-30.9 0-56 25.1-56 56v8h64c35.3 0 64 28.7 64 64v64c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V320 288 216zm256 0c0-66.3 53.7-120 120-120h8c17.7 0 32 14.3 32 32s-14.3 32-32 32h-8c-30.9 0-56 25.1-56 56v8h64c35.3 0 64 28.7 64 64v64c0 35.3-28.7 64-64 64H320c-35.3 0-64-28.7-64-64V320 288 216z"/></svg>
-        {{ feedback }}
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M448 296c0 66.3-53.7 120-120 120h-8c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H320c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72zm-256 0c0 66.3-53.7 120-120 120H64c-17.7 0-32-14.3-32-32s14.3-32 32-32h8c30.9 0 56-25.1 56-56v-8H64c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32 32 72z"/></svg>
+    <div class="result-wrap">
+        <div
+            class="option-wrap"
+            v-if="option !== null"
+            :class="[optionFlag ? 'confirm' : 'reject']"
+        >
+            {{ option }}
+        </div>
+        <div class="note-wrap" v-if="feedback !== null">
+            <img src="../assets/images/SVG/quote.svg" />
+            <span>{{ feedback }}</span>
+        </div>
+        <div class="time-post">{{ time }}</div>
     </div>
-  </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import { convertDate } from "../convert.js";
 
 const apiPath = process.env.MIX_API_PATH;
 
@@ -23,28 +30,37 @@ export default {
     data() {
         return {
             feedback: "",
-            option: "",
+            option: null,
+            optionFlag: null,
+            time: "",
         };
     },
     mounted() {
-        this.fetchData()
+        this.fetchData();
     },
     methods: {
         async fetchData() {
             try {
                 let apiRequest = `${apiPath}/get-receiver/${this.userEmail}/${this.mailId}`;
-                let resRequest  = (await axios.get(apiRequest)).data;
-                console.log(resRequest)
+                console.log("api res ", apiRequest);
+                let resRequest = (await axios.get(apiRequest)).data;
                 this.feedback = resRequest.feedback;
-                this.option = resRequest.confirm;
+                if (resRequest.confirm === 1) {
+                    this.option = "Confirm";
+                    this.optionFlag = true;
+                } else if (resRequest.confirm === 0) {
+                    this.option = "Reject";
+                    this.optionFlag = false;
+                } else {
+                    this.option = null;
+                }
+                this.time = convertDate(resRequest.created_at);
             } catch (e) {
-                console.log(e)
+                console.log(e, "loi o res");
             }
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
